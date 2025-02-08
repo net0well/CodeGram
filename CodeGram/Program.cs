@@ -1,3 +1,4 @@
+
 using CodeGram.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +9,7 @@ builder.Services.AddControllersWithViews();
 
 //DatabaseConfig
 
-string dbConnectionString = builder.Configuration.GetConnectionString("Default");
+string dbConnectionString = builder.Configuration.GetConnectionString("Default") ?? string.Empty;
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(dbConnectionString));
 
 
