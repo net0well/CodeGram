@@ -9,6 +9,16 @@ namespace CodeGram.Data.Models
         public string Content { get; set; }
         public string? ImageUrl { get; set; }
         public int NrOfReports { get; set; }
+        public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
+
+        //Foreing Key
+
+        public int UserId { get; set; }
+
+        //Navigation properties
+
+        public User User { get; set; }
+
     }
 }
