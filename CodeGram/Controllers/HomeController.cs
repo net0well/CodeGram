@@ -75,6 +75,37 @@ namespace CodeGram.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> TogglePostLike(PostLikeVM postLikeVM)
+        {
+            int loggedInUser = 1;
+
+            //check if user have already liked the post
+
+            var likes = await _context.Likes
+                .Where(l => l.PostId == postLikeVM.PostId && l.UserId == loggedInUser)
+                .FirstOrDefaultAsync();
+
+            if (likes != null)
+            {
+                _context.Likes.Remove(likes);
+                await _context.SaveChangesAsync();
+            } else
+            {
+                var newLike = new Like()
+                {
+                    PostId = postLikeVM.PostId,
+                    UserId = loggedInUser
+                };
+
+                await _context.Likes.AddAsync(newLike);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
+
+        }
+
 
     }
 }
