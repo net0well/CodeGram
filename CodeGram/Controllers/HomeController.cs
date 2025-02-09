@@ -1,4 +1,6 @@
+using CodeGram.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace CodeGram.Controllers
@@ -7,14 +9,21 @@ namespace CodeGram.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly AppDbContext _context;
+
+        public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+
+            var allPosts = await _context.Posts
+                .Include(n => n.User)
+                .ToListAsync();
+            return View(allPosts);
         }
 
     }
