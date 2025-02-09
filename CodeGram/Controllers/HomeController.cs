@@ -46,31 +46,26 @@ namespace CodeGram.Controllers
                 UserId = loggedInUser
             };
 
-            //check and save img
-
-            if(post.Image != null && post.Image.Length > 0)
+            //Check and save the image
+            if (post.Image != null && post.Image.Length > 0)
             {
                 string rootFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-
-                if(post.Image.ContentType.Contains("image"))
+                if (post.Image.ContentType.Contains("image"))
                 {
-                    string rootFolderPathImages = Path.Combine(rootFolderPath, "images");
+                    string rootFolderPathImages = Path.Combine(rootFolderPath, "images/uploaded");
                     Directory.CreateDirectory(rootFolderPathImages);
 
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(post.Image.ContentType);
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(post.Image.FileName);
                     string filePath = Path.Combine(rootFolderPathImages, fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
                         await post.Image.CopyToAsync(stream);
-                    }
 
-                    //set the url to the newPost object
-
-                    newPost.ImageUrl = "/images/" + fileName;
-
+                    //Set the URL to the newPost object
+                    newPost.ImageUrl = "/images/uploaded/" + fileName;
                 }
             }
+
 
             //Add the post to the database
             await _context.Posts.AddAsync(newPost);
