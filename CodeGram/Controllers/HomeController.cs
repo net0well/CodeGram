@@ -24,6 +24,7 @@ namespace CodeGram.Controllers
 
             var allPosts = await _context.Posts
                 .Include(n => n.User)
+                .Include(n => n.Likes)
                 .OrderByDescending(n => n.DateCreated)
                 .ToListAsync();
             return View(allPosts);
@@ -78,34 +79,31 @@ namespace CodeGram.Controllers
         [HttpPost]
         public async Task<IActionResult> TogglePostLike(PostLikeVM postLikeVM)
         {
-            int loggedInUser = 1;
+            int loggedInUserId = 1;
 
-            //check if user have already liked the post
-
-            var likes = await _context.Likes
-                .Where(l => l.PostId == postLikeVM.PostId && l.UserId == loggedInUser)
+            //check if user has already liked the post
+            var like = await _context.Likes
+                .Where(l => l.PostId == postLikeVM.PostId && l.UserId == loggedInUserId)
                 .FirstOrDefaultAsync();
 
-            if (likes != null)
+            if (like != null)
             {
-                _context.Likes.Remove(likes);
+                _context.Likes.Remove(like);
                 await _context.SaveChangesAsync();
-            } else
+            }
+            else
             {
                 var newLike = new Like()
                 {
                     PostId = postLikeVM.PostId,
-                    UserId = loggedInUser
+                    UserId = loggedInUserId
                 };
-
                 await _context.Likes.AddAsync(newLike);
                 await _context.SaveChangesAsync();
             }
 
             return RedirectToAction("Index");
-
         }
-
 
     }
 }
