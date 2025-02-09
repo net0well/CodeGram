@@ -24,19 +24,18 @@ namespace CodeGram.Controllers
 
             var allPosts = await _context.Posts
                 .Include(n => n.User)
+                .OrderByDescending(n => n.DateCreated)
                 .ToListAsync();
             return View(allPosts);
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreatePost(PostVM post)
+        public async Task<IActionResult> CreatePost(PostVM post)
         {
             //Get the logged in user
-
             int loggedInUser = 1;
 
             //Create a new post
-
             var newPost = new Post
             {
                 Content = post.Content,
@@ -47,14 +46,14 @@ namespace CodeGram.Controllers
                 UserId = loggedInUser
             };
 
-            //add post to the db
-
+            //Add the post to the database
             await _context.Posts.AddAsync(newPost);
             await _context.SaveChangesAsync();
 
+            //Redirect to the index page
             return RedirectToAction("Index");
-
         }
+
 
     }
 }
