@@ -105,5 +105,26 @@ namespace CodeGram.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddPostComment(PostCommentVM postCommentVM)
+        {
+            var loggedInUserId = 1;
+
+
+            //post obj
+            var newComment = new Comment()
+            {
+                UserId = loggedInUserId,
+                PostId = postCommentVM.PostId,
+                Content = postCommentVM.Content,
+                DateCreated = DateTime.UtcNow,
+                DateUpdated = DateTime.UtcNow
+            };
+
+            await _context.Comments.AddAsync(newComment);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+
     }
 }
