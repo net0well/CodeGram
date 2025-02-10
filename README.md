@@ -20,3 +20,8 @@
 
 - Deploy application to the cloud using Azure.
 - Set up a CI/CD pipeline to automate the deployment process.
+
+
+### Future Implementations
+
+- Add upload image to cloud services
