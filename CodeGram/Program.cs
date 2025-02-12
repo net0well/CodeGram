@@ -14,6 +14,7 @@ string dbConnectionString = builder.Configuration.GetConnectionString("Default")
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(dbConnectionString));
 
 
+
 var app = builder.Build();
 
 //Seed Db with initial database
