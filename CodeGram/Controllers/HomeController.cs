@@ -140,6 +140,26 @@ namespace CodeGram.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> TogglePostVisibility(PostVisibilityVM postVisibilityVM)
+        {
+            int loggedInUser = 1;
+
+            //check post by id
+            var post = await _context.Posts
+                .FirstOrDefaultAsync(l => l.Id == postVisibilityVM.PostId && l.UserId == loggedInUser);
+                
+
+            if (post != null)
+            {
+                post.IsPrivate = !post.IsPrivate;
+                _context.Posts.Update(post);
+                await _context.SaveChangesAsync();
+            } 
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> AddPostComment(PostCommentVM postCommentVM)
         {
             var loggedInUserId = 1;
