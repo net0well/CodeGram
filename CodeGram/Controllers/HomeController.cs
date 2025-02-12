@@ -13,10 +13,11 @@ namespace CodeGram.Controllers
 
         private readonly AppDbContext _context;
 
+
         public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
-            _context = context;
+            _context = context;       
         }
 
         public async Task<IActionResult> Index()
@@ -54,6 +55,8 @@ namespace CodeGram.Controllers
                 string rootFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
                 if (post.Image.ContentType.Contains("image"))
                 {
+                    
+
                     string rootFolderPathImages = Path.Combine(rootFolderPath, "images/uploaded");
                     Directory.CreateDirectory(rootFolderPathImages);
 
