@@ -184,6 +184,27 @@ namespace CodeGram.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> AddPostReport(PostReportVM postReportVM)
+        {
+            var loggedInUserId = 1;
+
+
+            //post obj
+            var newReport = new Report()
+            {
+                UserId = loggedInUserId,
+                PostId = postReportVM.PostId,
+                DateCreated = DateTime.UtcNow
+            };
+
+            await _context.Reports.AddAsync(newReport);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
         public async Task<IActionResult> RemovePostComment(RemoveCommentVM removeCommentVM)
         {
             var commentDb = await _context.Comments.FirstOrDefaultAsync(c => c.Id == removeCommentVM.CommentId);
