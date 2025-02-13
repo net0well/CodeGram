@@ -22,6 +22,8 @@ namespace CodeGram.Data.Models
         public User User { get; set; }
         public ICollection<Like> Likes { get; set; } = new List<Like>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
-        public ICollection<Favorite> Favorites { get; set;} = new List<Favorite>();
+        public ICollection<Favorite> Favorites { get; set;} = new List<Favorite>(); 
+        public ICollection<Report> Reports { get; set; } = new List<Report>();
+
     }
 }
