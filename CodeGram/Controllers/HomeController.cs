@@ -25,11 +25,12 @@ namespace CodeGram.Controllers
             int loggedInUserId = 1;
 
             var allPosts = await _context.Posts
-                .Where(n => !n.IsPrivate || n.UserId == loggedInUserId)
+                .Where(n => (!n.IsPrivate || n.UserId == loggedInUserId) && n.Reports.Count < 5)
                 .Include(n => n.User)
                 .Include(n => n.Likes)
                 .Include(n => n.Favorites)
                 .Include(n => n.Comments).ThenInclude(n => n.User)
+                .Include(n => n.Reports)
                 .OrderByDescending(n => n.DateCreated)
                 .ToListAsync();
             return View(allPosts);
@@ -186,22 +187,21 @@ namespace CodeGram.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPostReport(PostReportVM postReportVM)
         {
-            var loggedInUserId = 1;
+            int loggedInUserId = 1;
 
-
-            //post obj
+            //Creat a post object
             var newReport = new Report()
             {
                 UserId = loggedInUserId,
                 PostId = postReportVM.PostId,
-                DateCreated = DateTime.UtcNow
+                DateCreated = DateTime.UtcNow,
             };
-
             await _context.Reports.AddAsync(newReport);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
+
 
 
         [HttpPost]
