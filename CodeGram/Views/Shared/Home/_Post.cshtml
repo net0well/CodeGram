@@ -22,7 +22,8 @@
     @* Post heading *@
     <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
         <a>
-            <img src="@(Model.User.ProfilePictureUrl ?? "~/images/avatar/user.png")" class="w-9 h-9 rounded-full" />
+            @*<img src="@(Model.User.ProfilePictureUrl ?? "~/images/avatar/user.png")" class="w-9 h-9 rounded-full" />*@
+            <img src="~/images/avatar/user.png" class="w-9 h-9 rounded-full" />
         </a>
         <div class="flex-1">
             <a>
@@ -142,7 +143,9 @@
 
                 <div class="flex items-start gap-3 relative">
                     <a>
-                        <img src="@(comment.User.ProfilePictureUrl ?? "~/images/avatar/user.png")" class="w-6 h-6 mt-1 rounded-full" />
+                        @*<img src="@(comment.User.ProfilePictureUrl ?? "~/images/avatar/user.png")" class="w-6 h-6 mt-1 rounded-full" />*@
+                        <img src="~/images/avatar/user.png" class="w-6 h-6 mt-1 rounded-full" />
+                        
                     </a>
                     <div class="flex-1">
                         <div class="flex justify-content-between">
@@ -197,28 +200,3 @@
     </div>
 </div>
 
-<partial name="Home/_PostDeleteConfirmation" />
-
-<script>
-    function openPostDeleteConfirmation(postId) {
-        console.log('Selected post id - ', postId);
-
-
-        UIkit.dropdown('.post-options-dropdown').hide();
-
-
-        setTimeout(() => {
-            const postIdInput = document.getElementById('postId');
-
-            if (postIdInput) {
-                postIdInput.value = postId;
-            } else {
-                console.error('Elemento com ID "postId" não encontrado.');
-            }
-
-            UIkit.modal('#postDeleteDialog').show();
-        }, 300);
-    }
-
-
-</script>
