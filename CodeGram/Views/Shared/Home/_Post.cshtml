@@ -1,5 +1,6 @@
 ﻿@model Post
 
+
 @{
     TimeSpan timeSpanSincePosted = DateTime.UtcNow.Subtract(Model.DateCreated);
 
@@ -22,8 +23,7 @@
     @* Post heading *@
     <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
         <a>
-            @*<img src="@(Model.User.ProfilePictureUrl ?? "~/images/avatar/user.png")" class="w-9 h-9 rounded-full" />*@
-            <img src="~/images/avatar/user.png" class="w-9 h-9 rounded-full" />
+            <img src="@(Model.User.ProfilePictureUrl ?? "~/images/avatar/user.png")" class="w-9 h-9 rounded-full" />
         </a>
         <div class="flex-1">
             <a>
@@ -143,9 +143,7 @@
 
                 <div class="flex items-start gap-3 relative">
                     <a>
-                        @*<img src="@(comment.User.ProfilePictureUrl ?? "~/images/avatar/user.png")" class="w-6 h-6 mt-1 rounded-full" />*@
-                        <img src="~/images/avatar/user.png" class="w-6 h-6 mt-1 rounded-full" />
-                        
+                        <img src="@(comment.User.ProfilePictureUrl ?? "~/images/avatar/user.png")" class="w-6 h-6 mt-1 rounded-full" />
                     </a>
                     <div class="flex-1">
                         <div class="flex justify-content-between">
@@ -199,4 +197,3 @@
         </form>
     </div>
 </div>
-

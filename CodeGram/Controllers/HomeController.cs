@@ -1,23 +1,21 @@
-using CodeGram.Data;
 using CodeGram.Data.Models;
+using CodeGram.Data;
 using CodeGram.ViewModel.Home;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
-namespace CodeGram.Controllers
+namespace CircleApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
         private readonly AppDbContext _context;
-
 
         public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
-            _context = context;       
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -25,7 +23,7 @@ namespace CodeGram.Controllers
             int loggedInUserId = 1;
 
             var allPosts = await _context.Posts
-                .Where(n => (!n.IsPrivate || n.UserId == loggedInUserId) && n.Reports.Count < 5)
+                .Where(n => (!n.IsPrivate || n.UserId == loggedInUserId) && n.Reports.Count < 5 && !n.IsDeleted)
                 .Include(n => n.User)
                 .Include(n => n.Likes)
                 .Include(n => n.Favorites)
@@ -33,6 +31,7 @@ namespace CodeGram.Controllers
                 .Include(n => n.Reports)
                 .OrderByDescending(n => n.DateCreated)
                 .ToListAsync();
+
             return View(allPosts);
         }
 
@@ -59,8 +58,6 @@ namespace CodeGram.Controllers
                 string rootFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
                 if (post.Image.ContentType.Contains("image"))
                 {
-                    
-
                     string rootFolderPathImages = Path.Combine(rootFolderPath, "images/uploaded");
                     Directory.CreateDirectory(rootFolderPathImages);
 
@@ -75,7 +72,6 @@ namespace CodeGram.Controllers
                 }
             }
 
-
             //Add the post to the database
             await _context.Posts.AddAsync(newPost);
             await _context.SaveChangesAsync();
@@ -83,6 +79,7 @@ namespace CodeGram.Controllers
             //Redirect to the index page
             return RedirectToAction("Index");
         }
+
 
         [HttpPost]
         public async Task<IActionResult> TogglePostLike(PostLikeVM postLikeVM)
@@ -142,22 +139,22 @@ namespace CodeGram.Controllers
             return RedirectToAction("Index");
         }
 
+
         [HttpPost]
         public async Task<IActionResult> TogglePostVisibility(PostVisibilityVM postVisibilityVM)
         {
-            int loggedInUser = 1;
+            int loggedInUserId = 1;
 
-            //check post by id
+            //get post by id and loggedin user id
             var post = await _context.Posts
-                .FirstOrDefaultAsync(l => l.Id == postVisibilityVM.PostId && l.UserId == loggedInUser);
-                
+                .FirstOrDefaultAsync(l => l.Id == postVisibilityVM.PostId && l.UserId == loggedInUserId);
 
             if (post != null)
             {
                 post.IsPrivate = !post.IsPrivate;
                 _context.Posts.Update(post);
                 await _context.SaveChangesAsync();
-            } 
+            }
 
             return RedirectToAction("Index");
         }
@@ -165,10 +162,9 @@ namespace CodeGram.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPostComment(PostCommentVM postCommentVM)
         {
-            var loggedInUserId = 1;
+            int loggedInUserId = 1;
 
-
-            //post obj
+            //Creat a post object
             var newComment = new Comment()
             {
                 UserId = loggedInUserId,
@@ -177,7 +173,6 @@ namespace CodeGram.Controllers
                 DateCreated = DateTime.UtcNow,
                 DateUpdated = DateTime.UtcNow
             };
-
             await _context.Comments.AddAsync(newComment);
             await _context.SaveChangesAsync();
 
@@ -202,21 +197,33 @@ namespace CodeGram.Controllers
             return RedirectToAction("Index");
         }
 
-
-
         [HttpPost]
         public async Task<IActionResult> RemovePostComment(RemoveCommentVM removeCommentVM)
         {
             var commentDb = await _context.Comments.FirstOrDefaultAsync(c => c.Id == removeCommentVM.CommentId);
-            
-            if(commentDb != null)
+
+            if (commentDb != null)
             {
                 _context.Comments.Remove(commentDb);
                 await _context.SaveChangesAsync();
             }
 
             return RedirectToAction("Index");
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> PostRemove(PostRemoveVM postRemoveVM)
+        {
+            var postDb = await _context.Posts.FirstOrDefaultAsync(c => c.Id == postRemoveVM.PostId);
+
+            if (postDb != null)
+            {
+                postDb.IsDeleted = true;
+                _context.Posts.Update(postDb);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

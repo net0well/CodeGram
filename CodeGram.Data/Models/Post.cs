@@ -12,6 +12,7 @@ namespace CodeGram.Data.Models
         public bool IsPrivate { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
+        public bool IsDeleted { get; set; }
 
         //Foreing Key
 
