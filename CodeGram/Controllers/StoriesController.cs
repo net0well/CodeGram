@@ -2,6 +2,7 @@
 using CodeGram.Data.Models;
 using CodeGram.ViewModel.Stories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeGram.Controllers
 {
@@ -11,6 +12,13 @@ namespace CodeGram.Controllers
         public StoriesController(AppDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var allStories = await _context.Stories.Include(u => u.User).ToListAsync();
+
+            return View(allStories);
         }
 
         [HttpPost]
