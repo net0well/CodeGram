@@ -10,24 +10,19 @@ namespace CodeGram.Controllers
         private readonly AppDbContext _context;
         public StoriesController(AppDbContext context)
         {
-            context = _context;
-        }
-        public IActionResult Index()
-        {
-            return View();
+            _context = context;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateStory(StoryVM storyVM)
         {
-            int loggedInUser = 1;
+            int loggedInUserId = 1;
 
-
-            var newStory = new Story()
+            var newStory = new Story
             {
                 DateCreated = DateTime.UtcNow,
                 IsDeleted = false,
-                UserId = loggedInUser
+                UserId = loggedInUserId
             };
 
             //Check and save the image
@@ -50,10 +45,10 @@ namespace CodeGram.Controllers
                 }
             }
 
-              await _context.AddAsync(newStory);
-              await _context.SaveChangesAsync();
+            await _context.Stories.AddAsync(newStory);
+            await _context.SaveChangesAsync();
 
-              return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
