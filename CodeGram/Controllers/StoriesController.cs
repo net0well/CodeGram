@@ -14,13 +14,6 @@ namespace CodeGram.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var allStories = await _context.Stories.Include(u => u.User).ToListAsync();
-
-            return View(allStories);
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreateStory(StoryVM storyVM)
         {
