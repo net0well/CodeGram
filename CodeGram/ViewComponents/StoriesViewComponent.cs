@@ -16,7 +16,10 @@ namespace CodeGram.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
 
-            var allStories = await _context.Stories.Include(u => u.User).ToListAsync();
+            var allStories = await _context.Stories
+                .Where(n => n.DateCreated >= DateTime.UtcNow.AddHours(-24))
+                .Include(u => u.User)
+                .ToListAsync();
 
             return View(allStories);
         }
