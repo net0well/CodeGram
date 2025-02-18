@@ -255,8 +255,24 @@ namespace CircleApp.Controllers
                 postDb.IsDeleted = true;
                 _context.Posts.Update(postDb);
                 await _context.SaveChangesAsync();
-            }
 
+                //update hashtags
+                var postHashtags = HashtagHelper.GetHashtags(postDb.Content);
+
+                foreach(var hashtag in postHashtags)
+                {
+                    var hashtagDb = await _context.Hashtags.FirstOrDefaultAsync(n => n.Name == hashtag);
+
+                    if(hashtagDb != null)
+                    {
+                        hashtagDb.Count -= 1;
+                        hashtagDb.DateUpdated = DateTime.UtcNow;
+
+                        _context.Hashtags.Update(hashtagDb);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
             return RedirectToAction("Index");
         }
     }
