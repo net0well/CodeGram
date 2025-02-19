@@ -19,5 +19,6 @@ namespace CodeGram.Data.Services
         Task TogglePostLikeAsync(int postId, int loggedInUserId);
         Task TogglePostFavoriteAsync(int postId, int loggedInUserId);
         Task ReportPostAsync(int postId, int loggedInUserId);
+        Task TogglePostVisibilityAsync(int postId, int loggedInUserId);  
     }
 }
