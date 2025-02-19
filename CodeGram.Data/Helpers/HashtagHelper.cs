@@ -14,7 +14,7 @@ namespace CodeGram.Data.Helpers
             var hashtagPattern = new Regex(@"#\w+");
             var matches = hashtagPattern.Matches(postText)
                 .Select(match => match.Value
-                .TrimEnd('.', ',', '!', '?', ' ').ToLower())
+                .TrimEnd('.', ',', '!', '?').ToLower())
                 .Distinct()
                 .ToList();
 
