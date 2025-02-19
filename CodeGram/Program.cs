@@ -1,6 +1,7 @@
 
 using CodeGram.Data;
 using CodeGram.Data.Helpers;
+using CodeGram.Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,9 @@ builder.Services.AddControllersWithViews();
 string dbConnectionString = builder.Configuration.GetConnectionString("Default") ?? string.Empty;
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(dbConnectionString));
 
+
+//Services Configuration
+builder.Services.AddScoped<IPostsService, PostsService>();
 
 
 var app = builder.Build();
