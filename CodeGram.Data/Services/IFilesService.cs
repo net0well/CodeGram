@@ -1,4 +1,4 @@
-﻿using CodeGram.Data.Models;
+﻿using CodeGram.Data.Helpers.Enums;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace CodeGram.Data.Services
 {
-    public interface IStoriesService
+    public interface IFilesService
     {
-        Task<List<Story>> GetAllStoriesAsync();
-        Task<Story> CreateStoryAsync(Story story);
+        Task<String> UploadImageAsync(IFormFile file, ImageFileType imageFileType);
     }
 }
