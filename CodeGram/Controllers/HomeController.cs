@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using CodeGram.Data.Helpers;
 using CodeGram.Data.Services;
+using CodeGram.Data.Helpers.Enums;
 
 namespace CircleApp.Controllers
 {
@@ -14,12 +15,14 @@ namespace CircleApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IPostsService _postsService;
         private readonly IHashtagsService _hashtagsService;
+        private readonly IFilesService _filesService;
 
-        public HomeController(ILogger<HomeController> logger, IPostsService postsService, IHashtagsService hashtagsService)
+        public HomeController(ILogger<HomeController> logger, IPostsService postsService, IHashtagsService hashtagsService, IFilesService filesService)
         {
             _logger = logger;
             _postsService = postsService;   
             _hashtagsService = hashtagsService;
+            _filesService = filesService;
         }
 
         public async Task<IActionResult> Index()
@@ -37,18 +40,20 @@ namespace CircleApp.Controllers
             //Get the logged in user
             int loggedInUser = 1;
 
+            var imageUploadPath = await _filesService.UploadImageAsync(post.Image, ImageFileType.PostImage);
+
             //Create a new post
             var newPost = new Post
             {
                 Content = post.Content,
                 DateCreated = DateTime.UtcNow,
                 DateUpdated = DateTime.UtcNow,
-                ImageUrl = "",
+                ImageUrl = imageUploadPath,
                 NrOfReports = 0,
                 UserId = loggedInUser
             };
 
-            await _postsService.CreatePostAsync(newPost, post.Image);
+            await _postsService.CreatePostAsync(newPost);
             await _hashtagsService.ProcessHashtagsForNewPostAsync(post.Content);
     
 
