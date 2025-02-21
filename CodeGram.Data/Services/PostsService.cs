@@ -151,5 +151,20 @@ namespace CodeGram.Data.Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<List<Post>> GetAllFavoritedPostAsync(int userId)
+        {
+            var allFavoritedPosts = await _context.Favorites
+                .Include(f => f.Post.Reports)
+                .Where(n => n.UserId == userId && !n.Post.IsDeleted && n.Post.Reports.Count < 5)
+                .Include(n => n.Post)
+                .Select(n => n.Post)
+                .Include(p => p.User)
+                .Include(p => p.Comments).ThenInclude(p => p.User)
+                .Include(l => l.Likes)
+                .ToListAsync();
+
+            return allFavoritedPosts;
+        }
     }
 }
