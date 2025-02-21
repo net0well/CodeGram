@@ -106,7 +106,8 @@ namespace CodeGram.Data.Services
                 var newFavorite = new Favorite()
                 {
                     PostId = postId,
-                    UserId = loggedInUserId
+                    UserId = loggedInUserId,
+                    DateCreated = DateTime.UtcNow
                 };
 
                 await _context.Favorites.AddAsync(newFavorite);
@@ -150,6 +151,25 @@ namespace CodeGram.Data.Services
                 _context.Posts.Update(post);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<Post>> GetAllFavoritedPostAsync(int userId)
+        {
+            var allFavoritedPosts = await _context.Favorites
+                .Include(f => f.Post.Reports)
+                .Include(f => f.Post.User)
+                .Include(f => f.Post.Comments)
+                    .ThenInclude(c => c.User)
+                .Include(f => f.Post.Likes)
+                .Include(f => f.Post.Favorites)
+                .Where(n => n.UserId == userId &&
+                    !n.Post.IsDeleted &&
+                    n.Post.Reports.Count < 5)
+                .OrderByDescending(f => f.DateCreated)
+                .Select(n => n.Post)
+                .ToListAsync();
+
+            return allFavoritedPosts;
         }
     }
 }
