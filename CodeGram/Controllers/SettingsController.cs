@@ -1,12 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CodeGram.Data.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CodeGram.Controllers
 {
     public class SettingsController : Controller
     {
-        public IActionResult Index()
+        private readonly IUsersService _usersService;
+        public SettingsController(IUsersService usersService)
         {
-            return View();
+            _usersService = usersService;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var loggedInUserId = 1;
+
+            var userDb = await _usersService.GetUser(loggedInUserId);
+
+            return View(userDb);
         }
     }
 }
