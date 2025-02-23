@@ -12,6 +12,7 @@ namespace CodeGram.Data.Services
     {
 
         Task<List<Post>> GetAllPostsAsync(int loggedInUserId);
+        Task<Post> GetPostByIdAsync(int postId);
         Task<List<Post>> GetAllFavoritedPostAsync(int userId);
         Task<Post> CreatePostAsync(Post post);
         Task<Post> RemovePostAsync(int postId);
