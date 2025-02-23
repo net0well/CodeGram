@@ -26,11 +26,23 @@ namespace CodeGram.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProfilePicture(ProfilePictureVM profilePictureVM)
         {
-            var loggedInUserId = 1;
+            var loggedInUser = 1;
             var uploadedProfilePictureUrl = await _filesService.UploadImageAsync(profilePictureVM.ProfilePictureImage, ImageFileType.ProfilePicture);
 
-            await _usersService.UpdateUserProfilePicture(loggedInUserId, uploadedProfilePictureUrl);
+            await _usersService.UpdateUserProfilePicture(loggedInUser, uploadedProfilePictureUrl);
 
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfile(UpdateProfileVM profileVM)
+        {
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdatePassword(UpdatePasswordVM updatePasswordVM)
+        {
             return RedirectToAction("Index");
         }
     }
