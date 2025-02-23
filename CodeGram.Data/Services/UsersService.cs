@@ -19,5 +19,17 @@ namespace CodeGram.Data.Services
         {
             return await _context.Users.FirstOrDefaultAsync(n => n.Id == loggedInUserId) ?? new User();
         }
+
+        public async Task UpdateUserProfilePicture(int loggedInUserId, string profilePictureUrl)
+        {
+            var userDb = await _context.Users.FirstOrDefaultAsync(u => u.Id == loggedInUserId);
+
+            if (userDb != null)
+            {
+                userDb.ProfilePictureUrl = profilePictureUrl;
+                _context.Users.Update(userDb);
+                await _context.SaveChangesAsync();  
+            }
+        }
     }
 }
