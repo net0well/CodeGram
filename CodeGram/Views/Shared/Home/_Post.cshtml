@@ -26,7 +26,7 @@
     @* Post heading *@
     <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
         <a>
-            <img src="@(!string.IsNullOrEmpty(Model.User.ProfilePictureUrl) ? Url.Content("~/"+Model.User.ProfilePictureUrl) : defaultUserPicture)" class="w-9 h-9 rounded-full" />
+            <img src="@(!string.IsNullOrEmpty(Model.User.ProfilePictureUrl) ? Url.Content("~/"+Model.User.ProfilePictureUrl) : defaultUserPicture)" class="w-9 h-9 rounded-full object-cover" />
         </a>
         <div class="flex-1">
             <a>
