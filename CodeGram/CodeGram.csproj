@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\assets\" />
     <Folder Include="wwwroot\images\avatar\" />
+    <Folder Include="wwwroot\images\welcome\" />
     <Folder Include="wwwroot\images\placeholders\" />
   </ItemGroup>
 
