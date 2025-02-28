@@ -1,9 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CodeGram.Data.Helpers.Constants;
+using CodeGram.Data.Models;
+using CodeGram.ViewModel.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CodeGram.Controllers
 {
     public class AuthenticationController : Controller
     {
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+
+        public AuthenticationController(UserManager<User> userManager, SignInManager<User> signInManager )
+        {
+            _signInManager = signInManager;
+            _userManager = userManager;
+        }
         public async Task<IActionResult> Login()
         {
             return View();
@@ -12,6 +24,42 @@ namespace CodeGram.Controllers
         public async Task<IActionResult> Register()
         {
             return View();  
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterVM registerVM)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(registerVM);
+            }
+
+            var newUser = new User()
+            {
+                FullName = registerVM.FirstName + " " + registerVM.LastName,
+                Email = registerVM.Email,
+                UserName = registerVM.Email
+            };
+
+            var existingUser = await _userManager.FindByEmailAsync(newUser.Email);
+
+            if (existingUser != null)
+            {
+                ModelState.AddModelError("Email", "Email already exists");
+                return View(registerVM);
+            }
+
+            var result = await _userManager.CreateAsync(newUser, registerVM.Password);
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(newUser, AppRoles.User);
+
+                await _signInManager.SignInAsync(newUser, isPersistent: false);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(registerVM);
         }
     }
 }
