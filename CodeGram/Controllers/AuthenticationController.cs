@@ -29,20 +29,17 @@ namespace CodeGram.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
-            if(!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid)
                 return View(registerVM);
-            }
 
             var newUser = new User()
             {
-                FullName = registerVM.FirstName + " " + registerVM.LastName,
+                FullName = $"{registerVM.FirstName} {registerVM.LastName}",
                 Email = registerVM.Email,
                 UserName = registerVM.Email
             };
 
-            var existingUser = await _userManager.FindByEmailAsync(newUser.Email);
-
+            var existingUser = await _userManager.FindByEmailAsync(registerVM.Email);
             if (existingUser != null)
             {
                 ModelState.AddModelError("Email", "Email already exists");
@@ -59,7 +56,13 @@ namespace CodeGram.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
             return View(registerVM);
         }
     }
 }
+
