@@ -3,11 +3,13 @@ using CodeGram.Data.Helpers.Enums;
 using CodeGram.Data.Models;
 using CodeGram.Data.Services;
 using CodeGram.ViewModel.Stories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeGram.Controllers
 {
+    [Authorize]
     public class StoriesController : Controller
     {
         private readonly IStoriesService _storiesService;

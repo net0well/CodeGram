@@ -1,10 +1,12 @@
 ﻿using CodeGram.Data.Helpers.Enums;
 using CodeGram.Data.Services;
 using CodeGram.ViewModel.Settings;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeGram.Controllers
 {
+    [Authorize]
     public class SettingsController : Controller
     {
         private readonly IUsersService _usersService;
