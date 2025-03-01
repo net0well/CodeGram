@@ -4,6 +4,7 @@ using CodeGram.ViewModel.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CodeGram.Controllers
 {
@@ -29,7 +30,19 @@ namespace CodeGram.Controllers
             if (!ModelState.IsValid)
                 return View(loginVM);
 
+            var existingUser = await _userManager.FindByEmailAsync(loginVM.Email);
+            if (existingUser == null)
+            {
+                ModelState.AddModelError("", "Invalid email or password. Please, try again");
+                return View(loginVM);
+            }
+
+            var existingUserClaims = await _userManager.GetClaimsAsync(existingUser);
+            if (!existingUserClaims.Any(c => c.Type == CustomClaim.FullName))
+                await _userManager.AddClaimAsync(existingUser, new Claim(CustomClaim.FullName, existingUser.FullName));
+
             var result = await _signInManager.PasswordSignInAsync(loginVM.Email, loginVM.Password, false, false);
+
             if (result.Succeeded)
                 return RedirectToAction("Index", "Home");
 
@@ -67,7 +80,7 @@ namespace CodeGram.Controllers
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(newUser, AppRoles.User);
-
+                await _userManager.AddClaimAsync(newUser, new Claim(CustomClaim.FullName, newUser.FullName));
                 await _signInManager.SignInAsync(newUser, isPersistent: false);
                 return RedirectToAction("Index", "Home");
             }
