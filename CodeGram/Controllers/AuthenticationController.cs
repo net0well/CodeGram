@@ -1,6 +1,7 @@
 ﻿using CodeGram.Data.Helpers.Constants;
 using CodeGram.Data.Models;
 using CodeGram.ViewModel.Authentication;
+using CodeGram.ViewModel.Settings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -93,12 +94,48 @@ namespace CodeGram.Controllers
             return View(registerVM);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdatePassword(UpdatePasswordVM updatePasswordVM)
+        {
+            if(updatePasswordVM.NewPassword != updatePasswordVM.ConfirmPassword)
+            {
+                TempData["PasswordError"] = "Password dot not match";
+                TempData["ActiveTab"] = "Password";
+
+                return RedirectToAction("Index", "Settings");
+            }
+
+            var loggedInUser = await _userManager.GetUserAsync(User);
+            var currentPasswordValid = await _userManager.CheckPasswordAsync(loggedInUser, updatePasswordVM.CurrentPassword);
+
+            if(!currentPasswordValid)
+            {
+
+                TempData["PasswordError"] = "Password dot not match";
+                TempData["ActiveTab"] = "Password";
+                return RedirectToAction("Index", "Settings");
+            }
+
+            var result = await _userManager.ChangePasswordAsync(loggedInUser, updatePasswordVM.CurrentPassword, updatePasswordVM.NewPassword);
+
+            if (result.Succeeded)
+            {
+                TempData["PasswordSuccess"] = "Password updated successfully";
+                TempData["ActiveTab"] = "Password";
+
+                await _signInManager.RefreshSignInAsync(loggedInUser);
+            }
+
+            return RedirectToAction("Index", "Settings");
+        }
+
         [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
+
     }
 }
 
