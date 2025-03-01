@@ -7,9 +7,11 @@ using System.Diagnostics;
 using CodeGram.Data.Helpers;
 using CodeGram.Data.Services;
 using CodeGram.Data.Helpers.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CircleApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,18 +19,21 @@ namespace CircleApp.Controllers
         private readonly IHashtagsService _hashtagsService;
         private readonly IFilesService _filesService;
 
-        public HomeController(ILogger<HomeController> logger, IPostsService postsService, IHashtagsService hashtagsService, IFilesService filesService)
+        public HomeController(ILogger<HomeController> logger,
+            IPostsService postsService,
+            IHashtagsService hashtagsService,
+            IFilesService filesService)
         {
             _logger = logger;
-            _postsService = postsService;   
+            _postsService = postsService;
             _hashtagsService = hashtagsService;
             _filesService = filesService;
         }
 
+
         public async Task<IActionResult> Index()
         {
             int loggedInUserId = 1;
-
             var allPosts = await _postsService.GetAllPostsAsync(loggedInUserId);
 
             return View(allPosts);
@@ -37,9 +42,9 @@ namespace CircleApp.Controllers
         public async Task<IActionResult> Details(int postId)
         {
             var post = await _postsService.GetPostByIdAsync(postId);
-
             return View(post);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> CreatePost(PostVM post)
@@ -62,7 +67,6 @@ namespace CircleApp.Controllers
 
             await _postsService.CreatePostAsync(newPost);
             await _hashtagsService.ProcessHashtagsForNewPostAsync(post.Content);
-    
 
             //Redirect to the index page
             return RedirectToAction("Index");
@@ -73,7 +77,6 @@ namespace CircleApp.Controllers
         public async Task<IActionResult> TogglePostLike(PostLikeVM postLikeVM)
         {
             int loggedInUserId = 1;
-
             await _postsService.TogglePostLikeAsync(postLikeVM.PostId, loggedInUserId);
 
             return RedirectToAction("Index");
@@ -83,7 +86,6 @@ namespace CircleApp.Controllers
         public async Task<IActionResult> TogglePostFavorite(PostFavoriteVM postFavoriteVM)
         {
             int loggedInUserId = 1;
-
             await _postsService.TogglePostFavoriteAsync(postFavoriteVM.PostId, loggedInUserId);
 
             return RedirectToAction("Index");
@@ -94,7 +96,6 @@ namespace CircleApp.Controllers
         public async Task<IActionResult> TogglePostVisibility(PostVisibilityVM postVisibilityVM)
         {
             int loggedInUserId = 1;
-
             await _postsService.TogglePostVisibilityAsync(postVisibilityVM.PostId, loggedInUserId);
 
             return RedirectToAction("Index");
@@ -124,7 +125,6 @@ namespace CircleApp.Controllers
         public async Task<IActionResult> AddPostReport(PostReportVM postReportVM)
         {
             int loggedInUserId = 1;
-
             await _postsService.ReportPostAsync(postReportVM.PostId, loggedInUserId);
 
             return RedirectToAction("Index");
