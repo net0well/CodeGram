@@ -29,11 +29,11 @@ builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
 {
     //Password settings
-    options.Password.RequireDigit = false;
+    options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequiredLength = 4;
+    options.Password.RequiredLength = 6;
 })
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
