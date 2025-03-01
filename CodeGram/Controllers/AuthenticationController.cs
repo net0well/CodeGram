@@ -1,6 +1,7 @@
 ﻿using CodeGram.Data.Helpers.Constants;
 using CodeGram.Data.Models;
 using CodeGram.ViewModel.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -77,6 +78,13 @@ namespace CodeGram.Controllers
             }
 
             return View(registerVM);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
         }
     }
 }
