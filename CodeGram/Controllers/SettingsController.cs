@@ -36,12 +36,5 @@ namespace CodeGram.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateProfile(UpdateProfileVM profileVM)
-        {
-            return RedirectToAction("Index");
-        }
-
-       
     }
 }

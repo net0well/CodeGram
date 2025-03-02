@@ -42,7 +42,7 @@ namespace CodeGram.Controllers
             if (!existingUserClaims.Any(c => c.Type == CustomClaim.FullName))
                 await _userManager.AddClaimAsync(existingUser, new Claim(CustomClaim.FullName, existingUser.FullName));
 
-            var result = await _signInManager.PasswordSignInAsync(loginVM.Email, loginVM.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(existingUser.UserName, loginVM.Password, false, false);
 
             if (result.Succeeded)
                 return RedirectToAction("Index", "Home");
@@ -97,21 +97,20 @@ namespace CodeGram.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdatePassword(UpdatePasswordVM updatePasswordVM)
         {
-            if(updatePasswordVM.NewPassword != updatePasswordVM.ConfirmPassword)
+            if (updatePasswordVM.NewPassword != updatePasswordVM.ConfirmPassword)
             {
-                TempData["PasswordError"] = "Password dot not match";
+                TempData["PasswordError"] = "Passwords do not match";
                 TempData["ActiveTab"] = "Password";
 
                 return RedirectToAction("Index", "Settings");
             }
 
             var loggedInUser = await _userManager.GetUserAsync(User);
-            var currentPasswordValid = await _userManager.CheckPasswordAsync(loggedInUser, updatePasswordVM.CurrentPassword);
+            var isCurrentPasswordValid = await _userManager.CheckPasswordAsync(loggedInUser, updatePasswordVM.CurrentPassword);
 
-            if(!currentPasswordValid)
+            if (!isCurrentPasswordValid)
             {
-
-                TempData["PasswordError"] = "Password dot not match";
+                TempData["PasswordError"] = "Current password is invalid";
                 TempData["ActiveTab"] = "Password";
                 return RedirectToAction("Index", "Settings");
             }
@@ -122,10 +121,31 @@ namespace CodeGram.Controllers
             {
                 TempData["PasswordSuccess"] = "Password updated successfully";
                 TempData["ActiveTab"] = "Password";
-
                 await _signInManager.RefreshSignInAsync(loggedInUser);
             }
 
+            return RedirectToAction("Index", "Settings");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfile(UpdateProfileVM profileVM)
+        {
+            var loggedInUser = await _userManager.GetUserAsync(User);
+            if (loggedInUser == null)
+                return RedirectToAction("Login");
+
+            loggedInUser.FullName = profileVM.FullName;
+            loggedInUser.UserName = profileVM.UserName;
+            loggedInUser.Bio = profileVM.Bio;
+
+            var result = await _userManager.UpdateAsync(loggedInUser);
+            if (!result.Succeeded)
+            {
+                TempData["UserProfileError"] = "User profile could not be updated";
+                TempData["ActiveTab"] = "Profile";
+            }
+
+            await _signInManager.RefreshSignInAsync(loggedInUser);
             return RedirectToAction("Index", "Settings");
         }
 
@@ -135,7 +155,6 @@ namespace CodeGram.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
-
     }
 }
 
