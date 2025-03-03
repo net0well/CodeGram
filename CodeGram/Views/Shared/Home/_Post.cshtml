@@ -1,9 +1,9 @@
 ﻿@model Post
 
 @{
-    TimeSpan timeSpanSincePosted = DateTime.UtcNow.Subtract(Model.DateCreated);
-
     int loggedInUserId = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int result) ? result : 0;
+
+    TimeSpan timeSpanSincePosted = DateTime.UtcNow.Subtract(Model.DateCreated);
 
     string displayTime = timeSpanSincePosted switch
     {
@@ -22,7 +22,7 @@
 
     bool showAllComments = ViewData["ShowAllComment"] as bool? ?? false;
 
-    
+
 }
 
 <div class="bg-white rounded-xl shadow-sm text-sm font-medium border1">
@@ -192,7 +192,7 @@
         <form asp-controller="Home" asp-action="AddPostComment">
 
             <div class="sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1">
-                <img src="~/images/avatar/user.png" class="w-6 h-6 rounded-full" />
+                <img src="~/images/avatar/user.png" class="w-6 h-6 rounded-full object-cover" />
 
                 <input type="hidden" name="postId" value="@Model.Id" />
                 <div class="flex-1 relative overflow-hidden h-10">
