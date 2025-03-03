@@ -150,26 +150,24 @@ namespace CodeGram.Controllers
             return RedirectToAction("Index", "Settings");
         }
 
+
         public IActionResult ExternalLogin(string provider)
         {
             var redirectUrl = Url.Action("ExternalLoginCallback", "Authentication");
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-
             return Challenge(properties, provider);
         }
 
         public async Task<IActionResult> ExternalLoginCallback()
         {
             var info = await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
-            
-            if(info == null)
+            if (info == null)
                 return RedirectToAction("Login");
-
 
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
             var user = await _userManager.FindByEmailAsync(email);
 
-            if(user == null)
+            if (user is null)
             {
                 var newUser = new User()
                 {
@@ -178,14 +176,12 @@ namespace CodeGram.Controllers
                     FullName = info.Principal.FindFirstValue(ClaimTypes.Name),
                     EmailConfirmed = true
                 };
-
                 var result = await _userManager.CreateAsync(newUser);
-                
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(newUser, AppRoles.User);
                     await _userManager.AddClaimAsync(newUser, new Claim(CustomClaim.FullName, newUser.FullName));
-                    await _signInManager.SignInAsync(newUser, isPersistent:false);
+                    await _signInManager.SignInAsync(newUser, isPersistent: false);
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -193,7 +189,6 @@ namespace CodeGram.Controllers
 
             await _signInManager.SignInAsync(user, isPersistent: false);
             return RedirectToAction("Index", "Home");
-
         }
 
         [Authorize]
