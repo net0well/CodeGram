@@ -1,16 +1,15 @@
-﻿using CodeGram.Data;
+﻿using CodeGram.Controllers.Base;
 using CodeGram.Data.Helpers.Enums;
 using CodeGram.Data.Models;
 using CodeGram.Data.Services;
 using CodeGram.ViewModel.Stories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CodeGram.Controllers
 {
     [Authorize]
-    public class StoriesController : Controller
+    public class StoriesController : BaseController
     {
         private readonly IStoriesService _storiesService;
         private readonly IFilesService _filesService;
@@ -23,7 +22,9 @@ namespace CodeGram.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateStory(StoryVM storyVM)
         {
-            int loggedInUserId = 1;
+            var loggedInUserId = GetUserId();
+
+            if (loggedInUserId == null) return RedirectToLogin();
 
             var imageUploadPath = await _filesService.UploadImageAsync(storyVM.Image, ImageFileType.StoryImage);
 
@@ -32,7 +33,7 @@ namespace CodeGram.Controllers
                 DateCreated = DateTime.UtcNow,
                 IsDeleted = false,
                 ImageUrl = imageUploadPath,
-                UserId = loggedInUserId
+                UserId = loggedInUserId.Value
             };
 
             await _storiesService.CreateStoryAsync(newStory);

@@ -1,6 +1,7 @@
 ﻿using CodeGram.Data.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CodeGram.Controllers
 {
@@ -16,9 +17,9 @@ namespace CodeGram.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var userId = 1;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var favoritedPosts = await _postsService.GetAllFavoritedPostAsync(userId);
+            var favoritedPosts = await _postsService.GetAllFavoritedPostAsync(int.Parse(userId));
 
             return View(favoritedPosts);
         }

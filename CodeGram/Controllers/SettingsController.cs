@@ -1,4 +1,5 @@
-﻿using CodeGram.Data.Helpers.Enums;
+﻿using CodeGram.Controllers.Base;
+using CodeGram.Data.Helpers.Enums;
 using CodeGram.Data.Models;
 using CodeGram.Data.Services;
 using CodeGram.ViewModel.Settings;
@@ -10,7 +11,7 @@ using System.Security.Claims;
 namespace CodeGram.Controllers
 {
     [Authorize]
-    public class SettingsController : Controller
+    public class SettingsController : BaseController
     {
         private readonly IUsersService _usersService;
         private readonly IFilesService _filesService;
@@ -26,9 +27,6 @@ namespace CodeGram.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userDb = await _usersService.GetUser(int.Parse(loggedInUserId));
-
             var loggedInUser = await _userManager.GetUserAsync(User);
             return View(loggedInUser);
         }
@@ -36,10 +34,13 @@ namespace CodeGram.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProfilePicture(ProfilePictureVM profilePictureVM)
         {
-            var loggedInUser = 1;
+            var loggedInUserId = GetUserId();
+
+            if (loggedInUserId == null) return RedirectToLogin();
+
             var uploadedProfilePictureUrl = await _filesService.UploadImageAsync(profilePictureVM.ProfilePictureImage, Data.Helpers.Enums.ImageFileType.ProfilePicture);
 
-            await _usersService.UpdateUserProfilePicture(loggedInUser, uploadedProfilePictureUrl);
+            await _usersService.UpdateUserProfilePicture(loggedInUserId.Value, uploadedProfilePictureUrl);
 
             return RedirectToAction("Index");
         }
