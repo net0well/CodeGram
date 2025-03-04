@@ -21,7 +21,6 @@
                     <span class="ml-2 text-xl font-semibold text-gray-800 animate-pulse">CodeGram</span>
                 </a>
             </div>
-
         </div>
     </div>
     <div class="flex-1 relative">
@@ -67,7 +66,7 @@
 
                     <a>
                         <div class="p-4 py-5 flex items-center gap-4">
-                            <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content(profilePictureUrl))" class="w-10 h-10 rounded-full shadow object-cover" />
+                            <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content(profilePictureUrl))"  class="w-10 h-10 rounded-full shadow object-cover" />
                             <div class="flex-1">
                                 <h4 class="text-sm font-medium text-black">@fullName</h4>
                                 <div class="text-sm mt-1 text-blue-600 font-light/70">@userName</div>

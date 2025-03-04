@@ -165,6 +165,7 @@ namespace CodeGram.Controllers
                 return RedirectToAction("Login");
 
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+
             var user = await _userManager.FindByEmailAsync(email);
 
             if (user is null)

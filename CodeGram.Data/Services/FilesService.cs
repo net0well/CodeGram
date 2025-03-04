@@ -16,11 +16,11 @@ namespace CodeGram.Data.Services
         {
             string filePathUpload = imageFileType switch
             {
-               ImageFileType.PostImage => Path.Combine("images", "posts"),
-               ImageFileType.StoryImage => Path.Combine("images", "stories"),
-               ImageFileType.ProfilePicture => Path.Combine("images", "profilePictures"),
-               ImageFileType.CoverImage => Path.Combine("images", "convers"),
-               _ => throw new ArgumentException("Invalid file type")
+                ImageFileType.PostImage => Path.Combine("images", "posts"),
+                ImageFileType.StoryImage => Path.Combine("images", "stories"),
+                ImageFileType.ProfilePicture => Path.Combine("images", "profilePictures"),
+                ImageFileType.CoverImage => Path.Combine("images", "convers"),
+                _ => throw new ArgumentException("Invalid file type")
             };
 
             if (file != null && file.Length > 0)

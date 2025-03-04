@@ -1,6 +1,6 @@
 ﻿@model Post
 
-@{
+@{ 
     int loggedInUserId = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int result) ? result : 0;
 
     TimeSpan timeSpanSincePosted = DateTime.UtcNow.Subtract(Model.DateCreated);
@@ -17,23 +17,18 @@
     bool isLiked = Model.Likes.Any(n => n.UserId == loggedInUserId);
     bool isPrivate = Model.IsPrivate == true && Model.UserId == loggedInUserId;
     bool isReported = Model.Reports.Any(n => n.UserId == loggedInUserId);
-
-    string defaultUserPicture = "~/images/avatar/user.png";
-
     bool showAllComments = ViewData["ShowAllComment"] as bool? ?? false;
-
-
 }
 
 <div class="bg-white rounded-xl shadow-sm text-sm font-medium border1">
 
     @* Post heading *@
     <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
-        <a>
-            <img src="@(!string.IsNullOrEmpty(Model.User.ProfilePictureUrl) ? Url.Content("~/"+Model.User.ProfilePictureUrl) : defaultUserPicture)" class="w-9 h-9 rounded-full object-cover" />
+        <a asp-controller="Users" asp-action="Details" asp-route-userId="@Model.UserId">
+            <img src="@(!string.IsNullOrEmpty(Model.User.ProfilePictureUrl) ? Url.Content("~/"+Model.User.ProfilePictureUrl) : Url.Content("~/images/avatar/user.png"))" class="w-9 h-9 rounded-full object-cover" />
         </a>
         <div class="flex-1">
-            <a>
+            <a asp-controller="Users" asp-action="Details" asp-route-userId="@Model.UserId">
                 <h4 class="text-black">@Model.User.FullName</h4>
                 <div class="text-xs text-gray-500/80" title="@Model.DateCreated.ToString("MM/dd/yyyy HH:mm")"> @displayTime </div>
             </a>
@@ -57,8 +52,8 @@
                         <ion-icon name="trash-bin-outline"></ion-icon>  Delete Post
                     </button>
                 }
-
-                @if (!isReported)
+                
+                @if(!isReported)
                 {
                     <form asp-controller="Home" asp-action="AddPostReport">
                         <input type="hidden" name="postId" value="@Model.Id" />
@@ -98,11 +93,11 @@
             <form asp-controller="Home" asp-action="TogglePostLike">
                 <input type="hidden" name="postId" value="@Model.Id" />
                 <button type="submit" class="button-icon @(isLiked ? "text-red-500 bg-red-100" : "")">
-                    <ion-icon class="text-lg"
+                    <ion-icon class="text-lg" 
                               name="@(isLiked ? "heart" : "heart-outline")"></ion-icon>
                 </button>
             </form>
-
+            
             <a href="#">@Model.Likes.Count</a>
         </div>
 
@@ -134,11 +129,11 @@
     @* Add comment section *@
     <div>
 
-        <div class="p-2.5 border-t border-gray-100 font-normal space-y-3 relative">
+        <div  class="p-2.5 border-t border-gray-100 font-normal space-y-3 relative">
 
-            @foreach (var comment in showAllComments
-            ? Model.Comments.OrderByDescending(n => n.DateCreated)
-            : Model.Comments.OrderByDescending(n => n.DateCreated).Take(2))
+            @foreach(var comment in showAllComments 
+                ? Model.Comments.OrderByDescending(n => n.DateCreated) 
+                : Model.Comments.OrderByDescending(n => n.DateCreated).Take(2))
             {
                 TimeSpan commentTimeSpanSincePosted = DateTime.UtcNow.Subtract(comment.DateCreated);
 
@@ -151,12 +146,12 @@
                 };
 
                 <div class="flex items-start gap-3 relative">
-                    <a>
-                        <img src="@(!string.IsNullOrEmpty(comment.User.ProfilePictureUrl) ? Url.Content("~/"+comment.User.ProfilePictureUrl) : defaultUserPicture)" class="w-6 h-6 mt-1 rounded-full object-cover" />
+                    <a asp-controller="Users" asp-action="Details" asp-route-userId="@comment.UserId">
+                        <img src="@(!string.IsNullOrEmpty(comment.User.ProfilePictureUrl) ? Url.Content("~/"+comment.User.ProfilePictureUrl) : Url.Content("~/images/avatar/user.png"))" class="w-6 h-6 mt-1 rounded-full object-cover" />
                     </a>
                     <div class="flex-1">
                         <div class="flex justify-content-between">
-                            <a class="text-black font-medium inline-block flex-grow">
+                            <a asp-controller="Users" asp-action="Details" asp-route-userId="@comment.UserId" class="text-black font-medium inline-block flex-grow">
                                 @comment.User.FullName
                             </a>
                             <small>@commentDisplayTime</small>
@@ -167,18 +162,18 @@
                             </p>
 
                             <form asp-controller="Home" asp-action="RemovePostComment">
-                                <input type="hidden" name="commentId" value="@comment.Id" />
+                                <input type="hidden"  name="commentId" value="@comment.Id"/>
                                 <button type="submit" class="text-red-500 text-xs ml-2" title="Remove post comment">
                                     <ion-icon name="trash-outline"></ion-icon>
                                 </button>
                             </form>
                         </div>
-
+                        
                     </div>
                 </div>
             }
 
-            @if (Model.Comments.Count >= 3 && !showAllComments)
+            @if(Model.Comments.Count >= 3 && !showAllComments)
             {
                 <div class="p-1.5">
                     <a asp-controller="Home" asp-action="Details" asp-route-postId="@Model.Id">
@@ -192,7 +187,10 @@
         <form asp-controller="Home" asp-action="AddPostComment">
 
             <div class="sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1">
-                <img src="~/images/avatar/user.png" class="w-6 h-6 rounded-full object-cover" />
+                <a asp-controller="Users" asp-action="Detalis" asp-route-userId="@Model.UserId">
+                    <img src="@(string.IsNullOrEmpty(Model.User.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content(Model.User.ProfilePictureUrl))" class="w-6 h-6 rounded-full" />
+                </a>
+               
 
                 <input type="hidden" name="postId" value="@Model.Id" />
                 <div class="flex-1 relative overflow-hidden h-10">
