@@ -1,4 +1,5 @@
-<img src="https://i.ibb.co/mrswTc9r/Sem-t-tulo.png" alt="CodeGram">
+<img class="imagem" src="https://i.ibb.co/mrswTc9r/Sem-t-tulo.png" alt="CodeGram" style="max-width: 300px; height: 250;">
+
 
 
 ### Implementation
