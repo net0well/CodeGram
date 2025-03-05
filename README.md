@@ -1,4 +1,4 @@
-<img src="https://i.ibb.co/mrswTc9r/Sem-t-tulo.png" alt="Descrição da imagem">
+<img src="https://i.ibb.co/mrswTc9r/Sem-t-tulo.png" alt="CodeGram">
 
 
 ### Implementation
