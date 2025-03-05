@@ -1,12 +1,12 @@
 ﻿@model StoryVM
 
 <div class="hidden lg:p-20" id="create-story" uk-modal="">
-    <div class="uk-modal-dialog tt relative overflow-hidden mx-auto bg-white p-7 shadow-xl rounded-lg md:w-[520px] w-full">
+    <div class="uk-modal-dialog tt relative overflow-hidden mx-auto bg-white p-7 shadow-xl rounded-2xl md:w-[520px] w-full transition-all duration-300 ease-in-out">
 
-        <div class="text-center py-3 border-b -m-7 mb-0 dark:border-slate-700">
-            <h2 class="text-sm font-medium">Create Story</h2>
-            <button type="button" class="button__ico absolute top-0 right-0 m-2.5 uk-modal-close">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <div class="text-center py-3 border-b mb-0 dark:border-slate-700 relative">
+            <h2 class="text-lg font-semibold text-gray-900">Create Story</h2>
+            <button type="button" class="absolute top-0 right-0 m-2.5 uk-modal-close hover:bg-gray-100 p-2 rounded-full transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-700">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
@@ -15,32 +15,36 @@
         <div class="space-y-5 mt-7">
             <form asp-controller="Stories" asp-action="CreateStory" enctype="multipart/form-data">
                 <div>
-                    <div class="w-full h-72 relative border1 rounded-lg overflow-hidden bg-[url('../images/ad_pattern.png')] bg-repeat">
-                        <label class="flex flex-col justify-center items-center absolute -translate-x-1/2 left-1/2 bottom-0 z-10 w-full pb-6 pt-10 cursor-pointer bg-gradient-to-t from-gray-700/60">
+                    <div class="w-full h-72 relative border-2 rounded-lg overflow-hidden bg-[url('../images/ad_pattern.png')] bg-cover bg-center">
+                        <label class="flex flex-col justify-center items-center absolute -translate-x-1/2 left-1/2 bottom-0 z-10 w-full pb-6 pt-10 cursor-pointer bg-gradient-to-t from-gray-700/60 rounded-lg hover:bg-gray-700/80 transition duration-300">
                             <input id="storyUpload"
                                    name="image"
                                    type="file"
                                    accept="image/png, image/jpeg" hidden />
-
-                            <ion-icon name="image" class="text-3xl text-teal-600"></ion-icon>
-                            <span id="storyUploadBtn" class="text-white mt-2">Browse to Upload image</span>
-
+                            <ion-icon name="image" class="text-4xl text-teal-400"></ion-icon>
+                            <span id="storyUploadBtn" class="text-white mt-2 text-lg font-semibold">Browse to Upload Image</span>
                         </label>
-                        <img id="storyPreview" />
+                        <img id="storyPreview" class="object-cover w-full h-full rounded-lg" />
                     </div>
                 </div>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-start gap-2">
-                        <ion-icon name="time-outline" class="text-3xl text-teal-600 rounded-full bg-blue-50"></ion-icon>
-                        <p class="text-sm text-gray-500 font-medium">Your story will be available <br /> for <span class="text-gray-800">24 Hours</span></p>
+                <div class="flex justify-between items-center mt-5">
+                    <div class="flex items-start gap-3">
+                        <ion-icon name="time-outline" class="text-3xl text-teal-600 rounded-full bg-blue-50 p-2"></ion-icon>
+                        <p class="text-sm text-gray-500 font-medium">Your story will be available <br /> for <span class="text-gray-800 font-semibold">24 Hours</span></p>
                     </div>
-                    <button type="submit" class="button bg-blue-500 text-white px-8">Create</button>
+                    <button type="submit" class="bg-blue-500 text-white font-semibold py-2 px-8 rounded-full
+                    transition-transform transform hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-300 active:scale-95 active:shadow-lg">
+                        Create
+                    </button>
                 </div>
             </form>
         </div>
 
     </div>
 </div>
+
+
+
 
 <script>
     document.getElementById('storyUploadBtn').addEventListener('click', () => {
