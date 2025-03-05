@@ -6,88 +6,138 @@
     var profilePictureUrl = loggedInUser?.ProfilePictureUrl;
 }
 
-<header class="z-[100] h-[--m-top] fixed top-0 left-0 w-full flex items-center bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 backdrop-blur-xl border-b border-slate-200 shadow-lg transition-all duration-500">
+<header class="z-[100] h-[--m-top] fixed top-0 left-0 w-full flex items-center bg-white backdrop-blur-xl border-b border-gray-200 shadow-sm transition-all duration-500">
     <div class="2xl:w-[--w-side] lg:w-[--w-side-sm]">
         <div class="flex items-center gap-1">
             <button uk-toggle="target: #site__sidebar ; cls :!-translate-x-0"
-                    class="flex items-center justify-center w-10 h-10 text-2xl rounded-full hover:bg-gray-200 xl:hidden group transition-all duration-300">
-                <ion-icon name="menu-outline" class="text-2xl group-aria-expanded:hidden"></ion-icon>
-                <ion-icon name="close-outline" class="hidden text-2xl group-aria-expanded:block"></ion-icon>
+                    class="flex items-center justify-center w-10 h-10 text-xl rounded-full hover:bg-gray-100 xl:hidden group transition-all duration-300 text-black ml-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 group-aria-expanded:hidden">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hidden w-6 h-6 group-aria-expanded:block">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
             </button>
 
-            <div id="logo" class="flex items-center ml-4">
-                <a asp-controller="Home" asp-action="Index" class="flex items-center">
-                    <img src="~/images/logo.png" class="w-12 md:block hidden" />
-                    <span class="ml-3 text-2xl font-bold text-black animate-pulse">CodeGram</span>
+            
+            <div id="logo" class="flex items-center ml-2">
+                <a asp-controller="Home" asp-action="Index" class="flex items-center group">
+                   
+                    <svg width="48" height="48" viewBox="0 0 48 48" class="block">
+                        <circle cx="24" cy="24" r="22" fill="#6d28d9" />
+                        
+
+                        <path d="M12 20C12 17.7909 13.7909 16 16 16H20C22.2091 16 24 17.7909 24 20V22C24 24.2091 22.2091 26 20 26H16C13.7909 26 12 24.2091 12 22V20Z" fill="#f5f3ff" stroke="#4c1d95" stroke-width="1.5"/>
+                        <path d="M24 20C24 17.7909 25.7909 16 28 16H32C34.2091 16 36 17.7909 36 20V22C36 24.2091 34.2091 26 32 26H28C25.7909 26 24 24.2091 24 22V20Z" fill="#f5f3ff" stroke="#4c1d95" stroke-width="1.5"/>
+                        <path d="M24 20L24 22" stroke="#4c1d95" stroke-width="2"/>
+                        <path d="M14 20C14 18.8954 14.8954 18 16 18H20C21.1046 18 22 18.8954 22 20V22C22 23.1046 21.1046 24 20 24H16C14.8954 24 14 23.1046 14 22V20Z" fill="#4c1d95"/>
+                        <path d="M26 20C26 18.8954 26.8954 18 28 18H32C33.1046 18 34 18.8954 34 20V22C34 23.1046 33.1046 24 32 24H28C26.8954 24 26 23.1046 26 22V20Z" fill="#4c1d95"/>
+                        
+
+                        <circle cx="36" cy="14" r="3" fill="#f5f3ff" opacity="0.8"/>
+                        
+
+                        <path d="M18 30H30" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M16 34H32" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    
+
+                    <span class="ml-2 text-2xl font-bold text-black transition-colors">
+                        <span class="text-black">&lt;</span>Code<span class="text-purple-700">Gram</span><span class="text-black">/&gt;</span>
+                    </span>
                 </a>
             </div>
         </div>
     </div>
-    <div class="flex-1 relative">
-        <div class="max-w-[1220px] mx-auto flex items-center">
-            
-            <form id="search--box" class="xl:w-[680px] sm:w-96 sm:relative rounded-xl overflow-hidden z-20 bg-transparent border-2 border-[#A3C4FC] max-md:hidden w-screen left-0 max-sm:fixed max-sm:top-2 transition-all duration-300">
-                <ion-icon name="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-black"></ion-icon>
-                <input type="text" name="query" placeholder="Search Posts, Friends..." class="w-full !pl-10 !font-normal !bg-transparent h-12 !text-sm text-black rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+
+
+    <div class="flex-1 relative flex justify-center">
+
+        <div class="max-w-[1220px] w-full flex justify-start items-center pl-5 md:pl-16 lg:pl-28">
+            <form id="search--box" class="2xl:w-[650px] xl:w-[550px] lg:w-[450px] md:w-[400px] sm:w-[350px] w-[90%] rounded-full overflow-hidden z-20 bg-white/90 border border-gray-300 max-md:hidden transition-all duration-300 hover:border-indigo-300">
+                <div class="flex items-center h-full w-full">
+                    <div class="pl-4 pr-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                    </div>
+                    <input type="text" name="query" placeholder="Buscar posts, amigos, códigos..." class="w-full py-2 px-2 !bg-transparent h-11 !text-sm text-black rounded-full focus:outline-none placeholder-gray-500 border-0" />
+                </div>
             </form>
+            
+
+            <div class="ml-4 max-w-md overflow-hidden hidden lg:block">
+                <div id="anime-quotes" class="text-gray-600 italic text-sm font-medium relative h-6">
+                    <div class="quote-slide absolute inset-0 flex items-center">
+                        <span class="font-bold text-purple-700">Naruto:</span> Trabalho duro é inútil para aqueles que não acreditam em si mesmos.
+                    </div>
+                </div>
+            </div>
         </div>
 
 
-        <div class="max-w-[1220px] mx-auto flex items-center">
-            <div class="flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2 text-white">
 
-                <button type="button" class="sm:p-2 p-1 rounded-full relative">
-                    <!-- Ícone de Notificação com Cor Preta, sem Borda -->
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke="none" class="w-6 h-6 max-sm:hidden">
-                        <path d="M5.85 3.5a.75.75 0 00-1.117-1 9.719 9.719 0 00-2.348 4.876.75.75 0 001.479.248A8.219 8.219 0 015.85 3.5zM19.267 2.5a.75.75 0 10-1.118 1 8.22 8.22 0 011.987 4.124.75.75 0 001.48-.248A9.72 9.72 0 0019.266 2.5z" />
-                        <path fill-rule="evenodd" d="M12 2.25A6.75 6.75 0 005.25 9v.75a8.217 8.217 0 01-2.119 5.52.75.75 0 00.298 1.206c1.544.57 3.16.99 4.831 1.243a3.75 3.75 0 107.48 0 24.583 24.583 0 004.83-1.244.75.75 0 00.298-1.205 8.217 8.217 0 01-2.118-5.52V9A6.75 6.75 0 0012 2.25zM9.75 18c0-.034 0-.067.002-.1a25.05 25.05 0 004.496 0l.002.1a2.25 2.25 0 11-4.5 0z" clip-rule="evenodd" />
+        <div class="max-w-[1220px] mx-auto flex items-center">
+            <div class="flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2">
+
+                <button type="button" class="sm:p-2 p-1 rounded-full relative hover:bg-gray-100 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-black">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                     </svg>
-                    <div class="absolute top-0 right-0 -m-1 bg-red-600 text-white text-xs px-1 rounded-full" id="notificationsCount">0</div>
+                    <div class="absolute top-0 right-0 -m-1 bg-pink-500 text-white text-xs px-1.5 rounded-full font-bold" id="notificationsCount">0</div>
                 </button>
 
 
-                <div id="notificationModal" class="hidden bg-white rounded-lg drop-shadow-xl w-64 border2" uk-drop="offset:6;pos: bottom-right;animate-out: true;">
-                    <a>
-                        <div class="p-4 py-5 flex items-center gap-4">
-                            <h3 class="font-bold text-xl text-black">Notifications</h3>
-                        </div>
-                    </a>
-                    <hr />
-                    <div class="text-sm h-[400px] w-full overflow-y-auto pr-2">
-                        <div class="pl-2 p-1 text-sm font-normal text-black" id="notification-dropdown">
-                            No notifications...
+                <div id="notificationModal" class="hidden bg-white rounded-lg drop-shadow-xl w-72 border border-gray-200" uk-drop="offset:6;pos: bottom-right;animate-out: true;">
+                    <div class="p-4 py-3 flex items-center gap-4 bg-gray-100 border-b border-gray-200">
+                        <h3 class="font-bold text-lg text-black flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-indigo-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                            </svg>
+                            Notificações
+                        </h3>
+                    </div>
+                    <div class="text-sm h-[400px] w-full overflow-y-auto">
+                        <div class="p-3 text-sm font-normal text-gray-700" id="notification-dropdown">
+                            <div class="flex items-center justify-center h-32 text-center text-gray-500">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 mx-auto mb-3 text-indigo-300">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                    </svg>
+                                    <p>Não há notificações no momento</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                
-                <div class="rounded-lg overflow-hidden relative bg-purple-700 cursor-pointer shrink-0">
-                    <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+profilePictureUrl))" class="sm:w-12 sm:h-9 w-10 h-8 rounded-lg shadow-lg shrink-0 object-cover transform transition-all duration-300 hover:scale-110" />
+
+                <div class="rounded-lg overflow-hidden relative bg-white cursor-pointer shrink-0 hover:ring-2 hover:ring-indigo-300 transition-all duration-300 border border-gray-200">
+                    <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+profilePictureUrl))" class="sm:w-10 sm:h-10 w-9 h-9 rounded-lg shadow-sm shrink-0 object-cover" />
                 </div>
 
-               
-                <div id="profileDropdown" class="hidden bg-white rounded-lg drop-shadow-xl w-64 border2" uk-drop="offset:6;pos: bottom-right;animate-out: true;">
-                    <a>
-                        <div class="p-4 py-5 flex items-center gap-4">
-                            <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+profilePictureUrl))" class="w-10 h-10 rounded-lg shadow-lg object-cover" />
-                            <div class="flex-1">
-                                <h4 class="text-sm font-medium text-black">@fullName</h4>
-                                <div class="text-sm mt-1 text-blue-600 font-light">@userName</div>
-                            </div>
+
+                <div id="profileDropdown" class="hidden bg-white rounded-lg drop-shadow-xl w-64 border border-gray-200" uk-drop="offset:6;pos: bottom-right;animate-out: true;">
+                    <div class="p-4 py-3 flex items-center gap-4 bg-gray-100 border-b border-gray-200">
+                        <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+profilePictureUrl))" class="w-10 h-10 rounded-lg shadow-sm object-cover border border-gray-300" />
+                        <div class="flex-1">
+                            <h4 class="text-sm font-medium text-black">@fullName</h4>
+                            <div class="text-xs mt-1 text-indigo-600 font-light">@userName</div>
                         </div>
-                    </a>
-                    <hr />
-                    <nav>
-                        <a asp-controller="Settings" asp-action="Index">
-                            <div class="flex items-center gap-2.5 hover:bg-purple-100 p-2 px-2.5 rounded-md transition-all duration-300 text-black">
-                                <ion-icon name="settings-outline" class="text-lg"></ion-icon> My Account
-                            </div>
+                    </div>
+                    <nav class="p-1">
+                        <a asp-controller="Settings" asp-action="Index" class="flex items-center gap-3 hover:bg-indigo-50 p-2.5 px-3 rounded-md transition-all duration-300 text-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-indigo-600">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            Minha Conta
                         </a>
-                        <hr />
-                        <a asp-controller="Authentication" asp-action="Logout">
-                            <div class="flex items-center gap-2.5 hover:bg-purple-100 p-2 px-2.5 rounded-md transition-all duration-300 text-black">
-                                <ion-icon name="exit-outline" class="text-lg"></ion-icon> Log Out
-                            </div>
+                        <a asp-controller="Authentication" asp-action="Logout" class="flex items-center gap-3 hover:bg-indigo-50 p-2.5 px-3 rounded-md transition-all duration-300 text-gray-700 mt-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-500">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                            </svg>
+                            Sair
                         </a>
                     </nav>
                 </div>
@@ -97,14 +147,55 @@
 </header>
 
 <script>
+
     const searchBox = document.getElementById("search--box");
+    
+    if (searchBox) {
+        searchBox.addEventListener('mouseenter', function () {
+            searchBox.classList.add('shadow-md');
+            searchBox.classList.add('border-indigo-300');
+        });
 
-    searchBox.addEventListener('mouseenter', function () {
-        searchBox.classList.add('bg-blue-400'); 
-    });
+        searchBox.addEventListener('mouseleave', function () {
+            if (!searchBox.querySelector('input:focus')) {
+                searchBox.classList.remove('shadow-md');
+                searchBox.classList.remove('border-indigo-300');
+            }
+        });
+        
 
-    searchBox.addEventListener('mouseleave', function () {
-        searchBox.classList.remove('bg-blue-400'); 
-    });
+        const searchInput = searchBox.querySelector('input');
+        
+        if (searchInput) {
+            searchInput.addEventListener('focus', function() {
+                searchBox.classList.add('shadow-md');
+                searchBox.classList.add('border-indigo-300');
+            });
+            
+            searchInput.addEventListener('blur', function() {
+                searchBox.classList.remove('shadow-md');
+                searchBox.classList.remove('border-indigo-300');
+            });
+        }
+    }
+
+
+    const notifCount = document.getElementById('notificationsCount');
+    if (notifCount && notifCount.textContent !== '0') {
+        notifCount.classList.add('animate-pulse');
+    }
+    
+
+    const notifButton = document.querySelector('button[type="button"]');
+    const notifModal = document.getElementById('notificationModal');
+    
+    if (notifButton && notifModal) {
+        notifButton.addEventListener('click', function() {
+            if (notifModal.classList.contains('hidden')) {
+                notifCount.textContent = '0';
+                notifCount.classList.remove('animate-pulse');
+            }
+        });
+    }
+    
 </script>
-

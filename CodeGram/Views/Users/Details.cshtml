@@ -19,6 +19,13 @@
                         </span>
                     </h3>
                     <p class="mt-2 text-gray-600 text-sm md:text-base">@Model.User.UserName</p>
+
+                    <div class="mt-4 text-gray-700 text-sm md:text-base max-w-full">
+                        <strong class="block mb-2">Bio</strong>
+                        <p class="text-justify break-words leading-relaxed overflow-hidden text-ellipsis max-h-40">
+                            @Model.User.Bio
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
