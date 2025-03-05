@@ -1,58 +1,107 @@
-﻿<div class="box p-5 px-6">
-    <div class="flex items-baseline justify-between text-black">
-        <h3 class="font-bold text-base"> People you may know </h3>
+﻿<div class="box bg-white rounded-lg shadow-sm p-4 border border-gray-100">
+
+    <div class="flex items-baseline justify-between text-gray-800 mb-3">
+        <h3 class="font-bold text-base">Pessoas que você deve conhecer</h3>
+        <a href="#" class="text-xs text-blue-500 hover:text-blue-600 transition-colors">Ver todos</a>
     </div>
 
-    <div class="side-list">
-        <div class="side-list-item">
+
+    <div class="space-y-3">
+
+        <div class="side-list-item flex items-center hover:bg-gray-50 rounded-md p-2 transition-colors">
             <a asp-controller="Users" asp-action="Details" asp-route-userId="1">
-                <img src="~/images/avatar/user.png" class="side-list-image rounded-full" />
+                <img src="~/images/avatar/user.png" class="w-10 h-10 rounded-full border border-gray-200" alt="Avatar do usuário" />
             </a>
-            <div class="flex-1">
-                <a>
-                    <h4 class="side-list-title">First User</h4>
+
+            <div class="flex-1 ml-3 min-w-0 mr-3">
+                <a asp-controller="Users" asp-action="Details" asp-route-userId="1" class="hover:text-blue-500 transition-colors">
+                    <h4 class="side-list-title font-medium text-gray-800 text-sm truncate">First User</h4>
                 </a>
-                <div class="side-list-info">
-                    5 followers
+                <div class="side-list-info text-xs text-gray-500">
+                    5 seguidores
                 </div>
             </div>
-            <form>
-                <button type="submit" class="button bg-primary-soft text-primary">Follow</button>
-            </form>
-        </div>
-        <div class="side-list-item">
-            <a>
-                <img src="~/images/avatar/user.png" class="side-list-image rounded-full" />
-            </a>
-            <div class="flex-1">
-                <a>
-                    <h4 class="side-list-title">Second User</h4>
-                </a>
-                <div class="side-list-info">
-                    11 followers
-                </div>
-            </div>
-            <form>
-                <button type="submit" class="button bg-primary-soft text-primary">Follow</button>
-            </form>
-        </div>
-        <div class="side-list-item">
-            <a>
-                <img src="~/images/avatar/user.png" class="side-list-image rounded-full" />
-            </a>
-            <div class="flex-1">
-                <a>
-                    <h4 class="side-list-title">Third User</h4>
-                </a>
-                <div class="side-list-info">
-                    33 followers
-                </div>
-            </div>
-            <form>
-                <button type="submit" class="button bg-primary-soft text-primary">Follow</button>
+
+            <form class="flex-shrink-0">
+                <button type="submit" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded text-xs font-medium transition-colors w-16">
+                    Seguir
+                </button>
             </form>
         </div>
 
+
+        <div class="side-list-item flex items-center hover:bg-gray-50 rounded-md p-2 transition-colors">
+            <a href="#">
+                <img src="~/images/avatar/user.png" class="w-10 h-10 rounded-full border border-gray-200" alt="Avatar do usuário" />
+            </a>
+
+            <div class="flex-1 ml-3 min-w-0 mr-3">
+                <a href="#" class="hover:text-blue-500 transition-colors">
+                    <h4 class="side-list-title font-medium text-gray-800 text-sm truncate">Second User</h4>
+                </a>
+                <div class="side-list-info text-xs text-gray-500">
+                    11 seguidores
+                </div>
+            </div>
+
+            <form class="flex-shrink-0">
+                <button type="submit" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded text-xs font-medium transition-colors w-16">
+                    Seguir
+                </button>
+            </form>
+        </div>
+
+
+        <div class="side-list-item flex items-center hover:bg-gray-50 rounded-md p-2 transition-colors">
+            <a href="#">
+                <img src="~/images/avatar/user.png" class="w-10 h-10 rounded-full border border-gray-200" alt="Avatar do usuário" />
+            </a>
+
+            <div class="flex-1 ml-3 min-w-0 mr-3">
+                <a href="#" class="hover:text-blue-500 transition-colors">
+                    <h4 class="side-list-title font-medium text-gray-800 text-sm truncate">Third User</h4>
+                </a>
+                <div class="side-list-info text-xs text-gray-500">
+                    33 seguidores
+                </div>
+            </div>
+
+            <form class="flex-shrink-0">
+                <button type="submit" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded text-xs font-medium transition-colors w-16">
+                    Seguir
+                </button>
+            </form>
+        </div>
     </div>
 
+
+    <div class="mt-3 text-center">
+        <a href="#" class="text-xs text-blue-500 hover:text-blue-600 transition-colors">
+            Encontrar mais amigos
+        </a>
+    </div>
 </div>
+
+<script>
+    // Script para efeito nos botões de seguir usando apenas Tailwind
+    document.addEventListener('DOMContentLoaded', function () {
+        const followButtons = document.querySelectorAll('.side-list-item button');
+
+        followButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault(); 
+
+
+                if (this.classList.contains('bg-blue-100')) {
+                    this.classList.remove('bg-blue-100', 'hover:bg-blue-200', 'text-blue-700');
+                    this.classList.add('bg-gray-100', 'hover:bg-gray-200', 'text-gray-700');
+                    this.textContent = 'Seguindo';
+                } else {
+                    this.classList.remove('bg-gray-100', 'hover:bg-gray-200', 'text-gray-700');
+                    this.classList.add('bg-blue-100', 'hover:bg-blue-200', 'text-blue-700');
+                    this.textContent = 'Seguir';
+                }
+            });
+        });
+    });
+</script>
