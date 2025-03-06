@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CodeGram.Data.Services
 {
-    internal class FriendsService : IFriendsService
+    public class FriendsService : IFriendsService
     {
         private readonly AppDbContext _context;
         public FriendsService(AppDbContext context)
