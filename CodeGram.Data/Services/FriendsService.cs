@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using CodeGram.Data.Dtos;
 using CodeGram.Data.Helpers.Constants;
 using CodeGram.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,35 @@ namespace CodeGram.Data.Services
         public FriendsService(AppDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<List<UserWithFriendsCountDto>> GetSuggestedFriendsAsync(int userId)
+        {
+            var existingFriendIds = await _context.Friendships
+                .Where(n => n.SenderId == userId || n.ReceiverId == userId)
+                .Select(n => n.SenderId == userId ? n.ReceiverId : n.SenderId)
+                .ToListAsync();
+
+            //pending requests
+            var pendingRequestIds = await _context.FriendRequests
+                .Where(n => (n.SenderId == userId || n.ReceiverId == userId) && n.Status == FriendshipStatus.Pending)
+                .Select(n => n.SenderId == userId ? n.ReceiverId : n.SenderId)
+                .ToListAsync();
+
+            //get suggeted friends
+            var suggestedFriends = await _context.Users
+                .Where(n => n.Id != userId &&
+                !existingFriendIds.Contains(n.Id) &&
+                !pendingRequestIds.Contains(n.Id))
+                .Select(n => new UserWithFriendsCountDto()
+                {
+                    User = n,
+                    FriendsCount = _context.Friendships.Count(f => f.SenderId == n.Id || f.ReceiverId == n.Id),
+                })
+                .Take(5)
+                .ToListAsync();
+
+            return suggestedFriends;
         }
 
         public async Task RemoveFriendAsync(int friendshipId)
