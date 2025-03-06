@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CodeGram.Data.Dtos;
+using CodeGram.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +13,6 @@ namespace CodeGram.Data.Services
         Task SendRequestAsync(int senderId, int receiverId);
         Task UpdateRequestAsync(int requestId, string status);
         Task RemoveFriendAsync(int friendshipId);
-
+        Task<List<UserWithFriendsCountDto>> GetSuggestedFriendsAsync(int userId);
     }
 }
