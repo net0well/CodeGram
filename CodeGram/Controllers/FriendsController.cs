@@ -1,5 +1,6 @@
 ﻿using CodeGram.Controllers.Base;
 using CodeGram.Data.Services;
+using CodeGram.ViewModel.Friends;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeGram.Controllers
@@ -13,9 +14,17 @@ namespace CodeGram.Controllers
             _friendsService = friendsService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var userId = GetUserId();
+            if (!userId.HasValue) RedirectToLogin();
+
+            var friendsData = new FriendshipVM
+            {
+                FriendRequestSent = await _friendsService.GetSentFriendRequestAsync(userId.Value)
+            };
+
+            return View(friendsData);
         }
 
         [HttpPost]
