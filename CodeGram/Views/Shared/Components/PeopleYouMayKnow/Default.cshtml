@@ -13,7 +13,7 @@
         @foreach(var data in Model)
         {
             <div class="side-list-item flex items-center hover:bg-gray-50 rounded-md p-2 transition-colors">
-                <a asp-controller="Users" asp-action="Details" asp-route-userId="1022">
+                <a asp-controller="Users" asp-action="Details" asp-route-userId="1023">
                     <img src="@(string.IsNullOrEmpty(data.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+data.ProfilePictureUrl))" class="w-10 h-10 rounded-full border border-gray-200 object-cover" alt="Avatar do usuário" />
                 </a>
 
@@ -26,10 +26,9 @@
                     </div>
                 </div>
 
-                <form class="flex-shrink-0">
-                    <button type="submit" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded text-xs font-medium transition-colors w-16">
-                        Seguir
-                    </button>
+                <form asp-controller="Friends" asp-action="SendFriendRequest" method="post">
+                    <input type="hidden" name="receiverId" value="@data.UserId" />
+                    <button type="submit" class="button bg-primary-soft text-primary">Follow</button>
                 </form>
             </div>
         }
@@ -46,13 +45,11 @@
 </div>
 
 <script>
-    // Script para efeito nos botões de seguir usando apenas Tailwind
     document.addEventListener('DOMContentLoaded', function () {
         const followButtons = document.querySelectorAll('.side-list-item button');
 
         followButtons.forEach(button => {
             button.addEventListener('click', function (e) {
-                e.preventDefault();
 
 
                 if (this.classList.contains('bg-blue-100')) {
