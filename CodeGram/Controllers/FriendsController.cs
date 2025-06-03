@@ -1,4 +1,5 @@
 ﻿using CodeGram.Controllers.Base;
+using CodeGram.Data.Helpers.Constants;
 using CodeGram.Data.Services;
 using CodeGram.ViewModel.Friends;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,20 @@ namespace CodeGram.Controllers
 
             await _friendsService.SendRequestAsync(userId.Value, receiverId);
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CancelFriendRequest(int requestId)
+        {
+           await _friendsService.UpdateRequestAsync(requestId, FriendshipStatus.Canceled);
+           return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AcceptFriendRequest(int requestId)
+        {
+            await _friendsService.UpdateRequestAsync(requestId, FriendshipStatus.Accepted);
+            return RedirectToAction("Index");
         }
     }
 }

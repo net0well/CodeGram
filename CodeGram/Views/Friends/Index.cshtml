@@ -1,230 +1,236 @@
 ﻿@model FriendshipVM
 <main id="site__main" class="2xl:ml-[--w-side] xl:ml-[--w-side-sm] p-4 h-[calc(100vh-var(--m-top))] mt-[--m-top] bg-gray-50">
-    <div class="2xl:max-w-[1220px] max-w-[1065px] mx-auto">
+    <div class="2xl:max-w-[1220px] max-w-[1065px] mx-auto space-y-8">
 
-        @if (Model.FriendRequestsReceived.Count > 0)
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+            <div class="flex items-center space-x-4">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                    <ion-icon name="people-outline" class="text-3xl text-white"></ion-icon>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 mb-1">Convites de Amizade</h1>
+                    <p class="text-gray-600">Gerencie seus convites recebidos e enviados</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="grid lg:grid-cols-2 gap-8">
+
+
+            <div class="space-y-6">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-4 border-b border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                                    <ion-icon name="mail-outline" class="text-xl text-white"></ion-icon>
+                                </div>
+                                <div>
+                                    <h2 class="text-lg font-bold text-gray-900">Convites Recebidos</h2>
+                                    <p class="text-sm text-gray-600">Pedidos aguardando sua resposta</p>
+                                </div>
+                            </div>
+                            @if (Model.FriendRequestsReceived.Count > 0)
+                            {
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200">
+                                    @Model.FriendRequestsReceived.Count
+                                </span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="divide-y divide-gray-100">
+                        @if (Model.FriendRequestsReceived.Count > 0)
+                        {
+                            @foreach (var request in Model.FriendRequestsReceived)
+                            {
+                                <div class="p-5 hover:bg-gray-50 transition-colors duration-200">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="relative flex-shrink-0">
+                                            <div class="w-14 h-14 rounded-xl overflow-hidden ring-2 ring-green-100 shadow-sm">
+                                                <img src="@(string.IsNullOrEmpty(request.Sender.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content(request.Receiver.ProfilePictureUrl))"
+                                                     alt="Foto de @request.Sender.FullName"
+                                                     class="w-full h-full object-cover" />
+                                            </div>
+                                            <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-400 rounded-full border-2 border-white flex items-center justify-center">
+                                                <ion-icon name="mail-outline" class="text-xs text-white"></ion-icon>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="flex-1 min-w-0">
+                                            <a asp-controller="Users"
+                                               asp-action="Details"
+                                               asp-route-userId="@request.Sender.Id"
+                                               class="text-base font-semibold text-gray-900 hover:text-green-600 transition-colors capitalize truncate block">
+                                                @request.Sender.FullName
+                                            </a>
+                                            <p class="text-sm text-gray-500 mt-0.5">
+                                                Quer ser seu amigo
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center justify-end space-x-2 mt-4">
+                                        <form asp-controller="Friends" asp-action="AcceptFriendRequest" method="post" class="inline-block">
+                                            <input type="hidden" name="requestId" value="@request.Id" />
+                                            <button type="submit"
+                                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200">
+                                                <ion-icon name="checkmark-outline" class="w-4 h-4 mr-1.5"></ion-icon>
+                                                Aceitar
+                                            </button>
+                                        </form>
+                                        <form asp-controller="Friends" asp-action="CancelFriendRequest" method="post" class="inline-block">
+                                            <input type="hidden" name="requestId" value="@request.Id" />
+                                            <button type="submit"
+                                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200">
+                                                <ion-icon name="close-outline" class="w-4 h-4 mr-1.5"></ion-icon>
+                                                Recusar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center py-12">
+                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <ion-icon name="mail-outline" class="w-8 h-8 text-gray-400"></ion-icon>
+                                </div>
+                                <h3 class="text-sm font-medium text-gray-900 mb-1">Nenhum convite recebido</h3>
+                                <p class="text-sm text-gray-500">Você não tem convites pendentes</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                                    <ion-icon name="paper-plane-outline" class="text-xl text-white"></ion-icon>
+                                </div>
+                                <div>
+                                    <h2 class="text-lg font-bold text-gray-900">Convites Enviados</h2>
+                                    <p class="text-sm text-gray-600">Aguardando resposta</p>
+                                </div>
+                            </div>
+                            @if (Model.FriendRequestsSent.Count > 0)
+                            {
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200">
+                                    @Model.FriendRequestsSent.Count
+                                </span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="divide-y divide-gray-100">
+                        @if (Model.FriendRequestsSent.Count > 0)
+                        {
+                            @foreach (var request in Model.FriendRequestsSent)
+                            {
+                                <div class="p-5 hover:bg-gray-50 transition-colors duration-200">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="relative flex-shrink-0">
+                                            <div class="w-14 h-14 rounded-xl overflow-hidden ring-2 ring-blue-100 shadow-sm">
+                                                <img src="@(string.IsNullOrEmpty(request.Receiver.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content(request.Receiver.ProfilePictureUrl))"
+                                                     alt="Foto de @request.Receiver.FullName"
+                                                     class="w-full h-full object-cover" />
+                                            </div>
+                                            <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-amber-400 rounded-full border-2 border-white flex items-center justify-center">
+                                                <ion-icon name="time-outline" class="text-xs text-white"></ion-icon>
+                                            </div>
+                                        </div>
+
+                                        <!-- Informações -->
+                                        <div class="flex-1 min-w-0">
+                                            <a asp-controller="Users"
+                                               asp-action="Details"
+                                               asp-route-userId="@request.Receiver.Id"
+                                               class="text-base font-semibold text-gray-900 hover:text-blue-600 transition-colors capitalize truncate block">
+                                                @request.Receiver.FullName
+                                            </a>
+                                            <p class="text-sm text-gray-500 mt-0.5 flex items-center">
+                                                <ion-icon name="hourglass-outline" class="w-3 h-3 mr-1"></ion-icon>
+                                                Aguardando resposta
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center justify-end mt-4">
+                                        <form asp-controller="Friends" asp-action="CancelFriendRequest" method="post" class="inline-block">
+                                            <input type="hidden" name="requestId" value="@request.Id" />
+                                            <button type="submit"
+                                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-200">
+                                                <ion-icon name="close-outline" class="w-4 h-4 mr-1.5"></ion-icon>
+                                                Cancelar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center py-12">
+                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <ion-icon name="paper-plane-outline" class="w-8 h-8 text-gray-400"></ion-icon>
+                                </div>
+                                <h3 class="text-sm font-medium text-gray-900 mb-1">Nenhum convite enviado</h3>
+                                <p class="text-sm text-gray-500">Você ainda não enviou convites</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        @if (Model.FriendRequestsSent.Count == 0 && Model.FriendRequestsReceived.Count == 0)
         {
-            <!-- Cabeçalho da Seção -->
-            <div class="mb-6 bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <div class="flex items-start justify-between">
-                    <div class="flex items-center space-x-3">
-                        <div class="flex-shrink-0">
-                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <ion-icon name="paper-plane-outline" class="text-2xl text-white"></ion-icon>
-                            </div>
-                        </div>
-                        <div>
-                            <h2 class="text-xl font-bold text-gray-900 mb-1">Convites Recebidos</h2>
-                            <p class="text-sm text-gray-600 leading-relaxed max-w-2xl">
-                                Acompanhe os pedidos de amizade que você recebeu.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
-                            <ion-icon name="time-outline" class="w-3 h-3 mr-1"></ion-icon>
-                            @Model.FriendRequestsReceived.Count pendente(s)
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lista de Convites -->
-            <div class="space-y-3">
-                @foreach (var request in Model.FriendRequestsReceived)
-                {
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200 hover:border-gray-200">
-                        <div class="flex items-center justify-between p-5">
-                            <!-- Avatar e Informações do Usuário -->
-                            <div class="flex items-center space-x-4 flex-1">
-                                <div class="relative flex-shrink-0">
-                                    <div class="w-16 h-16 rounded-xl overflow-hidden ring-2 ring-gray-100 shadow-sm">
-                                        <img src="@(string.IsNullOrEmpty(request.Sender.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content(request.Receiver.ProfilePictureUrl))"
-                                             alt="Foto de @request.Sender.FullName"
-                                             class="w-full h-full object-cover" />
-                                    </div>
-                                    <!-- Indicador de Status -->
-                                    <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-amber-400 rounded-full border-2 border-white flex items-center justify-center">
-                                        <ion-icon name="hourglass-outline" class="text-xs text-white"></ion-icon>
-                                    </div>
-                                </div>
-
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex items-center space-x-2 mb-1">
-                                        <a asp-controller="Users"
-                                           asp-action="Details"
-                                           asp-route-userId="@request.Sender.Id"
-                                           class="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors capitalize truncate">
-                                            @request.Sender.FullName
-                                        </a>
-                                    </div>
-                                    <p class="text-sm text-gray-500 flex items-center">
-                                        <ion-icon name="paper-plane-outline" class="w-4 h-4 mr-1"></ion-icon>
-                                        Convite recebido • Aguardando resposta
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Ações -->
-                            <div class="flex items-center space-x-3 ml-4">
-                                <!-- Botão Desktop -->
-                                <form class="hidden md:block">
-                                    <button type="submit"
-                                            class="inline-flex items-center px-4 py-2.5 text-sm font-medium text-green-600 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 hover:border-green-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 transition-all duration-200">
-                                        <ion-icon name="checkmark-circle-outline" class="w-4 h-4 mr-2"></ion-icon>
-                                        Aceitar Convite
-                                    </button>
-                                    <button type="submit"
-                                            class="inline-flex items-center px-4 py-2.5 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 hover:border-red-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1 transition-all duration-200">
-                                        <ion-icon name="close-circle-outline" class="w-4 h-4 mr-2"></ion-icon>
-                                        Rejeitar Convite
-                                    </button>
-                                </form>
-
-                                <!-- Botão Mobile -->
-                                <form class="md:hidden">
-                                    <button type="submit"
-                                            class="inline-flex items-center justify-center w-10 h-10 text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 hover:border-red-300 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-200">
-                                        <ion-icon name="close-outline" class="w-5 h-5"></ion-icon>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-
-            <!-- Informação Adicional -->
-            <div class="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-4">
-                <div class="flex items-start space-x-3">
-                    <div class="flex-shrink-0">
-                        <ion-icon name="information-circle-outline" class="w-5 h-5 text-blue-600 mt-0.5"></ion-icon>
-                    </div>
-                    <div class="text-sm text-blue-800">
-                        <p class="font-medium mb-1">Dica:</p>
-                        <p>Os convites pendentes ficam disponíveis até que o usuário aceite, recuse ou você cancele. Você pode cancelar um convite a qualquer momento clicando no botão "Cancelar Convite".</p>
-                    </div>
-                </div>
-            </div>
-        }
-        
-
-        @if (Model.FriendRequestsSent.Count > 0)
-        {
-            <!-- Cabeçalho da Seção -->
-            <div class="mb-6 bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                <div class="flex items-start justify-between">
-                    <div class="flex items-center space-x-3">
-                        <div class="flex-shrink-0">
-                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <ion-icon name="paper-plane-outline" class="text-2xl text-white"></ion-icon>
-                            </div>
-                        </div>
-                        <div>
-                            <h2 class="text-xl font-bold text-gray-900 mb-1">Convites Pendentes</h2>
-                            <p class="text-sm text-gray-600 leading-relaxed max-w-2xl">
-                                Acompanhe os pedidos de amizade que você enviou. Veja quem ainda não respondeu e gerencie seus convites pendentes.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
-                            <ion-icon name="time-outline" class="w-3 h-3 mr-1"></ion-icon>
-                            @Model.FriendRequestsSent.Count pendente(s)
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lista de Convites -->
-            <div class="space-y-3">
-                @foreach (var request in Model.FriendRequestsSent)
-                {
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200 hover:border-gray-200">
-                        <div class="flex items-center justify-between p-5">
-                            <!-- Avatar e Informações do Usuário -->
-                            <div class="flex items-center space-x-4 flex-1">
-                                <div class="relative flex-shrink-0">
-                                    <div class="w-16 h-16 rounded-xl overflow-hidden ring-2 ring-gray-100 shadow-sm">
-                                        <img src="@(string.IsNullOrEmpty(request.Receiver.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content(request.Receiver.ProfilePictureUrl))"
-                                             alt="Foto de @request.Receiver.FullName"
-                                             class="w-full h-full object-cover" />
-                                    </div>
-                                    <!-- Indicador de Status -->
-                                    <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-amber-400 rounded-full border-2 border-white flex items-center justify-center">
-                                        <ion-icon name="hourglass-outline" class="text-xs text-white"></ion-icon>
-                                    </div>
-                                </div>
-
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex items-center space-x-2 mb-1">
-                                        <a asp-controller="Users"
-                                           asp-action="Details"
-                                           asp-route-userId="@request.Receiver.Id"
-                                           class="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors capitalize truncate">
-                                            @request.Receiver.FullName
-                                        </a>
-                                    </div>
-                                    <p class="text-sm text-gray-500 flex items-center">
-                                        <ion-icon name="paper-plane-outline" class="w-4 h-4 mr-1"></ion-icon>
-                                        Convite enviado • Aguardando resposta
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Ações -->
-                            <div class="flex items-center space-x-3 ml-4">
-                                <!-- Botão Desktop -->
-                                <form class="hidden md:block">
-                                    <button type="submit"
-                                            class="inline-flex items-center px-4 py-2.5 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 hover:border-red-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1 transition-all duration-200">
-                                        <ion-icon name="close-circle-outline" class="w-4 h-4 mr-2"></ion-icon>
-                                        Cancelar Convite
-                                    </button>
-                                </form>
-
-                                <!-- Botão Mobile -->
-                                <form class="md:hidden">
-                                    <button type="submit"
-                                            class="inline-flex items-center justify-center w-10 h-10 text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 hover:border-red-300 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-200">
-                                        <ion-icon name="close-outline" class="w-5 h-5"></ion-icon>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-
-            <!-- Informação Adicional -->
-            <div class="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-4">
-                <div class="flex items-start space-x-3">
-                    <div class="flex-shrink-0">
-                        <ion-icon name="information-circle-outline" class="w-5 h-5 text-blue-600 mt-0.5"></ion-icon>
-                    </div>
-                    <div class="text-sm text-blue-800">
-                        <p class="font-medium mb-1">Dica:</p>
-                        <p>Os convites pendentes ficam disponíveis até que o usuário aceite, recuse ou você cancele. Você pode cancelar um convite a qualquer momento clicando no botão "Cancelar Convite".</p>
-                    </div>
-                </div>
-            </div>
-        }
-        @if (Model.FriendRequestsSent.Count == 0 || Model.FriendRequestsReceived.Count == 0)
-        {
-            <!-- Estado Vazio -->
             <div class="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-100">
                 <div class="max-w-md mx-auto">
-                    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <ion-icon name="paper-plane-outline" class="w-10 h-10 text-gray-400"></ion-icon>
+                    <div class="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <ion-icon name="people-outline" class="w-12 h-12 text-blue-500"></ion-icon>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Nenhum convite pendente</h3>
-                    <p class="text-gray-500 mb-6">Você não possui convites de amizade pendentes no momento.</p>
-                    <a href="/" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                        <ion-icon name="people-outline" class="w-4 h-4 mr-2"></ion-icon>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Nenhum convite pendente</h3>
+                    <p class="text-gray-500 mb-8 leading-relaxed">
+                        Você não possui convites de amizade no momento.<br>
+                        Que tal começar a conectar com outras pessoas?
+                    </p>
+                    <a href="/" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <ion-icon name="search-outline" class="w-5 h-5 mr-2"></ion-icon>
                         Encontrar Amigos
                     </a>
                 </div>
             </div>
         }
+
+        @if (Model.FriendRequestsSent.Count > 0 || Model.FriendRequestsReceived.Count > 0)
+        {
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6">
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <ion-icon name="bulb-outline" class="w-5 h-5 text-blue-600"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="text-sm text-blue-800">
+                        <p class="font-semibold mb-2">💡 Dicas importantes:</p>
+                        <ul class="space-y-1 text-blue-700">
+                            <li>• Convites recebidos podem ser aceitos ou recusados a qualquer momento</li>
+                            <li>• Convites enviados ficam pendentes até que a pessoa responda</li>
+                            <li>• Você pode cancelar convites enviados clicando em "Cancelar"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+
     </div>
 </main>
