@@ -19,6 +19,17 @@ namespace CodeGram.Data.Services
             _context = context;
         }
 
+        public async Task<List<FriendRequest>> GetReceivedFriendRequestAsync(int userId)
+        {
+            var friendReceived = await _context.FriendRequests
+                .Include(n => n.Sender)
+                .Include(n => n.Receiver)
+                .Where(n => n.ReceiverId == userId && n.Status == FriendshipStatus.Pending)
+                .ToListAsync();
+
+            return friendReceived;
+        }
+
         public async Task<List<FriendRequest>> GetSentFriendRequestAsync(int userId)
         {
             var friendRequestSent = await _context.FriendRequests
