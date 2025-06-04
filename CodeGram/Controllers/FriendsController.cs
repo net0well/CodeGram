@@ -22,6 +22,7 @@ namespace CodeGram.Controllers
 
             var friendsData = new FriendshipVM
             {
+                Friends = await _friendsService.GetFriendsAsync(userId.Value),
                 FriendRequestsSent = await _friendsService.GetSentFriendRequestAsync(userId.Value),
                 FriendRequestsReceived = await _friendsService.GetReceivedFriendRequestAsync(userId.Value)
             };
@@ -50,6 +51,20 @@ namespace CodeGram.Controllers
         public async Task<IActionResult> AcceptFriendRequest(int requestId)
         {
             await _friendsService.UpdateRequestAsync(requestId, FriendshipStatus.Accepted);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RejectFriendRequest(int requestId)
+        {
+            await _friendsService.UpdateRequestAsync(requestId, FriendshipStatus.Rejected);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFriend(int friendshipId)
+        {
+            await _friendsService.RemoveFriendAsync(friendshipId);
             return RedirectToAction("Index");
         }
     }

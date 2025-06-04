@@ -8,19 +8,155 @@
                     <ion-icon name="people-outline" class="text-3xl text-white"></ion-icon>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 mb-1">Convites de Amizade</h1>
-                    <p class="text-gray-600">Gerencie seus convites recebidos e enviados</p>
+                    <h1 class="text-2xl font-bold text-gray-900 mb-1">Gerenciar Amizades</h1>
+                    <p class="text-gray-600">Visualize seus amigos e convites</p>
                 </div>
             </div>
         </div>
 
+        <!-- Tabs Navigation -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="border-b border-gray-200">
+                <nav class="flex space-x-8 px-6" aria-label="Tabs">
+                    <button class="tab-button active py-4 px-1 border-b-2 border-green-500 font-medium text-sm text-green-600 focus:outline-none transition-colors duration-200"
+                            onclick="showTab('friends-tab')">
+                        <div class="flex items-center space-x-2">
+                            <ion-icon name="people" class="w-5 h-5"></ion-icon>
+                            <span>Meus Amigos</span>
+                            @if (Model.Friends.Count > 0)
+                            {
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                                    @Model.Friends.Count
+                                </span>
+                            }
+                        </div>
+                    </button>
+                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none transition-colors duration-200"
+                            onclick="showTab('received-tab')">
+                        <div class="flex items-center space-x-2">
+                            <ion-icon name="mail" class="w-5 h-5"></ion-icon>
+                            <span>Convites Recebidos</span>
+                            @if (Model.FriendRequestsReceived.Count > 0)
+                            {
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                                    @Model.FriendRequestsReceived.Count
+                                </span>
+                            }
+                        </div>
+                    </button>
+                    <button class="tab-button py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none transition-colors duration-200"
+                            onclick="showTab('sent-tab')">
+                        <div class="flex items-center space-x-2">
+                            <ion-icon name="paper-plane" class="w-5 h-5"></ion-icon>
+                            <span>Convites Enviados</span>
+                            @if (Model.FriendRequestsSent.Count > 0)
+                            {
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                                    @Model.FriendRequestsSent.Count
+                                </span>
+                            }
+                        </div>
+                    </button>
+                </nav>
+            </div>
 
-        <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Tab Contents -->
+            <div class="p-6">
+                <!-- Meus Amigos Tab -->
+                <div id="friends-tab" class="tab-content">
+                    <div class="bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-4 border border-green-100 rounded-t-xl mb-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                                    <ion-icon name="people" class="text-xl text-white"></ion-icon>
+                                </div>
+                                <div>
+                                    <h2 class="text-lg font-bold text-gray-900">Meus Amigos</h2>
+                                    <p class="text-sm text-gray-600">Seus amigos conectados</p>
+                                </div>
+                            </div>
+                            @if (Model.Friends.Count > 0)
+                            {
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200">
+                                    @Model.Friends.Count
+                                </span>
+                            }
+                        </div>
+                    </div>
 
+                    <div class="divide-y divide-gray-100 border border-gray-100 rounded-b-xl overflow-hidden">
+                        @if (Model.Friends.Count > 0)
+                        {
+                            @foreach (var _friendship in Model.Friends)
+                            {
+                                var friend = _friendship.SenderId == int.Parse(User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier)) ?
+                                _friendship.Receiver :
+                                _friendship.Sender;
 
-            <div class="space-y-6">
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div class="bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-4 border-b border-gray-100">
+                                <div class="p-5 hover:bg-gray-50 transition-colors duration-200">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="relative flex-shrink-0">
+                                            <div class="w-14 h-14 rounded-xl overflow-hidden ring-2 ring-green-100 shadow-sm">
+                                                <img src="@(string.IsNullOrEmpty(friend.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content(friend.ProfilePictureUrl))"
+                                                     alt="Foto de @friend.FullName"
+                                                     class="w-full h-full object-cover" />
+                                            </div>
+                                            <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-400 rounded-full border-2 border-white flex items-center justify-center">
+                                                <ion-icon name="checkmark" class="text-xs text-white"></ion-icon>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex-1 min-w-0">
+                                            <a asp-controller="Users"
+                                               asp-action="Details"
+                                               asp-route-userId="@friend.Id"
+                                               class="text-base font-semibold text-gray-900 hover:text-green-600 transition-colors capitalize truncate block">
+                                                @friend.FullName
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center justify-end space-x-2 mt-4">
+                                        <a asp-controller="Chat"
+                                           asp-action="Index"
+                                           asp-route-userId="@friend.Id"
+                                           class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+                                            <ion-icon name="chatbubble-outline" class="w-4 h-4 mr-1.5"></ion-icon>
+                                            Conversar
+                                        </a>
+                                        <form asp-controller="Friends" asp-action="RemoveFriend" method="post" class="inline-block"
+                                              onsubmit="return confirm('Tem certeza que deseja remover @friend.FullName dos seus amigos?')">
+                                            <input type="hidden" name="friendshipId" value="@friend.Id" />
+                                            <button type="submit"
+                                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-200">
+                                                <ion-icon name="person-remove-outline" class="w-4 h-4 mr-1.5"></ion-icon>
+                                                Remover
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center py-12">
+                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <ion-icon name="people-outline" class="w-8 h-8 text-gray-400"></ion-icon>
+                                </div>
+                                <h3 class="text-sm font-medium text-gray-900 mb-1">Nenhum amigo ainda</h3>
+                                <p class="text-sm text-gray-500 mb-4">Comece a fazer conexões!</p>
+                                <a href="/" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200">
+                                    <ion-icon name="search-outline" class="w-4 h-4 mr-1.5"></ion-icon>
+                                    Encontrar Pessoas
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Convites Recebidos Tab -->
+                <div id="received-tab" class="tab-content hidden">
+                    <div class="bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-4 border border-green-100 rounded-t-xl mb-6">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-3">
                                 <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
@@ -40,7 +176,7 @@
                         </div>
                     </div>
 
-                    <div class="divide-y divide-gray-100">
+                    <div class="divide-y divide-gray-100 border border-gray-100 rounded-b-xl overflow-hidden">
                         @if (Model.FriendRequestsReceived.Count > 0)
                         {
                             @foreach (var request in Model.FriendRequestsReceived)
@@ -49,7 +185,7 @@
                                     <div class="flex items-center space-x-4">
                                         <div class="relative flex-shrink-0">
                                             <div class="w-14 h-14 rounded-xl overflow-hidden ring-2 ring-green-100 shadow-sm">
-                                                <img src="@(string.IsNullOrEmpty(request.Sender.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content(request.Receiver.ProfilePictureUrl))"
+                                                <img src="@(string.IsNullOrEmpty(request.Sender.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content(request.Sender.ProfilePictureUrl))"
                                                      alt="Foto de @request.Sender.FullName"
                                                      class="w-full h-full object-cover" />
                                             </div>
@@ -57,7 +193,6 @@
                                                 <ion-icon name="mail-outline" class="text-xs text-white"></ion-icon>
                                             </div>
                                         </div>
-
 
                                         <div class="flex-1 min-w-0">
                                             <a asp-controller="Users"
@@ -81,7 +216,7 @@
                                                 Aceitar
                                             </button>
                                         </form>
-                                        <form asp-controller="Friends" asp-action="CancelFriendRequest" method="post" class="inline-block">
+                                        <form asp-controller="Friends" asp-action="RejectFriendRequest" method="post" class="inline-block">
                                             <input type="hidden" name="requestId" value="@request.Id" />
                                             <button type="submit"
                                                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200">
@@ -105,11 +240,10 @@
                         }
                     </div>
                 </div>
-            </div>
 
-            <div class="space-y-6">
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-100">
+                <!-- Convites Enviados Tab -->
+                <div id="sent-tab" class="tab-content hidden">
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-4 border border-blue-100 rounded-t-xl mb-6">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-3">
                                 <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
@@ -129,7 +263,7 @@
                         </div>
                     </div>
 
-                    <div class="divide-y divide-gray-100">
+                    <div class="divide-y divide-gray-100 border border-blue-100 rounded-b-xl overflow-hidden">
                         @if (Model.FriendRequestsSent.Count > 0)
                         {
                             @foreach (var request in Model.FriendRequestsSent)
@@ -147,12 +281,11 @@
                                             </div>
                                         </div>
 
-                                        <!-- Informações -->
                                         <div class="flex-1 min-w-0">
                                             <a asp-controller="Users"
                                                asp-action="Details"
                                                asp-route-userId="@request.Receiver.Id"
-                                               class="text-base font-semibold text-gray-900 hover:text-blue-600 transition-colors capitalize truncate block">
+                                               class="text-base font-semibtml semibold text-gray-900 hover:text-blue-600 transition-colors capitalize truncate block">
                                                 @request.Receiver.FullName
                                             </a>
                                             <p class="text-sm text-gray-500 mt-0.5 flex items-center">
@@ -188,19 +321,19 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
-        @if (Model.FriendRequestsSent.Count == 0 && Model.FriendRequestsReceived.Count == 0)
+        <!-- Mensagem quando não há nada -->
+        @if (Model.Friends.Count == 0 && Model.FriendRequestsSent.Count == 0 && Model.FriendRequestsReceived.Count == 0)
         {
             <div class="text-center py-16 bg-white rounded-xl shadow-sm border border-gray-100">
                 <div class="max-w-md mx-auto">
                     <div class="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
                         <ion-icon name="people-outline" class="w-12 h-12 text-blue-500"></ion-icon>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Nenhum convite pendente</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Comece a fazer conexões</h3>
                     <p class="text-gray-500 mb-8 leading-relaxed">
-                        Você não possui convites de amizade no momento.<br>
+                        Você ainda não possui amigos ou convites.<br>
                         Que tal começar a conectar com outras pessoas?
                     </p>
                     <a href="/" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
@@ -211,7 +344,8 @@
             </div>
         }
 
-        @if (Model.FriendRequestsSent.Count > 0 || Model.FriendRequestsReceived.Count > 0)
+        <!-- Dicas -->
+        @if (Model.Friends.Count > 0 || Model.FriendRequestsSent.Count > 0 || Model.FriendRequestsReceived.Count > 0)
         {
             <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6">
                 <div class="flex items-start space-x-4">
@@ -223,9 +357,10 @@
                     <div class="text-sm text-blue-800">
                         <p class="font-semibold mb-2">💡 Dicas importantes:</p>
                         <ul class="space-y-1 text-blue-700">
+                            <li>• Use a aba "Meus Amigos" para ver e gerenciar suas conexões</li>
                             <li>• Convites recebidos podem ser aceitos ou recusados a qualquer momento</li>
                             <li>• Convites enviados ficam pendentes até que a pessoa responda</li>
-                            <li>• Você pode cancelar convites enviados clicando em "Cancelar"</li>
+                            <li>• Você pode cancelar convites enviados ou remover amigos quando necessário</li>
                         </ul>
                     </div>
                 </div>
@@ -234,3 +369,38 @@
 
     </div>
 </main>
+
+<script>
+    function showTab(tabId) {
+        // Esconder todas as tabs
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(tab => {
+            tab.classList.add('hidden');
+        });
+
+        // Remover classe active de todos os botões
+        const tabButtons = document.querySelectorAll('.tab-button');
+        tabButtons.forEach(button => {
+            button.classList.remove('active');
+            button.classList.remove('border-green-500', 'text-green-600', 'border-blue-500', 'text-blue-600');
+            button.classList.add('border-transparent', 'text-gray-500');
+        });
+
+        // Mostrar a tab selecionada
+        document.getElementById(tabId).classList.remove('hidden');
+
+        // Adicionar classe active ao botão clicado
+        const activeButton = event.target.closest('.tab-button');
+        activeButton.classList.add('active');
+        activeButton.classList.remove('border-transparent', 'text-gray-500');
+
+        // Aplicar cores específicas baseadas na tab
+        if (tabId === 'friends-tab') {
+            activeButton.classList.add('border-green-500', 'text-green-600');
+        } else if (tabId === 'received-tab') {
+            activeButton.classList.add('border-green-500', 'text-green-600');
+        } else if (tabId === 'sent-tab') {
+            activeButton.classList.add('border-blue-500', 'text-blue-600');
+        }
+    }
+</script>
