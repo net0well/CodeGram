@@ -126,7 +126,7 @@
                                         </a>
                                         <form asp-controller="Friends" asp-action="RemoveFriend" method="post" class="inline-block"
                                               onsubmit="return confirm('Tem certeza que deseja remover @friend.FullName dos seus amigos?')">
-                                            <input type="hidden" name="friendshipId" value="@friend.Id" />
+                                            <input type="hidden" name="friendshipId" value="@_friendship.Id" />
                                             <button type="submit"
                                                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-200">
                                                 <ion-icon name="person-remove-outline" class="w-4 h-4 mr-1.5"></ion-icon>
@@ -208,16 +208,18 @@
                                     </div>
 
                                     <div class="flex items-center justify-end space-x-2 mt-4">
-                                        <form asp-controller="Friends" asp-action="AcceptFriendRequest" method="post" class="inline-block">
+                                        <form asp-controller="Friends" asp-action="UpdateFriendRequest" method="post" class="inline-block">
                                             <input type="hidden" name="requestId" value="@request.Id" />
+                                            <input type="hidden" name="status" value="@FriendshipStatus.Accepted" />
                                             <button type="submit"
                                                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200">
                                                 <ion-icon name="checkmark-outline" class="w-4 h-4 mr-1.5"></ion-icon>
                                                 Aceitar
                                             </button>
                                         </form>
-                                        <form asp-controller="Friends" asp-action="RejectFriendRequest" method="post" class="inline-block">
+                                        <form asp-controller="Friends" asp-action="UpdateFriendRequest" method="post" class="inline-block">
                                             <input type="hidden" name="requestId" value="@request.Id" />
+                                            <input type="hidden" name="status" value="@FriendshipStatus.Rejected" />
                                             <button type="submit"
                                                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200">
                                                 <ion-icon name="close-outline" class="w-4 h-4 mr-1.5"></ion-icon>
@@ -296,8 +298,9 @@
                                     </div>
 
                                     <div class="flex items-center justify-end mt-4">
-                                        <form asp-controller="Friends" asp-action="CancelFriendRequest" method="post" class="inline-block">
+                                        <form asp-controller="Friends" asp-action="UpdateFriendRequest" method="post" class="inline-block">
                                             <input type="hidden" name="requestId" value="@request.Id" />
+                                            <input type="hidden" name="status" value="@FriendshipStatus.Canceled" />
                                             <button type="submit"
                                                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-200">
                                                 <ion-icon name="close-outline" class="w-4 h-4 mr-1.5"></ion-icon>
