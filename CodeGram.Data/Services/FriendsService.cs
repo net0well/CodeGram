@@ -91,8 +91,8 @@ namespace CodeGram.Data.Services
                 await _context.SaveChangesAsync();
 
                 var requests = await _context.FriendRequests
-                    .Where(n => (n.SenderId == friendship.SenderId && n.ReceiverId == friendship.ReceiverId) ||
-                                (n.SenderId == friendship.ReceiverId && n.ReceiverId == friendship.SenderId))
+                    .Where(r => (r.SenderId == friendship.SenderId && r.ReceiverId == friendship.ReceiverId) ||
+                    (r.SenderId == friendship.ReceiverId && r.ReceiverId == friendship.SenderId))
                     .ToListAsync();
 
                 if (requests.Any())
