@@ -19,6 +19,17 @@ namespace CodeGram.Data.Services
             _context = context;
         }
 
+        public async Task<List<Friendship>> GetFriendsAsync(int userId)
+        {
+            var friends = await _context.Friendships
+                .Include(f => f.Sender)
+                .Include(f => f.Receiver)
+                .Where(f => f.SenderId == userId || f.ReceiverId == userId)
+                .ToListAsync();
+
+            return friends; ;
+        }
+
         public async Task<List<FriendRequest>> GetReceivedFriendRequestAsync(int userId)
         {
             var friendReceived = await _context.FriendRequests
@@ -78,6 +89,17 @@ namespace CodeGram.Data.Services
             {
                 _context.Friendships.Remove(friendship);
                 await _context.SaveChangesAsync();
+
+                var requests = await _context.FriendRequests
+                    .Where(n => (n.SenderId == friendship.SenderId && n.ReceiverId == friendship.ReceiverId) ||
+                                (n.SenderId == friendship.ReceiverId && n.ReceiverId == friendship.SenderId))
+                    .ToListAsync();
+
+                if (requests.Any())
+                {
+                    _context.FriendRequests.RemoveRange(requests);
+                    await _context.SaveChangesAsync();
+                }
             }
         }
 
