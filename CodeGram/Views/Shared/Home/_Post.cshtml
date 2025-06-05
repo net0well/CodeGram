@@ -7,10 +7,10 @@
 
     string displayTime = timeSpanSincePosted switch
     {
-        var t when t.TotalDays >= 1 => $"{(int)t.TotalDays}d ago",
-        var t when t.TotalHours >= 1 => $"{(int)t.TotalHours}h ago",
-        var t when t.TotalMinutes >= 1 => $"{(int)t.TotalMinutes}m ago",
-        _ => "Just now"
+        var t when t.TotalDays >= 1 => $"{(int)t.TotalDays}d atras",
+        var t when t.TotalHours >= 1 => $"{(int)t.TotalHours}h atras",
+        var t when t.TotalMinutes >= 1 => $"{(int)t.TotalMinutes}m atras",
+        _ => "Agora"
     };
 
     bool isFavorited = Model.Favorites.Any(n => n.UserId == loggedInUserId);
@@ -138,16 +138,16 @@
 
                 @foreach (var comment in showAllComments
                ? Model.Comments.OrderByDescending(n => n.DateCreated)
-               : Model.Comments.OrderByDescending(n => n.DateCreated).Take(2))
+               : Model.Comments.OrderByDescending(n => n.DateCreated).Take(5))
                 {
                     TimeSpan commentTimeSpanSincePosted = DateTime.UtcNow.Subtract(comment.DateCreated);
 
                     string commentDisplayTime = commentTimeSpanSincePosted switch
                     {
-                        var t when t.TotalDays >= 1 => $"{(int)t.TotalDays}d ago",
-                        var t when t.TotalHours >= 1 => $"{(int)t.TotalHours}h ago",
-                        var t when t.TotalMinutes >= 1 => $"{(int)t.TotalMinutes}m ago",
-                        _ => "Just now"
+                        var t when t.TotalDays >= 1 => $"{(int)t.TotalDays}d atras",
+                        var t when t.TotalHours >= 1 => $"{(int)t.TotalHours}h atras",
+                        var t when t.TotalMinutes >= 1 => $"{(int)t.TotalMinutes}m atras",
+                        _ => "Agora"
                     };
 
                     <div class="flex items-start gap-3 relative">
@@ -166,8 +166,10 @@
                                     @comment.Content
                                 </p>
 
-                                <form asp-controller="Home" asp-action="RemovePostComment">
+                                <form asp-controller="Home" asp-action="RemovePostComment" class="remove-comment-form">
+                                    @Html.AntiForgeryToken()
                                     <input type="hidden" name="commentId" value="@comment.Id" />
+                                    <input type="hidden" name="postId" value="@comment.PostId" />
                                     <button type="submit" class="text-red-500 text-xs ml-2" title="Remove post comment">
                                         <ion-icon name="trash-outline"></ion-icon>
                                     </button>
@@ -189,7 +191,8 @@
 
             </div>
 
-            <form asp-controller="Home" asp-action="AddPostComment">
+            <form asp-controller="Home" asp-action="AddPostComment" class="add-comment-form">
+                @Html.AntiForgeryToken()
 
                 <div class="sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1">
                     <a asp-controller="Users" asp-action="Detalis" asp-route-userId="@Model.UserId">
@@ -199,12 +202,12 @@
 
                     <input type="hidden" name="postId" value="@Model.Id" />
                     <div class="flex-1 relative overflow-hidden h-10">
-                        <textarea name="content" placeholder="Add Comment...."
+                        <textarea name="content" placeholder="Adicionar um comentario...."
                                   rows="1"
                                   class="w-full resize-none !bg-transparent px-4 py-2 focus:!border-transparent focus:!ring-transparent"></textarea>
                     </div>
 
-                    <button type="submit" class="text-sm rounded-full py-1.5 px-3.5 bg-secondery">Comment</button>
+                    <button type="submit" class="text-sm rounded-full py-1.5 px-3.5 bg-secondery">Comentar</button>
                 </div>
             </form>
         </div>
