@@ -12,9 +12,11 @@ namespace CodeGram.Data.Services
     public class PostsService : IPostsService
     {
         private readonly AppDbContext _context;
-        public PostsService(AppDbContext context)
+        private readonly INotificationsService _notificationsService;
+        public PostsService(AppDbContext context, INotificationsService notificationsService)
         {
            _context = context;
+           _notificationsService = notificationsService;
         }
 
         public async Task<List<Post>> GetAllPostsAsync(int loggedInUserId)
@@ -136,6 +138,9 @@ namespace CodeGram.Data.Services
                 };
                 await _context.Likes.AddAsync(newLike);
                 await _context.SaveChangesAsync();
+
+                //add notification
+                await _notificationsService.AddNewNotificationAsync(loggedInUserId, "Alguem curtiu o seu post!", "Like");
             }
         }
 

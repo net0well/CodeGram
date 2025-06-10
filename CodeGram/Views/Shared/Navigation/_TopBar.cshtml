@@ -189,7 +189,25 @@
     </div>
 </header>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aspnet-signalr/1.0.27/signalr.min.js" integrity="sha512-a+73ErrZPjhqOu0qbW1QLsenEF4pvDjmnd+Ws6hkDyJlrwAigOQAxQhIT+fPNFWScUvtJQvn+G535TT2C6/G4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/notificationHub")
+            .build();
+
+        connection.on("ReceiveNotification", (message) => {
+            console.log(message);
+
+            document.getElementById("notificationsCount").innerHTML = "new";
+        });
+
+        connection.start().then(() => console.log("signalR running")).catch((err) => console.log(err));
+
+    })
+
 
     const searchBox = document.getElementById("search--box");
     
