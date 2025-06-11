@@ -123,11 +123,25 @@
         <div class="max-w-[1220px] mx-auto flex items-center">
             <div class="flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2">
 
-                <button type="button" class="sm:p-2 p-1 rounded-full relative hover:bg-gray-100 transition-colors" uk-toggle="target: #notificationModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-black">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.310m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                <button type="button"
+                        class="group sm:p-3 p-2 rounded-xl relative hover:bg-slate-50/80 transition-all duration-300 border border-transparent hover:border-slate-200/60 hover:shadow-sm"
+                        uk-toggle="target: #notificationModal">
+
+                    <!-- Ícone Bell Minimalista -->
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke-width="1.5"
+                         stroke="currentColor"
+                         class="w-6 h-6 text-slate-600 group-hover:text-indigo-600 transition-all duration-300 bell-icon-hover">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                     </svg>
-                    <span id="notificationsCount" class="absolute -top-2 -right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full min-w-[18px] h-[18px]">
+
+                    <!-- Contador Minimalista -->
+                    <span id="notificationsCount"
+                          class="absolute -top-1 -right-1 notification-dot text-white text-xs font-mono-geek font-semibold w-5 h-5 flex items-center justify-center rounded-full transition-all duration-300 notification-hidden">
                         0
                     </span>
                 </button>
@@ -208,23 +222,20 @@
             }
 
             if (count > 0) {
-                notificationsCountElement.textContent = count;
-                notificationsCountElement.style.display = "inline-flex";
-                notificationsCountElement.classList.add('animate-pulse');
+                // Mostrar contador com animação
+                notificationsCountElement.textContent = count > 99 ? '99+' : count;
+                notificationsCountElement.classList.remove('notification-hidden');
+                notificationsCountElement.classList.add('notification-visible', 'notification-pulse');
                 console.log("Contador visível com valor:", count);
             } else {
-                notificationsCountElement.style.display = "none";
-                notificationsCountElement.classList.remove('animate-pulse');
+                // Ocultar contador com animação
+                notificationsCountElement.classList.remove('notification-visible', 'notification-pulse');
+                notificationsCountElement.classList.add('notification-hidden');
                 console.log("Contador oculto");
             }
         }
 
-        if (notificationsCountElement) {
-            console.log("Forçando exibição do contador para teste...");
-            notificationsCountElement.textContent = "1";
-            notificationsCountElement.style.display = "inline-flex";
-        }
-
+        // Buscar contagem inicial
         fetch("Notifications/GetCount", {
             method: 'GET',
             headers: {
@@ -237,7 +248,6 @@
             })
             .catch(error => {
                 console.error("Erro ao buscar notificações:", error);
-                console.log("Mantendo valor de teste devido ao erro");
             });
 
         // Configurar SignalR
@@ -248,10 +258,17 @@
         connection.on("ReceiveNotification", (message) => {
             console.log("Nova notificação recebida:", message);
 
+            // Aumentar contador ou mostrar indicador "new"
             if (notificationsCountElement) {
-                notificationsCountElement.textContent = "new";
-                notificationsCountElement.style.display = "inline-flex";
-                notificationsCountElement.classList.add('animate-pulse');
+                const currentCount = parseInt(notificationsCountElement.textContent) || 0;
+                updateNotificationCount(currentCount + 1);
+
+                // Adicionar efeito de "nova notificação"
+                notificationsCountElement.style.animation = 'none';
+                setTimeout(() => {
+                    notificationsCountElement.style.animation = '';
+                    notificationsCountElement.classList.add('notification-pulse');
+                }, 10);
             }
         });
 
@@ -259,45 +276,54 @@
             .then(() => console.log("SignalR conectado com sucesso"))
             .catch((err) => console.error("Erro ao conectar SignalR:", err));
 
+        // Quando clicar no botão, remover animação de pulse e zerar contador
         const notifButton = document.querySelector('button[uk-toggle="target: #notificationModal"]');
 
         if (notifButton) {
             notifButton.addEventListener('click', function () {
                 console.log("Botão de notificação clicado");
+
+                // Remover animação de pulse imediatamente
+                notificationsCountElement.classList.remove('notification-pulse');
+
+                // Após um delay, zerar o contador
                 setTimeout(() => {
                     updateNotificationCount(0);
                 }, 500);
             });
         }
     });
-
-    const searchBox = document.getElementById("search--box");
-
-    if (searchBox) {
-        searchBox.addEventListener('mouseenter', function () {
-            searchBox.classList.add('shadow-md');
-            searchBox.classList.add('border-indigo-300');
-        });
-
-        searchBox.addEventListener('mouseleave', function () {
-            if (!searchBox.querySelector('input:focus')) {
-                searchBox.classList.remove('shadow-md');
-                searchBox.classList.remove('border-indigo-300');
-            }
-        });
-
-        const searchInput = searchBox.querySelector('input');
-
-        if (searchInput) {
-            searchInput.addEventListener('focus', function () {
-                searchBox.classList.add('shadow-md');
-                searchBox.classList.add('border-indigo-300');
-            });
-
-            searchInput.addEventListener('blur', function () {
-                searchBox.classList.remove('shadow-md');
-                searchBox.classList.remove('border-indigo-300');
-            });
-        }
-    }
 </script>
+
+<style>
+    
+    
+    .font-mono-geek {
+        font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+    }
+    
+    .notification-pulse {
+        animation: notification-glow 2s infinite;
+    }
+    
+    .notification-dot {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        box-shadow: 0 0 6px rgba(99, 102, 241, 0.4);
+    }
+    
+    .notification-hidden {
+        transform: scale(0);
+        opacity: 0;
+        transition: all 0.2s ease-out;
+    }
+    
+    .notification-visible {
+        transform: scale(1);
+        opacity: 1;
+        transition: all 0.2s ease-out;
+    }
+    
+    .bell-icon-hover {
+        filter: drop-shadow(0 0 4px rgba(99, 102, 241, 0.3));
+    }
+</style>
