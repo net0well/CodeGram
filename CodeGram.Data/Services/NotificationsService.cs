@@ -5,15 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
+using CodeGram.Data.Hubs;
 
 namespace CodeGram.Data.Services
 {
     public class NotificationsService : INotificationsService
     {
         private readonly AppDbContext _context;
-        public NotificationsService(AppDbContext context)
+        private readonly IHubContext<NotificationHub> _hubContext;
+        public NotificationsService(AppDbContext context, IHubContext<NotificationHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
         public async Task AddNewNotificationAsync(int userId, string message, string notificationType)
         {
