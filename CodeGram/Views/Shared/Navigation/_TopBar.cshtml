@@ -19,10 +19,10 @@
                 </svg>
             </button>
 
-            
+
             <div id="logo" class="flex items-center ml-2">
                 <a asp-controller="Home" asp-action="Index" class="flex items-center group">
-                   
+
                     <svg width="48" height="48" viewBox="0 0 48 48" class="block">
                         <!-- Background with gradient -->
                         <defs>
@@ -34,7 +34,7 @@
                                 <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
                                 <stop offset="100%" style="stop-color:#e0e7ff;stop-opacity:0.8" />
                             </linearGradient>
-                            <!-- Glow effect -->
+                            
                             <filter id="glow">
                                 <feGaussianBlur stdDeviation="2" result="coloredBlur" />
                                 <feMerge>
@@ -83,7 +83,7 @@
                         <rect x="37" y="32" width="1" height="1" fill="#00ff88" opacity="0.8" />
                         <circle cx="40" cy="18" r="0.5" fill="#fbbf24" opacity="0.9" />
                     </svg>
-                    
+
 
                     <span class="ml-2 text-2xl font-bold text-black transition-colors">
                         <span class="text-black">&lt;</span>Code<span class="text-purple-700">Gram</span><span class="text-black">/&gt;</span>
@@ -107,7 +107,7 @@
                     <input type="text" name="query" placeholder="Buscar posts, amigos, códigos..." class="w-full py-2 px-2 !bg-transparent h-11 !text-sm text-black rounded-full focus:outline-none placeholder-gray-500 border-0" />
                 </div>
             </form>
-            
+
 
             <div class="ml-4 max-w-md overflow-hidden hidden lg:block">
                 <div id="anime-quotes" class="text-gray-600 italic text-sm font-medium relative h-6">
@@ -123,11 +123,13 @@
         <div class="max-w-[1220px] mx-auto flex items-center">
             <div class="flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2">
 
-                <button type="button" class="sm:p-2 p-1 rounded-full relative hover:bg-gray-100 transition-colors">
+                <button type="button" class="sm:p-2 p-1 rounded-full relative hover:bg-gray-100 transition-colors" uk-toggle="target: #notificationModal">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-black">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.310m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                     </svg>
-                    <div class="absolute top-0 right-0 -m-1 bg-pink-500 text-white text-xs px-1.5 rounded-full font-bold" id="notificationsCount">0</div>
+                    <span id="notificationsCount" class="absolute -top-2 -right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full min-w-[18px] h-[18px]">
+                        0
+                    </span>
                 </button>
 
 
@@ -155,7 +157,7 @@
                 </div>
 
 
-                <div class="rounded-lg overflow-hidden relative bg-white cursor-pointer shrink-0 hover:ring-2 hover:ring-indigo-300 transition-all duration-300 border border-gray-200">
+                <div class="rounded-lg overflow-hidden relative bg-white cursor-pointer shrink-0 hover:ring-2 hover:ring-indigo-300 transition-all duration-300 border border-gray-200" uk-toggle="target: #profileDropdown">
                     <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+profilePictureUrl))" class="sm:w-10 sm:h-10 w-9 h-9 rounded-lg shadow-sm shrink-0 object-cover" />
                 </div>
 
@@ -192,25 +194,85 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aspnet-signalr/1.0.27/signalr.min.js" integrity="sha512-a+73ErrZPjhqOu0qbW1QLsenEF4pvDjmnd+Ws6hkDyJlrwAigOQAxQhIT+fPNFWScUvtJQvn+G535TT2C6/G4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-
     document.addEventListener("DOMContentLoaded", () => {
+        const notificationsCountElement = document.getElementById("notificationsCount");
+
+        console.log("Elemento contador encontrado:", notificationsCountElement);
+
+        function updateNotificationCount(count) {
+            console.log("Atualizando contador para:", count);
+
+            if (!notificationsCountElement) {
+                console.error("Elemento notificationsCount não encontrado!");
+                return;
+            }
+
+            if (count > 0) {
+                notificationsCountElement.textContent = count;
+                notificationsCountElement.style.display = "inline-flex";
+                notificationsCountElement.classList.add('animate-pulse');
+                console.log("Contador visível com valor:", count);
+            } else {
+                notificationsCountElement.style.display = "none";
+                notificationsCountElement.classList.remove('animate-pulse');
+                console.log("Contador oculto");
+            }
+        }
+
+        if (notificationsCountElement) {
+            console.log("Forçando exibição do contador para teste...");
+            notificationsCountElement.textContent = "1";
+            notificationsCountElement.style.display = "inline-flex";
+        }
+
+        fetch("Notifications/GetCount", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(data => {
+                console.log("notifications count from API = ", data);
+                updateNotificationCount(data);
+            })
+            .catch(error => {
+                console.error("Erro ao buscar notificações:", error);
+                console.log("Mantendo valor de teste devido ao erro");
+            });
+
+        // Configurar SignalR
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/notificationHub")
             .build();
 
         connection.on("ReceiveNotification", (message) => {
-            console.log(message);
+            console.log("Nova notificação recebida:", message);
 
-            document.getElementById("notificationsCount").innerHTML = "new";
+            if (notificationsCountElement) {
+                notificationsCountElement.textContent = "new";
+                notificationsCountElement.style.display = "inline-flex";
+                notificationsCountElement.classList.add('animate-pulse');
+            }
         });
 
-        connection.start().then(() => console.log("signalR running")).catch((err) => console.log(err));
+        connection.start()
+            .then(() => console.log("SignalR conectado com sucesso"))
+            .catch((err) => console.error("Erro ao conectar SignalR:", err));
 
-    })
+        const notifButton = document.querySelector('button[uk-toggle="target: #notificationModal"]');
 
+        if (notifButton) {
+            notifButton.addEventListener('click', function () {
+                console.log("Botão de notificação clicado");
+                setTimeout(() => {
+                    updateNotificationCount(0);
+                }, 500);
+            });
+        }
+    });
 
     const searchBox = document.getElementById("search--box");
-    
+
     if (searchBox) {
         searchBox.addEventListener('mouseenter', function () {
             searchBox.classList.add('shadow-md');
@@ -223,40 +285,19 @@
                 searchBox.classList.remove('border-indigo-300');
             }
         });
-        
 
         const searchInput = searchBox.querySelector('input');
-        
+
         if (searchInput) {
-            searchInput.addEventListener('focus', function() {
+            searchInput.addEventListener('focus', function () {
                 searchBox.classList.add('shadow-md');
                 searchBox.classList.add('border-indigo-300');
             });
-            
-            searchInput.addEventListener('blur', function() {
+
+            searchInput.addEventListener('blur', function () {
                 searchBox.classList.remove('shadow-md');
                 searchBox.classList.remove('border-indigo-300');
             });
         }
     }
-
-
-    const notifCount = document.getElementById('notificationsCount');
-    if (notifCount && notifCount.textContent !== '0') {
-        notifCount.classList.add('animate-pulse');
-    }
-    
-
-    const notifButton = document.querySelector('button[type="button"]');
-    const notifModal = document.getElementById('notificationModal');
-    
-    if (notifButton && notifModal) {
-        notifButton.addEventListener('click', function() {
-            if (notifModal.classList.contains('hidden')) {
-                notifCount.textContent = '0';
-                notifCount.classList.remove('animate-pulse');
-            }
-        });
-    }
-    
 </script>
