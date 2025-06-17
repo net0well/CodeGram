@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using CodeGram.Data.Hubs;
+using CodeGram.Data.Helpers.Constants;
 
 namespace CodeGram.Data.Services
 {
@@ -19,14 +20,15 @@ namespace CodeGram.Data.Services
             _context = context;
             _hubContext = hubContext;
         }
-        public async Task AddNewNotificationAsync(int userId, string message, string notificationType)
+        public async Task AddNewNotificationAsync(int userId, string notificationType, string userFullName, int? postId)
         {
             var newNotification = new Notification
             {
                 UserId = userId,
-                Message = message,
+                Message = GetPostMessage(notificationType, userFullName),
                 Type = notificationType,
                 IsRead = false,
+                PostId = postId,
                 DateCreated = DateTime.Now,
                 DateUpdated = DateTime.Now
             };
@@ -48,6 +50,40 @@ namespace CodeGram.Data.Services
 
             return count;
 
+        }
+
+        private string GetPostMessage(string notificationType, string userFullName)
+        {
+            var message = "";
+
+            switch(notificationType)
+            {
+                case NotificationType.Like:
+                    message = $"{userFullName} curtiu o seu post.";
+                    break;
+
+                case NotificationType.Favorite:
+                    message = $"{userFullName} favoritou o seu post.";
+                    break;
+
+                case NotificationType.Comment:
+                    message = $"{userFullName} comentou o seu post.";
+                    break;
+
+                case NotificationType.FriendRequest:
+                    message = $"{userFullName} te adicionou como amigo.";
+                    break;
+
+                case NotificationType.FriendRequestApproved:
+                    message = $"{userFullName} te aceitou como amigo.";
+                    break;
+
+                default:
+                    message = "";
+                    break;
+            }
+
+            return message;
         }
     }
 }
