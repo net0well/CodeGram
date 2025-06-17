@@ -85,11 +85,11 @@ namespace CircleApp.Controllers
 
             var result = await _postsService.TogglePostLikeAsync(postLikeVM.PostId, loggedInUserId.Value);
 
-            if (result.SendNotification) await _notificationsService.AddNewNotificationAsync(loggedInUserId.Value, "Liked", "Like");
+            //if (result.SendNotification) await _notificationsService.AddNewNotificationAsync(loggedInUserId.Value, "Liked", "Like");
 
             var post = await _postsService.GetPostByIdAsync(postLikeVM.PostId);
 
-            await _notificationsService.AddNewNotificationAsync(loggedInUserId.Value, "", "Like");
+            //await _notificationsService.AddNewNotificationAsync(loggedInUserId.Value, "", "Like");
 
             return PartialView("Home/_Post", post);
         }
