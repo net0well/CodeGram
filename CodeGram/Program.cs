@@ -1,9 +1,9 @@
 
 using CodeGram.Data;
 using CodeGram.Data.Helpers;
+using CodeGram.Data.Hubs;
 using CodeGram.Data.Models;
 using CodeGram.Data.Services;
-using CodeGram.Hubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
