@@ -1,4 +1,5 @@
-﻿using CodeGram.Data.Models;
+﻿using CodeGram.Data.Dtos;
+using CodeGram.Data.Models;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace CodeGram.Data.Services
         Task<Post> RemovePostAsync(int postId);
         Task AddPostCommentAsync(Comment comment);
         Task RemovePostCommentAsync(int commentId);
-        Task TogglePostLikeAsync(int postId, int loggedInUserId);
+        Task<GetNotificationDto> TogglePostLikeAsync(int postId, int loggedInUserId);
         Task TogglePostFavoriteAsync(int postId, int loggedInUserId);
         Task ReportPostAsync(int postId, int loggedInUserId);
         Task TogglePostVisibilityAsync(int postId, int loggedInUserId);  

@@ -6,7 +6,6 @@ using CodeGram.Data.Helpers.Enums;
 using Microsoft.AspNetCore.Authorization;
 using CodeGram.Controllers.Base;
 using Microsoft.AspNetCore.SignalR;
-using CodeGram.Hubs;
 
 namespace CircleApp.Controllers
 {
@@ -17,21 +16,18 @@ namespace CircleApp.Controllers
         private readonly IPostsService _postsService;
         private readonly IHashtagsService _hashtagsService;
         private readonly IFilesService _filesService;
-        private readonly IHubContext<NotificationHub> _hubContext;
         private readonly INotificationsService _notificationsService;
 
         public HomeController(ILogger<HomeController> logger,
             IPostsService postsService,
             IHashtagsService hashtagsService,
             IFilesService filesService,
-            IHubContext<NotificationHub> hubContext,
             INotificationsService notificationsService)
         {
             _logger = logger;
             _postsService = postsService;
             _hashtagsService = hashtagsService;
             _filesService = filesService;
-            _hubContext = hubContext;
             _notificationsService = notificationsService;
         }
 
@@ -87,14 +83,13 @@ namespace CircleApp.Controllers
             var loggedInUserId = GetUserId();
             if (loggedInUserId == null) return RedirectToLogin();
 
-            await _postsService.TogglePostLikeAsync(postLikeVM.PostId, loggedInUserId.Value);
+            var result = await _postsService.TogglePostLikeAsync(postLikeVM.PostId, loggedInUserId.Value);
+
+            if (result.SendNotification) await _notificationsService.AddNewNotificationAsync(loggedInUserId.Value, "Liked", "Like");
 
             var post = await _postsService.GetPostByIdAsync(postLikeVM.PostId);
 
-            var notificationNumber = await _notificationsService.GetUnreadNotificationsCountAsync(loggedInUserId.Value);
-
-            await _hubContext.Clients.User(post.UserId.ToString())
-                .SendAsync("ReceiveNotification", notificationNumber);
+            await _notificationsService.AddNewNotificationAsync(loggedInUserId.Value, "", "Like");
 
             return PartialView("Home/_Post", post);
         }

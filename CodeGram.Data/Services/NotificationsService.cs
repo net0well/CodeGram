@@ -33,6 +33,11 @@ namespace CodeGram.Data.Services
 
             await _context.Notifications.AddAsync(newNotification);
             await _context.SaveChangesAsync();
+
+            var notificationNumber = await GetUnreadNotificationsCountAsync(userId);
+
+            await _hubContext.Clients.User(userId.ToString())
+                .SendAsync("ReceiveNotification", notificationNumber);
         }
 
         public async Task<int> GetUnreadNotificationsCountAsync(int userId)
