@@ -241,6 +241,7 @@
             }
         });
 
+
         // Configurar SignalR
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/notificationHub")
@@ -262,6 +263,26 @@
         // Tornar a função loadNotifications global para o botão de retry
         window.loadNotifications = loadNotifications;
     });
+
+    function setNotificationAsRead(notificationId) {
+            console.log("Mark as read ", notificationId);
+        fetch(`Notifications/SetNotificationAsRead?notificationId=${notificationId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    notificationId: notificationId
+                })
+            })
+                .then(resp => resp.text())
+                .then(html => {
+                    document.getElementById('notification-dropdown').innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Erro ao marcar notificação como lida:', error);
+                });
+        }
 </script>
 
 <style>
