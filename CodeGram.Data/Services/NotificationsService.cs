@@ -28,7 +28,7 @@ namespace CodeGram.Data.Services
                 Message = GetPostMessage(notificationType, userFullName),
                 Type = notificationType,
                 IsRead = false,
-                PostId = postId,
+                PostId = postId.HasValue ? postId.Value : null,
                 DateCreated = DateTime.Now,
                 DateUpdated = DateTime.Now
             };
