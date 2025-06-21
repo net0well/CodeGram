@@ -55,48 +55,47 @@
             <div class="flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2">
 
                 <!-- Botão de Notificações -->
-                <button type="button" id="notificationsBtn"
-                        class="group sm:p-3 p-2 rounded-xl relative hover:bg-slate-50/80 transition-all duration-300 border border-transparent hover:border-slate-200/60 hover:shadow-sm"
-                        uk-toggle="target: #notificationModal">
+                <div class="relative">
+                    <button type="button" id="notificationsBtn"
+                            class="group sm:p-3 p-2 rounded-xl relative hover:bg-slate-50/80 transition-all duration-300 border border-transparent hover:border-slate-200/60 hover:shadow-sm">
 
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                         class="w-6 h-6 text-slate-600 group-hover:text-indigo-600 transition-all duration-300">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                    </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                             class="w-6 h-6 text-slate-600 group-hover:text-indigo-600 transition-all duration-300">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                        </svg>
 
-                    <!-- Contador -->
-                    <span id="notificationsCount"
-                          class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full hidden">
-                        0
-                    </span>
-                </button>
+                        <!-- Contador -->
+                        <span id="notificationsCount"
+                              class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full hidden">
+                            0
+                        </span>
+                    </button>
 
-                <!-- Modal de Notificações -->
-                <div id="notificationModal" class="hidden bg-white rounded-lg drop-shadow-xl w-80 border border-gray-200"
-                     uk-drop="offset:6;pos: bottom-right;animate-out: true;">
+                    <!-- Modal de Notificações -->
+                    <div id="notificationModal" class="hidden absolute top-full right-0 mt-2 bg-white rounded-lg drop-shadow-xl w-80 border border-gray-200 z-50">
+                        <div class="p-4 py-3 flex items-center gap-4 bg-gray-100 border-b border-gray-200">
+                            <h3 class="font-bold text-lg text-black flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                     class="w-5 h-5 mr-2 text-indigo-600">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                                </svg>
+                                Notificações
+                            </h3>
+                        </div>
 
-                    <div class="p-4 py-3 flex items-center gap-4 bg-gray-100 border-b border-gray-200">
-                        <h3 class="font-bold text-lg text-black flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                 class="w-5 h-5 mr-2 text-indigo-600">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                            </svg>
-                            Notificações
-                        </h3>
-                    </div>
-
-                    <div class="text-sm h-[400px] w-full overflow-y-auto">
-                        <div class="p-3" id="notification-dropdown">
-                            <div class="flex items-center justify-center h-32 text-center text-gray-500">
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                         class="w-10 h-10 mx-auto mb-3 text-indigo-300">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-                                    </svg>
-                                    <p>Não há notificações no momento</p>
+                        <div class="text-sm h-[400px] w-full overflow-y-auto">
+                            <div class="p-3" id="notification-dropdown">
+                                <div class="flex items-center justify-center h-32 text-center text-gray-500">
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                             class="w-10 h-10 mx-auto mb-3 text-indigo-300">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                        </svg>
+                                        <p>Não há notificações no momento</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -153,9 +152,11 @@
     document.addEventListener("DOMContentLoaded", function () {
         const notificationsBtn = document.getElementById("notificationsBtn");
         const notificationsCount = document.getElementById("notificationsCount");
+        const notificationModal = document.getElementById("notificationModal");
         const notificationDropdown = document.getElementById("notification-dropdown");
 
         let currentCount = 0;
+        let isModalOpen = false;
 
         // Função para atualizar o contador
         function updateNotificationCount(count) {
@@ -185,16 +186,33 @@
                 .catch(error => {
                     console.error("Erro ao carregar notificações:", error);
                     notificationDropdown.innerHTML = `
-                            <div class="flex items-center justify-center h-32 text-center text-red-500">
-                                <div>
-                                    <p>Erro ao carregar notificações</p>
-                                    <button onclick="loadNotifications()" class="mt-2 text-sm text-indigo-600 hover:underline">
-                                        Tentar novamente
-                                    </button>
+                                <div class="flex items-center justify-center h-32 text-center text-red-500">
+                                    <div>
+                                        <p>Erro ao carregar notificações</p>
+                                        <button onclick="loadNotifications()" class="mt-2 text-sm text-indigo-600 hover:underline">
+                                            Tentar novamente
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        `;
+                            `;
                 });
+        }
+
+        // Função para mostrar/esconder o modal
+        function toggleModal() {
+            if (isModalOpen) {
+                notificationModal.classList.add('hidden');
+                isModalOpen = false;
+            } else {
+                notificationModal.classList.remove('hidden');
+                isModalOpen = true;
+                loadNotifications();
+
+                // Zerar contador após um pequeno delay
+                setTimeout(() => {
+                    updateNotificationCount(0);
+                }, 300);
+            }
         }
 
         // Buscar contagem inicial
@@ -209,14 +227,18 @@
             });
 
         // Event listener para o botão de notificações
-        notificationsBtn.addEventListener('click', function () {
-            console.log("Botão clicado, carregando notificações...");
-            loadNotifications();
+        notificationsBtn.addEventListener('click', function (event) {
+            event.stopPropagation();
+            console.log("Botão clicado, alternando modal...");
+            toggleModal();
+        });
 
-            // Zerar contador após um pequeno delay
-            setTimeout(() => {
-                updateNotificationCount(0);
-            }, 300);
+        // Fechar modal quando clicar fora dele
+        document.addEventListener('click', function (event) {
+            if (isModalOpen && !notificationModal.contains(event.target) && !notificationsBtn.contains(event.target)) {
+                notificationModal.classList.add('hidden');
+                isModalOpen = false;
+            }
         });
 
         // Configurar SignalR
@@ -288,5 +310,10 @@
     /* Transições suaves */
     .transition-all {
         transition: all 0.3s ease;
+    }
+
+    /* Garantir que o modal apareça por cima de outros elementos */
+    #notificationModal {
+        z-index: 1000;
     }
 </style>
