@@ -1,4 +1,5 @@
 ﻿using CodeGram.Controllers.Base;
+using CodeGram.Data.Models;
 using CodeGram.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +35,20 @@ namespace CodeGram.Controllers
             var userId = GetUserId();
 
             if (!userId.HasValue) RedirectToLogin();
+
+            var notifications = await _notificationsService.GetNotifications(userId.Value);
+
+            return PartialView("Notifications/_Notifications", notifications);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SetNotificationAsRead(int notificationId)
+        {
+            var userId = GetUserId();
+
+            if (!userId.HasValue) RedirectToLogin();
+
+            await _notificationsService.SetNotificationAsRead(notificationId);
 
             var notifications = await _notificationsService.GetNotifications(userId.Value);
 

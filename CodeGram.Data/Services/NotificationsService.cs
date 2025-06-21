@@ -63,6 +63,20 @@ namespace CodeGram.Data.Services
 
         }
 
+        public async Task SetNotificationAsRead(int notificationId)
+        {
+            var notificationDb = await _context.Notifications.FirstOrDefaultAsync(n => n.Id == notificationId);
+
+            if(notificationDb != null)
+            {
+                notificationDb.DateUpdated = DateTime.Now;
+                notificationDb.IsRead = true;
+
+                _context.Notifications.Update(notificationDb);
+                await _context.SaveChangesAsync();
+            }
+        }
+
         private string GetPostMessage(string notificationType, string userFullName)
         {
             var message = "";
