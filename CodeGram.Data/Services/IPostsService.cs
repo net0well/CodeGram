@@ -20,7 +20,7 @@ namespace CodeGram.Data.Services
         Task AddPostCommentAsync(Comment comment);
         Task RemovePostCommentAsync(int commentId);
         Task<GetNotificationDto> TogglePostLikeAsync(int postId, int loggedInUserId);
-        Task TogglePostFavoriteAsync(int postId, int loggedInUserId);
+        Task<GetNotificationDto> TogglePostFavoriteAsync(int postId, int loggedInUserId);
         Task ReportPostAsync(int postId, int loggedInUserId);
         Task TogglePostVisibilityAsync(int postId, int loggedInUserId);  
     }

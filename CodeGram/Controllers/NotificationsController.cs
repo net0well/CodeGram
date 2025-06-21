@@ -27,5 +27,17 @@ namespace CodeGram.Controllers
 
             return Json(count);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetNotifications()
+        {
+            var userId = GetUserId();
+
+            if (!userId.HasValue) RedirectToLogin();
+
+            var notifications = await _notificationsService.GetNotifications(userId.Value);
+
+            return PartialView("Notifications/_Notifications", notifications);
+        }
     }
 }

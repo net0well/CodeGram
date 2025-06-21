@@ -6,6 +6,7 @@ using CodeGram.Data.Helpers.Enums;
 using Microsoft.AspNetCore.Authorization;
 using CodeGram.Controllers.Base;
 using Microsoft.AspNetCore.SignalR;
+using CodeGram.Data.Helpers.Constants;
 
 namespace CircleApp.Controllers
 {
@@ -81,15 +82,15 @@ namespace CircleApp.Controllers
         public async Task<IActionResult> TogglePostLike(PostLikeVM postLikeVM)
         {
             var loggedInUserId = GetUserId();
+            var userName = GetUserFullName();
+
             if (loggedInUserId == null) return RedirectToLogin();
 
             var result = await _postsService.TogglePostLikeAsync(postLikeVM.PostId, loggedInUserId.Value);
 
-            //if (result.SendNotification) await _notificationsService.AddNewNotificationAsync(loggedInUserId.Value, "Liked", "Like");
-
             var post = await _postsService.GetPostByIdAsync(postLikeVM.PostId);
 
-            //await _notificationsService.AddNewNotificationAsync(loggedInUserId.Value, "", "Like");
+            if (result.SendNotification) await _notificationsService.AddNewNotificationAsync(post.UserId, NotificationType.Like, userName, postLikeVM.PostId);
 
             return PartialView("Home/_Post", post);
         }
@@ -98,10 +99,14 @@ namespace CircleApp.Controllers
         public async Task<IActionResult> TogglePostFavorite(PostFavoriteVM postFavoriteVM)
         {
             var loggedInUserId = GetUserId();
+            var userName = GetUserFullName();
+
             if (loggedInUserId == null) return RedirectToLogin();
-            await _postsService.TogglePostFavoriteAsync(postFavoriteVM.PostId, loggedInUserId.Value);
+            var result = await _postsService.TogglePostFavoriteAsync(postFavoriteVM.PostId, loggedInUserId.Value);
 
             var post = await _postsService.GetPostByIdAsync(postFavoriteVM.PostId);
+
+            if (result.SendNotification) await _notificationsService.AddNewNotificationAsync(post.UserId, NotificationType.Favorite, userName, postFavoriteVM.PostId);
 
             return PartialView("Home/_Post", post);
         }
@@ -122,6 +127,7 @@ namespace CircleApp.Controllers
         public async Task<IActionResult> AddPostComment(PostCommentVM postCommentVM)
         {
             var loggedInUserId = GetUserId();
+            var userName = GetUserFullName();
             if (loggedInUserId == null) return RedirectToLogin();
 
             //Creat a post object
@@ -137,6 +143,8 @@ namespace CircleApp.Controllers
             await _postsService.AddPostCommentAsync(newComment);
 
             var post = await _postsService.GetPostByIdAsync(postCommentVM.PostId);
+
+            await _notificationsService.AddNewNotificationAsync(post.UserId, NotificationType.Comment, userName, postCommentVM.PostId);
 
             return PartialView("Home/_post", post);
         }

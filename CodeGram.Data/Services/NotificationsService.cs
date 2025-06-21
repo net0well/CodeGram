@@ -42,6 +42,17 @@ namespace CodeGram.Data.Services
                 .SendAsync("ReceiveNotification", notificationNumber);
         }
 
+        public async Task<List<Notification>> GetNotifications(int userId)
+        {
+            var allNotifications = await _context.Notifications
+                .Where(n => n.UserId == userId)
+                .OrderBy(n => n.IsRead)
+                .ThenByDescending(n => n.DateCreated)
+                .ToListAsync();
+
+            return allNotifications;
+        }
+
         public async Task<int> GetUnreadNotificationsCountAsync(int userId)
         {
             var count = await _context.Notifications

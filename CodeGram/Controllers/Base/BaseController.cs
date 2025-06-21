@@ -16,6 +16,15 @@ namespace CodeGram.Controllers.Base
             return int.Parse(loggedInUserId);
         }
 
+        protected string GetUserFullName()
+        {
+            var loggedInUserFullName = User.FindFirstValue(ClaimTypes.Name);
+            //var GivenName = User.FindFirstValue(ClaimTypes.GivenName);
+            //var Surname = User.FindFirstValue(ClaimTypes.Surname);
+
+            return loggedInUserFullName;
+        }
+
         protected IActionResult RedirectToLogin()
         {
             return RedirectToAction("Login", "Authentication");

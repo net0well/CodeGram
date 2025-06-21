@@ -19,83 +19,17 @@
                 </svg>
             </button>
 
-
             <div id="logo" class="flex items-center ml-2">
                 <a asp-controller="Home" asp-action="Index" class="flex items-center group">
-
-                    <svg width="48" height="48" viewBox="0 0 48 48" class="block">
-                        <!-- Background with gradient -->
-                        <defs>
-                            <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
-                            </linearGradient>
-                            <linearGradient id="glassGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
-                                <stop offset="100%" style="stop-color:#e0e7ff;stop-opacity:0.8" />
-                            </linearGradient>
-                            
-                            <filter id="glow">
-                                <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-                                <feMerge>
-                                    <feMergeNode in="coloredBlur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
-                        </defs>
-
-                        <circle cx="24" cy="24" r="22" fill="url(#bgGradient)" />
-
-
-                        <pattern id="grid" patternUnits="userSpaceOnUse" width="4" height="4">
-                            <path d="M 4 0 L 0 0 0 4" fill="none" stroke="#ffffff" stroke-width="0.3" opacity="0.2" />
-                        </pattern>
-                        <circle cx="24" cy="24" r="20" fill="url(#grid)" opacity="0.6" />
-
-
-                        <rect x="11" y="18" width="12" height="8" rx="4" ry="4" fill="url(#glassGradient)" stroke="#1e1b4b" stroke-width="1.8" />
-
-                        <rect x="25" y="18" width="12" height="8" rx="4" ry="4" fill="url(#glassGradient)" stroke="#1e1b4b" stroke-width="1.8" />
-
-                        <rect x="22.5" y="21" width="3" height="2" fill="#1e1b4b" />
-
-                        <rect x="13" y="20" width="8" height="4" rx="2" ry="2" fill="#3730a3" opacity="0.7" />
-                        <rect x="27" y="20" width="8" height="4" rx="2" ry="2" fill="#3730a3" opacity="0.7" />
-
-                        <circle cx="17" cy="22" r="1" fill="#00ff88" opacity="0.8" />
-                        <circle cx="31" cy="22" r="1" fill="#00ff88" opacity="0.8" />
-                        <rect x="15.5" y="21.5" width="3" height="0.5" fill="#00ff88" opacity="0.6" />
-                        <rect x="29.5" y="21.5" width="3" height="0.5" fill="#00ff88" opacity="0.6" />
-
-                        <ellipse cx="16" cy="20.5" rx="2" ry="1" fill="#ffffff" opacity="0.4" />
-                        <ellipse cx="30" cy="20.5" rx="2" ry="1" fill="#ffffff" opacity="0.4" />
-
-                        <circle cx="38" cy="12" r="3.5" fill="#ff4444" filter="url(#glow)" />
-                        <circle cx="38" cy="12" r="2.5" fill="#ffffff" />
-                        <text x="38" y="13.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="3" font-weight="bold" fill="#ff4444">!</text>
-
-                        <path d="M18 30 Q24 34 30 30" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" fill="none" />
-
-                        <text x="12" y="38" font-family="monospace" font-size="3" fill="#ffffff" opacity="0.6">101010</text>
-                        <text x="28" y="38" font-family="monospace" font-size="3" fill="#ffffff" opacity="0.6">110011</text>
-
-                        <rect x="10" y="14" width="1" height="1" fill="#00ff88" opacity="0.8" />
-                        <rect x="37" y="32" width="1" height="1" fill="#00ff88" opacity="0.8" />
-                        <circle cx="40" cy="18" r="0.5" fill="#fbbf24" opacity="0.9" />
-                    </svg>
-
-
-                    <span class="ml-2 text-2xl font-bold text-black transition-colors">
-                        <span class="text-black">&lt;</span>Code<span class="text-purple-700">Gram</span><span class="text-black">/&gt;</span>
-                    </span>
+                    <img src="https://i.ibb.co/CqbjK7D/Green-Modern-Marketing-Logo-removebg-preview.png"
+                         alt="Logo"
+                         class="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
                 </a>
             </div>
         </div>
     </div>
 
-
     <div class="flex-1 relative flex justify-center">
-
         <div class="max-w-[1220px] w-full flex justify-start items-center pl-5 md:pl-16 lg:pl-28">
             <form id="search--box" class="2xl:w-[650px] xl:w-[550px] lg:w-[450px] md:w-[400px] sm:w-[350px] w-[90%] rounded-full overflow-hidden z-20 bg-white/90 border border-gray-300 max-md:hidden transition-all duration-300 hover:border-indigo-300">
                 <div class="flex items-center h-full w-full">
@@ -108,7 +42,6 @@
                 </div>
             </form>
 
-
             <div class="ml-4 max-w-md overflow-hidden hidden lg:block">
                 <div id="anime-quotes" class="text-gray-600 italic text-sm font-medium relative h-6">
                     <div class="quote-slide absolute inset-0 flex items-center">
@@ -118,50 +51,50 @@
             </div>
         </div>
 
-
-
         <div class="max-w-[1220px] mx-auto flex items-center">
             <div class="flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2">
 
-                <button type="button"
+                <!-- Botão de Notificações -->
+                <button type="button" id="notificationsBtn"
                         class="group sm:p-3 p-2 rounded-xl relative hover:bg-slate-50/80 transition-all duration-300 border border-transparent hover:border-slate-200/60 hover:shadow-sm"
                         uk-toggle="target: #notificationModal">
 
-                    <!-- Ícone Bell Minimalista -->
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke-width="1.5"
-                         stroke="currentColor"
-                         class="w-6 h-6 text-slate-600 group-hover:text-indigo-600 transition-all duration-300 bell-icon-hover">
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                         class="w-6 h-6 text-slate-600 group-hover:text-indigo-600 transition-all duration-300">
+                        <path stroke-linecap="round" stroke-linejoin="round"
                               d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                     </svg>
 
-                    <!-- Contador Minimalista -->
+                    <!-- Contador -->
                     <span id="notificationsCount"
-                          class="absolute -top-1 -right-1 notification-dot text-white text-xs font-mono-geek font-semibold w-5 h-5 flex items-center justify-center rounded-full transition-all duration-300 notification-hidden">
+                          class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full hidden">
                         0
                     </span>
                 </button>
 
+                <!-- Modal de Notificações -->
+                <div id="notificationModal" class="hidden bg-white rounded-lg drop-shadow-xl w-80 border border-gray-200"
+                     uk-drop="offset:6;pos: bottom-right;animate-out: true;">
 
-                <div id="notificationModal" class="hidden bg-white rounded-lg drop-shadow-xl w-72 border border-gray-200" uk-drop="offset:6;pos: bottom-right;animate-out: true;">
                     <div class="p-4 py-3 flex items-center gap-4 bg-gray-100 border-b border-gray-200">
                         <h3 class="font-bold text-lg text-black flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2 text-indigo-600">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                 class="w-5 h-5 mr-2 text-indigo-600">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                             </svg>
                             Notificações
                         </h3>
                     </div>
+
                     <div class="text-sm h-[400px] w-full overflow-y-auto">
-                        <div class="p-3 text-sm font-normal text-gray-700" id="notification-dropdown">
+                        <div class="p-3" id="notification-dropdown">
                             <div class="flex items-center justify-center h-32 text-center text-gray-500">
                                 <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 mx-auto mb-3 text-indigo-300">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                         class="w-10 h-10 mx-auto mb-3 text-indigo-300">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                                     </svg>
                                     <p>Não há notificações no momento</p>
                                 </div>
@@ -170,31 +103,40 @@
                     </div>
                 </div>
 
-
-                <div class="rounded-lg overflow-hidden relative bg-white cursor-pointer shrink-0 hover:ring-2 hover:ring-indigo-300 transition-all duration-300 border border-gray-200" uk-toggle="target: #profileDropdown">
-                    <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+profilePictureUrl))" class="sm:w-10 sm:h-10 w-9 h-9 rounded-lg shadow-sm shrink-0 object-cover" />
+                <!-- Profile Dropdown -->
+                <div class="rounded-lg overflow-hidden relative bg-white cursor-pointer shrink-0 hover:ring-2 hover:ring-indigo-300 transition-all duration-300 border border-gray-200"
+                     uk-toggle="target: #profileDropdown">
+                    <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+profilePictureUrl))"
+                         class="sm:w-10 sm:h-10 w-9 h-9 rounded-lg shadow-sm shrink-0 object-cover" />
                 </div>
 
-
-                <div id="profileDropdown" class="hidden bg-white rounded-lg drop-shadow-xl w-64 border border-gray-200" uk-drop="offset:6;pos: bottom-right;animate-out: true;">
+                <div id="profileDropdown" class="hidden bg-white rounded-lg drop-shadow-xl w-64 border border-gray-200"
+                     uk-drop="offset:6;pos: bottom-right;animate-out: true;">
                     <div class="p-4 py-3 flex items-center gap-4 bg-gray-100 border-b border-gray-200">
-                        <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+profilePictureUrl))" class="w-10 h-10 rounded-lg shadow-sm object-cover border border-gray-300" />
+                        <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+profilePictureUrl))"
+                             class="w-10 h-10 rounded-lg shadow-sm object-cover border border-gray-300" />
                         <div class="flex-1">
                             <h4 class="text-sm font-medium text-black">@fullName</h4>
                             <div class="text-xs mt-1 text-indigo-600 font-light">@userName</div>
                         </div>
                     </div>
                     <nav class="p-1">
-                        <a asp-controller="Settings" asp-action="Index" class="flex items-center gap-3 hover:bg-indigo-50 p-2.5 px-3 rounded-md transition-all duration-300 text-gray-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-indigo-600">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                        <a asp-controller="Settings" asp-action="Index"
+                           class="flex items-center gap-3 hover:bg-indigo-50 p-2.5 px-3 rounded-md transition-all duration-300 text-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                 class="w-5 h-5 text-indigo-600">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                             Minha Conta
                         </a>
-                        <a asp-controller="Authentication" asp-action="Logout" class="flex items-center gap-3 hover:bg-indigo-50 p-2.5 px-3 rounded-md transition-all duration-300 text-gray-700 mt-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-500">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                        <a asp-controller="Authentication" asp-action="Logout"
+                           class="flex items-center gap-3 hover:bg-indigo-50 p-2.5 px-3 rounded-md transition-all duration-300 text-gray-700 mt-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                 class="w-5 h-5 text-red-500">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                             </svg>
                             Sair
                         </a>
@@ -208,122 +150,143 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aspnet-signalr/1.0.27/signalr.min.js" integrity="sha512-a+73ErrZPjhqOu0qbW1QLsenEF4pvDjmnd+Ws6hkDyJlrwAigOQAxQhIT+fPNFWScUvtJQvn+G535TT2C6/G4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const notificationsCountElement = document.getElementById("notificationsCount");
+    document.addEventListener("DOMContentLoaded", function () {
+        const notificationsBtn = document.getElementById("notificationsBtn");
+        const notificationsCount = document.getElementById("notificationsCount");
+        const notificationDropdown = document.getElementById("notification-dropdown");
 
-        console.log("Elemento contador encontrado:", notificationsCountElement);
+        let currentCount = 0;
 
+        // Função para atualizar o contador
         function updateNotificationCount(count) {
-            console.log("Atualizando contador para:", count);
-
-            if (!notificationsCountElement) {
-                console.error("Elemento notificationsCount não encontrado!");
-                return;
-            }
+            currentCount = count;
 
             if (count > 0) {
-                // Mostrar contador com animação
-                notificationsCountElement.textContent = count > 99 ? '99+' : count;
-                notificationsCountElement.classList.remove('notification-hidden');
-                notificationsCountElement.classList.add('notification-visible', 'notification-pulse');
-                console.log("Contador visível com valor:", count);
+                notificationsCount.textContent = count > 99 ? '99+' : count;
+                notificationsCount.classList.remove('hidden');
             } else {
-                // Ocultar contador com animação
-                notificationsCountElement.classList.remove('notification-visible', 'notification-pulse');
-                notificationsCountElement.classList.add('notification-hidden');
-                console.log("Contador oculto");
+                notificationsCount.classList.add('hidden');
             }
         }
 
+        // Função para carregar notificações
+        function loadNotifications() {
+            fetch("/Notifications/GetNotifications")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    console.log("HTML recebido:", html);
+                    notificationDropdown.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error("Erro ao carregar notificações:", error);
+                    notificationDropdown.innerHTML = `
+                            <div class="flex items-center justify-center h-32 text-center text-red-500">
+                                <div>
+                                    <p>Erro ao carregar notificações</p>
+                                    <button onclick="loadNotifications()" class="mt-2 text-sm text-indigo-600 hover:underline">
+                                        Tentar novamente
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                });
+        }
+
         // Buscar contagem inicial
-        fetch("Notifications/GetCount", {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => response.json())
-            .then(data => {
-                console.log("notifications count from API = ", data);
-                updateNotificationCount(data);
+        fetch("/Notifications/GetCount")
+            .then(response => response.json())
+            .then(count => {
+                console.log("Contagem inicial:", count);
+                updateNotificationCount(count);
             })
             .catch(error => {
-                console.error("Erro ao buscar notificações:", error);
+                console.error("Erro ao buscar contagem:", error);
             });
+
+        // Event listener para o botão de notificações
+        notificationsBtn.addEventListener('click', function () {
+            console.log("Botão clicado, carregando notificações...");
+            loadNotifications();
+
+            // Zerar contador após um pequeno delay
+            setTimeout(() => {
+                updateNotificationCount(0);
+            }, 300);
+        });
 
         // Configurar SignalR
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/notificationHub")
             .build();
 
-        connection.on("ReceiveNotification", (message) => {
-            console.log("Nova notificação recebida:", message);
-
-            // Aumentar contador ou mostrar indicador "new"
-            if (notificationsCountElement) {
-                const currentCount = parseInt(notificationsCountElement.textContent) || 0;
-                updateNotificationCount(currentCount + 1);
-
-                // Adicionar efeito de "nova notificação"
-                notificationsCountElement.style.animation = 'none';
-                setTimeout(() => {
-                    notificationsCountElement.style.animation = '';
-                    notificationsCountElement.classList.add('notification-pulse');
-                }, 10);
-            }
+        connection.on("ReceiveNotification", function (message) {
+            console.log("Nova notificação via SignalR:", message);
+            updateNotificationCount(currentCount + 1);
         });
 
         connection.start()
-            .then(() => console.log("SignalR conectado com sucesso"))
-            .catch((err) => console.error("Erro ao conectar SignalR:", err));
-
-        // Quando clicar no botão, remover animação de pulse e zerar contador
-        const notifButton = document.querySelector('button[uk-toggle="target: #notificationModal"]');
-
-        if (notifButton) {
-            notifButton.addEventListener('click', function () {
-                console.log("Botão de notificação clicado");
-
-                // Remover animação de pulse imediatamente
-                notificationsCountElement.classList.remove('notification-pulse');
-
-                // Após um delay, zerar o contador
-                setTimeout(() => {
-                    updateNotificationCount(0);
-                }, 500);
+            .then(() => {
+                console.log("SignalR conectado com sucesso");
+            })
+            .catch(error => {
+                console.error("Erro ao conectar SignalR:", error);
             });
-        }
+
+        // Tornar a função loadNotifications global para o botão de retry
+        window.loadNotifications = loadNotifications;
     });
 </script>
 
 <style>
-    
-    
-    .font-mono-geek {
-        font-family: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+    /* Estilo para o contador de notificações */
+    #notificationsCount {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        transition: all 0.3s ease;
     }
-    
-    .notification-pulse {
-        animation: notification-glow 2s infinite;
+
+        #notificationsCount:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+
+    /* Melhorar o scroll das notificações */
+    #notification-dropdown {
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 #f1f5f9;
     }
-    
-    .notification-dot {
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
-        box-shadow: 0 0 6px rgba(99, 102, 241, 0.4);
+
+        #notification-dropdown::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #notification-dropdown::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 3px;
+        }
+
+        #notification-dropdown::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+            #notification-dropdown::-webkit-scrollbar-thumb:hover {
+                background: #94a3b8;
+            }
+
+    /* Estilo para o botão de notificações quando há notificações */
+    #notificationsBtn.has-notifications {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: rgba(239, 68, 68, 0.2);
     }
-    
-    .notification-hidden {
-        transform: scale(0);
-        opacity: 0;
-        transition: all 0.2s ease-out;
-    }
-    
-    .notification-visible {
-        transform: scale(1);
-        opacity: 1;
-        transition: all 0.2s ease-out;
-    }
-    
-    .bell-icon-hover {
-        filter: drop-shadow(0 0 4px rgba(99, 102, 241, 0.3));
+
+    /* Transições suaves */
+    .transition-all {
+        transition: all 0.3s ease;
     }
 </style>
