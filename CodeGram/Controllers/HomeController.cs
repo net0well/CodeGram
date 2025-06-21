@@ -90,7 +90,7 @@ namespace CircleApp.Controllers
 
             var post = await _postsService.GetPostByIdAsync(postLikeVM.PostId);
 
-            if (result.SendNotification) await _notificationsService.AddNewNotificationAsync(post.UserId, NotificationType.Like, userName, postLikeVM.PostId);
+            if (result.SendNotification && loggedInUserId != post.UserId) await _notificationsService.AddNewNotificationAsync(post.UserId, NotificationType.Like, userName, postLikeVM.PostId);
 
             return PartialView("Home/_Post", post);
         }
@@ -106,7 +106,7 @@ namespace CircleApp.Controllers
 
             var post = await _postsService.GetPostByIdAsync(postFavoriteVM.PostId);
 
-            if (result.SendNotification) await _notificationsService.AddNewNotificationAsync(post.UserId, NotificationType.Favorite, userName, postFavoriteVM.PostId);
+            if (result.SendNotification && loggedInUserId != post.UserId) await _notificationsService.AddNewNotificationAsync(post.UserId, NotificationType.Favorite, userName, postFavoriteVM.PostId);
 
             return PartialView("Home/_Post", post);
         }
@@ -144,7 +144,8 @@ namespace CircleApp.Controllers
 
             var post = await _postsService.GetPostByIdAsync(postCommentVM.PostId);
 
-            await _notificationsService.AddNewNotificationAsync(post.UserId, NotificationType.Comment, userName, postCommentVM.PostId);
+            if(loggedInUserId != post.UserId)
+                await _notificationsService.AddNewNotificationAsync(post.UserId, NotificationType.Comment, userName, postCommentVM.PostId);
 
             return PartialView("Home/_post", post);
         }
