@@ -10,9 +10,11 @@ namespace CodeGram.Controllers
         {
             _adminService = adminService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var reportedPosts = await _adminService.GetReportedPostsAsync();
+
+            return View(reportedPosts);
         }
     }
 }
