@@ -18,8 +18,11 @@ namespace CodeGram.Data.Services
         public async Task<List<Post>> GetReportedPostsAsync()
         {
             var posts = await _context.Posts
-                .Include(n => n.Reports)
-                .Where(n => n.Reports.Count > 5 && !n.IsDeleted)
+                .Include(n => n.User)
+                .Include(n => n.Comments)
+                .Include(n => n.Likes)
+                .Include(n => n.Favorites)
+                .Where(n => n.NrOfReports > 5 && !n.IsDeleted)
                 .ToListAsync();
 
             return posts;

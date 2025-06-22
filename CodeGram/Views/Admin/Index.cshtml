@@ -1,6 +1,204 @@
 ﻿@model List<Post>
-<main id="site__main" class="2xl:ml-[--w-side]  xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
-    <h2>
-        Welcome to Admin Dashboard.
-    </h2>
-    </main>
+
+<main id="site__main" class="ml-[30px] 2xl:ml-[--w-side] xl:ml-[--w-side-sm] p-2.5 h-[calc(100vh-var(--m-top))] mt-[--m-top]">
+
+    <div class="bg-white rounded-xl shadow-sm border p-6 mb-4">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">Posts Reportados</h2>
+                <p class="text-sm text-gray-600 mt-1">Gerencie conteúdos reportados pela comunidade</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                    @Model.Count post@(Model.Count != 1 ? "s" : "") reportado@(Model.Count != 1 ? "s" : "")
+                </span>
+            </div>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+
+        <div class="bg-white rounded-xl shadow-sm border p-8 text-center">
+            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-green-100 rounded-full">
+                <ion-icon name="checkmark-circle" class="text-2xl text-green-600"></ion-icon>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Nenhum post reportado</h3>
+            <p class="text-gray-600">Ótimas notícias! Não há posts pendentes de moderação no momento.</p>
+        </div>
+    }
+    else
+    {
+        <div class="space-y-4">
+            @foreach (var post in Model)
+            {
+                TimeSpan timeSpanSincePosted = DateTime.UtcNow.Subtract(post.DateCreated);
+                string displayTime = timeSpanSincePosted switch
+                {
+                    var t when t.TotalDays >= 1 => $"{(int)t.TotalDays}d atrás",
+                    var t when t.TotalHours >= 1 => $"{(int)t.TotalHours}h atrás",
+                    var t when t.TotalMinutes >= 1 => $"{(int)t.TotalMinutes}m atrás",
+                    _ => "Agora"
+                };
+
+                int reportCount = post.NrOfReports;
+                
+
+                <div id="post-@post.Id" class="bg-white rounded-xl shadow-sm text-sm font-medium border border-l-4 border-l-red-500">
+
+                    <div class="bg-red-50 px-4 py-3 border-b border-red-100">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <ion-icon name="warning" class="text-red-600 text-lg"></ion-icon>
+                                <span class="text-red-800 font-medium">
+                                    @reportCount denuncia@(reportCount != 1 ? "s" : "") recebida@(reportCount != 1 ? "s" : "")
+                                </span>
+                            </div>
+                            <div class="flex gap-2">
+                                <form asp-controller="Admin" asp-action="ApprovePost" style="display: inline;">
+                                    <input type="hidden" name="postId" value="@post.Id" />
+                                    <button type="submit" class="px-3 py-1.5 bg-green-100 text-green-700 rounded-lg text-xs font-medium hover:bg-green-200 transition-colors">
+                                        <ion-icon name="checkmark" class="text-sm mr-1"></ion-icon>
+                                        Aprovar
+                                    </button>
+                                </form>
+
+                                <form asp-controller="Admin" asp-action="RemoveReportedPost" style="display: inline;">
+                                    <input type="hidden" name="postId" value="@post.Id" />
+                                    <button type="submit" class="px-3 py-1.5 bg-red-100 text-red-700 rounded-lg text-xs font-medium hover:bg-red-200 transition-colors"
+                                            onclick="return confirm('Tem certeza que deseja remover este post?')">
+                                        <ion-icon name="trash" class="text-sm mr-1"></ion-icon>
+                                        Remover
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
+                        <a asp-controller="Users" asp-action="Details" asp-route-userId="@post.UserId">
+                            <img src="@(!string.IsNullOrEmpty(post.User.ProfilePictureUrl) ?
+                                Url.Content("~/"+post.User.ProfilePictureUrl) :
+                                Url.Content("~/images/avatar/user.png"))"
+                                 class="w-9 h-9 rounded-full object-cover" />
+                        </a>
+                        <div class="flex-1">
+                            <a asp-controller="Users" asp-action="Details" asp-route-userId="@post.UserId">
+                                <h4 class="text-black font-semibold">@post.User.FullName</h4>
+                                <div class="text-xs text-gray-500/80" title="@post.DateCreated.ToString("dd/MM/yyyy HH:mm")">
+                                    @displayTime
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            @if (post.IsPrivate == true)
+                            {
+                                <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">
+                                    <ion-icon name="lock-closed" class="text-xs mr-1"></ion-icon>
+                                    Privado
+                                </span>
+                            }
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                                ID: @post.Id
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="sm:px-4 p-2.5 pt-0 w-full">
+                        <p class="font-normal text-gray-800 leading-relaxed">
+                            @post.Content
+                        </p>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(post.ImageUrl))
+                    {
+                        <div class="sm:px-4 px-2.5 pb-2">
+                            <div class="relative w-full rounded-lg overflow-hidden border">
+                                <img src="@Url.Content("~/"+post.ImageUrl)"
+                                     class="w-full h-auto object-cover max-h-96"
+                                     alt="Imagem do post" />
+                            </div>
+                        </div>
+                    }
+
+                    <div class="sm:px-4 px-2.5 py-3 border-t border-gray-100">
+                        <div class="flex items-center gap-6 text-xs text-gray-600">
+                            <div class="flex items-center gap-1">
+                                <ion-icon name="heart" class="text-red-500"></ion-icon>
+                                <span>@(post.Likes?.Count ?? 0) curtidas</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <ion-icon name="chatbubble-ellipses" class="text-blue-500"></ion-icon>
+                                <span>@(post.Comments?.Count ?? 0) comentários</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <ion-icon name="bookmark" class="text-orange-500"></ion-icon>
+                                <span>@(post.Favorites?.Count ?? 0) salvos</span>
+                            </div>
+                            <div class="ml-auto flex items-center gap-1">
+                                <ion-icon name="flag" class="text-red-500"></ion-icon>
+                                <span class="font-medium text-red-600">@reportCount denúncia@(reportCount != 1 ? "s" : "")</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-100 bg-gray-50">
+                        <button type="button" class="w-full px-4 py-3 text-xs text-gray-600 hover:text-gray-800 transition-colors flex items-center justify-center gap-2"
+                                onclick="togglePostDetails('@post.Id')">
+                            <span>Ver detalhes das denúncias</span>
+                            <ion-icon name="chevron-down" class="text-sm transition-transform" id="chevron-@post.Id"></ion-icon>
+                        </button>
+
+                        <div id="details-@post.Id" class="hidden px-4 pb-4">
+                            <div class="bg-white rounded-lg p-3 border">
+                                <h5 class="font-medium text-gray-900 mb-2">Motivos das denúncias:</h5>
+                                @if (post.Reports != null && post.Reports.Any())
+                                {
+                                    <div class="space-y-2">
+                                        @foreach (var report in post.Reports.Take(3))
+                                        {
+                                            <div class="flex items-start gap-2 text-xs">
+                                                <div class="w-2 h-2 bg-red-400 rounded-full mt-1.5 flex-shrink-0"></div>
+                                                <div>
+                                                    <span class="text-gray-600">Por:</span>
+                                                    <span class="font-medium">@(report.User?.FullName ?? "Usuário anônimo")</span>
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (post.Reports.Count > 3)
+                                        {
+                                            <div class="text-xs text-gray-500 mt-2">
+                                                E mais @(post.Reports.Count - 3) denúncia@(post.Reports.Count - 3 != 1 ? "s" : "")...
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="text-xs text-gray-500">Detalhes das denúncias não disponíveis no momento.</p> 
+                                }
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</main>
+
+<script>
+    function togglePostDetails(postId) {
+        const details = document.getElementById('details-' + postId);
+        const chevron = document.getElementById('chevron-' + postId);
+
+        if (details.classList.contains('hidden')) {
+            details.classList.remove('hidden');
+            chevron.style.transform = 'rotate(180deg)';
+        } else {
+            details.classList.add('hidden');
+            chevron.style.transform = 'rotate(0deg)';
+        }
+    }
+</script>
