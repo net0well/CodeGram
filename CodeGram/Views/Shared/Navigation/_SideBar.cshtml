@@ -1,193 +1,154 @@
 ﻿<div id="site__sidebar" class="fixed top-0 left-0 z-[99] pt-[--m-top] overflow-hidden transition-transform xl:duration-500 max-xl:w-full max-xl:-translate-x-full">
-    
-    <div class="p-3 max-xl:bg-white xl:bg-gradient-to-b from-gray-900 to-indigo-900 shadow-lg 2xl:w-72 sm:w-64 w-[80%] h-[calc(100vh-64px)] relative z-30 max-lg:border-r dark:max-xl:!bg-slate-800 dark:border-slate-700">
-       
-        <div class="pr-4 h-full" data-simplebar>
-            
-            <div class="mt-2"></div>
 
-            
-            <nav id="side" class="mb-6">
-                <h2 class="text-xs font-bold uppercase text-indigo-300 dark:text-indigo-400 mb-2 ml-2">Menu Principal</h2>
-                <ul class="space-y-1">
-                    <li>
-                        <a asp-controller="Home" asp-action="Index" class="flex items-center p-3 rounded-lg hover:bg-blue-600/10 dark:hover:bg-blue-500/20 transition-colors group menu-item" data-page="home">
-                            <div class="w-9 h-9 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 mr-3 shadow-md group-hover:scale-110 transition-transform">
-                                
-                                <svg class="w-5 h-5 text-black dark:text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-                                    <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1.5" />
-                                    <path d="M8.5 8.5L15.5 15.5" stroke="currentColor" stroke-width="1.5" />
-                                    <path d="M15.5 8.5L8.5 15.5" stroke="currentColor" stroke-width="1.5" />
-                                </svg>
-                            </div>
-                            <span class="font-medium text-gray-700 dark:text-gray-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors"> Feed </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Favorites" asp-action="Index" class="flex items-center p-3 rounded-lg hover:bg-pink-600/10 dark:hover:bg-pink-500/20 transition-colors group menu-item" data-page="favorites">
-                            <div class="w-9 h-9 flex items-center justify-center rounded-full bg-gradient-to-br from-pink-400 to-purple-600 mr-3 shadow-md group-hover:scale-110 transition-transform">
-                                
-                                <svg class="w-5 h-5 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                                </svg>
-                            </div>
-                            <span class="font-medium text-gray-700 dark:text-gray-200 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors"> Favoritos </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Friends" asp-action="Index" class="flex items-center p-3 rounded-lg hover:bg-yellow-600/10 dark:hover:bg-yellow-500/20 transition-colors group menu-item" data-page="friends">
-                            <div class="w-9 h-9 flex items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-orange-600 mr-3 shadow-md group-hover:scale-110 transition-transform">
-                               
-                                <svg class="w-5 h-5 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                                </svg>
-                            </div>
-                            <span class="font-medium text-gray-700 dark:text-gray-200 group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors"> Amigos </span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+    <div class="sidebar-bg shadow-2xl 2xl:w-72 sm:w-64 w-[85%] h-[calc(100vh-64px)] relative z-30">
 
-            
-            <div class="relative h-0.5 bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent my-4 opacity-70"></div>
-
-            
-            <nav id="side" class="font-medium text-sm">
-                <div class="px-3 pb-2 text-sm font-bold">
-                    <h2 class="text-xs font-bold uppercase text-indigo-300 dark:text-indigo-400 mb-2 ml-2">Páginas</h2>
-                </div>
-                <ul class="space-y-1">
-                    <li>
-                        <a asp-controller="Settings" asp-action="Index" class="flex items-center p-3 rounded-lg hover:bg-teal-600/10 dark:hover:bg-teal-500/20 transition-colors group menu-item" data-page="settings">
-                            <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-teal-400 to-green-600 mr-3 shadow-md group-hover:scale-110 transition-transform">
-                                
-                                <svg class="w-4 h-4 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </div>
-                            <span class="font-medium text-gray-700 dark:text-gray-200 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">Configurações</span>
-                        </a>
-                    </li>
-
-                   
-                    <li>
-                        <a href="#" class="flex items-center p-3 rounded-lg hover:bg-purple-600/10 dark:hover:bg-purple-500/20 transition-colors group menu-item" data-page="collectibles">
-                            <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-400 to-violet-600 mr-3 shadow-md group-hover:scale-110 transition-transform">
-                                
-                                <svg class="w-4 h-4 text-black dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                            </div>
-                            <span class="font-medium text-gray-700 dark:text-gray-200 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Colecionáveis</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
+        <div class="pr-3 h-full overflow-y-auto scrollbar-thin">
            
-            <div class="mt-8 p-3 rounded-lg bg-gradient-to-r from-indigo-600/20 to-purple-600/20 border border-indigo-500/30">
-                <div class="flex items-center mb-2">
-                    
-                    <svg class="w-5 h-5 mr-2 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12l2 2 4-4" />
-                    </svg>
-                    <h3 class="text-sm font-bold text-indigo-700 dark:text-indigo-300">Próximos Eventos</h3>
-                </div>
-                <p class="text-xs text-gray-600 dark:text-gray-300">Convenção Anime Summit em breve! Não perca!</p>
-                <a href="#" class="mt-2 text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 inline-block">Saiba mais →</a>
+            <nav id="side" class="mb-10 px-6">
+                <div class="mt-3"></div>
+                <ul class="space-y-3">
+                    <li>
+                        <a asp-controller="Home" asp-action="Index" class="elegant-button flex items-center py-4 px-5 rounded-2xl menu-item relative" data-page="home">
+                            <div class="icon-container w-12 h-12 flex items-center justify-center rounded-xl mr-4 relative z-10" style="--gradient-from: #06b6d4; --gradient-to: #3b82f6;">
+                                <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v6h8V1" />
+                                </svg>
+                            </div>
+                            <div class="relative z-10">
+                                <span class="font-bold text-primary text-lg">Feed</span>
+                                <p class="text-sm text-secondary mt-0.5">Latest updates</p>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Favorites" asp-action="Index" class="elegant-button flex items-center py-4 px-5 rounded-2xl menu-item relative" data-page="favorites">
+                            <div class="icon-container w-12 h-12 flex items-center justify-center rounded-xl mr-4 relative z-10" style="--gradient-from: #ec4899; --gradient-to: #8b5cf6;">
+                                <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                            </div>
+                            <div class="relative z-10">
+                                <span class="font-bold text-primary text-lg">Favoritos</span>
+                                <p class="text-sm text-secondary mt-0.5">Saved content</p>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Friends" asp-action="Index" class="elegant-button flex items-center py-4 px-5 rounded-2xl menu-item relative" data-page="friends">
+                            <div class="icon-container w-12 h-12 flex items-center justify-center rounded-xl mr-4 relative z-10" style="--gradient-from: #10b981; --gradient-to: #059669;">
+                                <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                            </div>
+                            <div class="relative z-10">
+                                <span class="font-bold text-primary text-lg">Network</span>
+                                <p class="text-sm text-secondary mt-0.5">Dev community</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="relative h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent my-8 mx-6 opacity-60">
+                <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-slate-400 rounded-full"></div>
             </div>
+
+            <nav id="side" class="font-medium text-sm mb-10 px-6">
+
+                <ul class="space-y-3">
+                    <li>
+                        <a asp-controller="Settings" asp-action="Index" class="elegant-button flex items-center py-4 px-5 rounded-2xl menu-item relative" data-page="settings">
+                            <div class="icon-container w-12 h-12 flex items-center justify-center rounded-xl mr-4 relative z-10" style="--gradient-from: #8b5cf6; --gradient-to: #7c3aed;">
+                                <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+                                </svg>
+                            </div>
+                            <div class="relative z-10">
+                                <span class="font-bold text-primary text-lg">Settings</span>
+                                <p class="text-sm text-secondary mt-0.5">Preferences</p>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="elegant-button flex items-center py-4 px-5 rounded-2xl menu-item relative" data-page="collectibles">
+                            <div class="icon-container w-12 h-12 flex items-center justify-center rounded-xl mr-4 relative z-10" style="--gradient-from: #f59e0b; --gradient-to: #d97706;">
+                                <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                                </svg>
+                            </div>
+                            <div class="relative z-10">
+                                <span class="font-bold text-primary text-lg">Achievements</span>
+                                <p class="text-sm text-secondary mt-0.5">Your progress</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Event Banner -->
+            <div class="mt-8 mx-6 p-6 rounded-2xl bg-white border border-slate-200 shadow-lg relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-indigo-50 to-purple-50 opacity-50"></div>
+                <div class="relative z-10">
+                    <div class="flex items-center mb-3">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mr-3">
+                            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-bold text-indigo-600 font-mono">Next Event</h3>
+                    </div>
+                    <p class="text-sm text-primary leading-relaxed mb-4 font-medium">DevTalk 2025: The Future of Web3 & AI Integration</p>
+                    <a href="#" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-medium rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        <span>Join Event</span>
+                        <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="h-6"></div> <!-- Spacing at bottom -->
         </div>
     </div>
 
-    
     <div id="site__sidebar__overly"
-         class="absolute top-0 left-0 z-20 w-screen h-screen xl:hidden backdrop-blur-sm bg-black/30" uk-toggle="target: #site__sidebar ; cls :!-translate-x-0"></div>
+         class="absolute top-0 left-0 z-20 w-screen h-screen xl:hidden backdrop-blur-sm bg-black/40" uk-toggle="target: #site__sidebar ; cls :!-translate-x-0"></div>
 </div>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-       
         highlightActiveMenu();
-
-        
         setupPageTransitions();
+        initStatusUpdates();
 
-        
         function highlightActiveMenu() {
             const currentPath = window.location.pathname.toLowerCase();
             const menuItems = document.querySelectorAll('.menu-item');
 
             menuItems.forEach(item => {
-                
-                item.classList.remove('bg-blue-600/20', 'bg-pink-600/20', 'bg-yellow-600/20', 'bg-teal-600/20', 'bg-purple-600/20');
+                // Remove all active states
+                item.classList.remove('active');
 
-                
+                // Check if this item should be active
                 const page = item.getAttribute('data-page');
                 if (currentPath.includes(page) ||
                     (page === 'home' && (currentPath === '/' || currentPath.endsWith('/home')))) {
 
-                    
-                    switch (page) {
-                        case 'home':
-                            item.classList.add('bg-blue-600/20');
-                            item.querySelector('span').classList.add('text-blue-600');
-                            break;
-                        case 'favorites':
-                            item.classList.add('bg-pink-600/20');
-                            item.querySelector('span').classList.add('text-pink-600');
-                            break;
-                        case 'friends':
-                            item.classList.add('bg-yellow-600/20');
-                            item.querySelector('span').classList.add('text-yellow-600');
-                            break;
-                        case 'settings':
-                            item.classList.add('bg-teal-600/20');
-                            item.querySelector('span').classList.add('text-teal-600');
-                            break;
-                        case 'collectibles':
-                            item.classList.add('bg-purple-600/20');
-                            item.querySelector('span').classList.add('text-purple-600');
-                            break;
-                        default:
-                            item.classList.add('bg-blue-600/20');
-                    }
-
-                    
-                    item.classList.add('border-l-4');
-                    switch (page) {
-                        case 'home':
-                            item.classList.add('border-blue-600');
-                            break;
-                        case 'favorites':
-                            item.classList.add('border-pink-600');
-                            break;
-                        case 'friends':
-                            item.classList.add('border-yellow-600');
-                            break;
-                        case 'settings':
-                            item.classList.add('border-teal-600');
-                            break;
-                        case 'collectibles':
-                            item.classList.add('border-purple-600');
-                            break;
-                        default:
-                            item.classList.add('border-blue-600');
-                    }
+                    // Add active state
+                    item.classList.add('active');
                 }
             });
         }
 
-        
         function setupPageTransitions() {
             const menuLinks = document.querySelectorAll('.menu-item');
 
             menuLinks.forEach(link => {
                 link.addEventListener('click', function (e) {
-                   
                     if (this.getAttribute('href') &&
                         !this.getAttribute('href').startsWith('#') &&
                         !this.getAttribute('href').startsWith('http')) {
@@ -195,39 +156,150 @@
                         e.preventDefault();
                         const targetPage = this.getAttribute('href');
 
-                        
+                        // Add loading state
+                        this.style.pointerEvents = 'none';
+                        const icon = this.querySelector('.icon-container');
+                        if (icon) {
+                            icon.style.transform = 'scale(0.95)';
+                            icon.style.opacity = '0.7';
+                        }
+
                         const mainContent = document.querySelector('main') || document.querySelector('#content') || document.querySelector('#main-content');
 
                         if (mainContent) {
-                            
-                            mainContent.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                            mainContent.style.transition = 'opacity 0.3s ease';
+                            mainContent.style.opacity = '0';
 
-                            
                             setTimeout(() => {
                                 window.location.href = targetPage;
-                            }, 300); 
+                            }, 300);
                         } else {
-                            
-                            window.location.href = targetPage;
+                            setTimeout(() => {
+                                window.location.href = targetPage;
+                            }, 150);
                         }
                     }
                 });
             });
         }
+
+        function initStatusUpdates() {
+            // Event banner interactions only
+            const eventBanner = document.querySelector('[href="#"]');
+            if (eventBanner && eventBanner.textContent.includes('Join Event')) {
+                eventBanner.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    // Add some visual feedback
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            }
+        }
     });
 </script>
 
-
 <style>
-    /* Remover borda esquerda padrão de todos os itens para não ocupar espaço em itens inativos */
-    .menu-item {
-        border-left-width: 0;
+    /* Custom styles for enhanced elegance */
+    .elegant-button {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
-        transition: background-color 0.3s ease;
+        overflow: hidden;
     }
 
-        /* Ajustar padding quando item estiver ativo */
-        .menu-item.border-l-4 {
-            padding-left: calc(0.75rem - 4px);
+        .elegant-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
+
+        .elegant-button:hover::before {
+            opacity: 1;
+        }
+
+        .elegant-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.9) inset, 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .elegant-button.active {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.9) inset, 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+        }
+
+            .elegant-button.active::before {
+                opacity: 1;
+            }
+
+    .icon-container {
+        background: linear-gradient(135deg, var(--gradient-from) 0%, var(--gradient-to) 100%);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+        transition: all 0.3s ease;
+    }
+
+    .elegant-button:hover .icon-container {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+    }
+
+    .sidebar-bg {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        border-right: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .text-primary {
+        color: #1e293b;
+    }
+
+    .text-secondary {
+        color: #64748b;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-track {
+        background: rgba(148, 163, 184, 0.1);
+        border-radius: 2px;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.3);
+        border-radius: 2px;
+    }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.5);
+        }
+
+    /* Enhanced menu items with better spacing and transitions */
+    .menu-item {
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 1rem;
+    }
+
+    /* Custom font for code elements */
+    .font-mono {
+        font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Consolas', monospace;
+    }
+
+    /* Enhanced backdrop blur for modern browsers */
+    .backdrop-blur-sm {
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
 </style>
