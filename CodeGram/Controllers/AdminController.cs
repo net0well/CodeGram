@@ -19,5 +19,19 @@ namespace CodeGram.Controllers
 
             return View(reportedPosts);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ApproveReport(int postId)
+        {
+            await _adminService.ApproveReport(postId);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RejectReport(int postId)
+        {
+            await _adminService.RejectReport(postId);
+            return RedirectToAction("Index");
+        }
     }
 }

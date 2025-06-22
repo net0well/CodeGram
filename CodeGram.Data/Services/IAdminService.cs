@@ -10,5 +10,7 @@ namespace CodeGram.Data.Services
     public interface IAdminService
     {
         Task<List<Post>> GetReportedPostsAsync();
+        Task ApproveReport(int postId);
+        Task RejectReport(int postId);
     }
 }

@@ -15,6 +15,7 @@ namespace CodeGram.Data.Services
         {
             _context = context;
         }
+
         public async Task<List<Post>> GetReportedPostsAsync()
         {
             var posts = await _context.Posts
@@ -26,6 +27,28 @@ namespace CodeGram.Data.Services
                 .ToListAsync();
 
             return posts;
+        }
+        public async Task ApproveReport(int postId)
+        {
+            var postDb = await _context.Posts.FirstOrDefaultAsync(n => n.Id == postId);
+            if (postDb != null)
+            {
+                postDb.IsDeleted = true;
+                _context.Posts.Update(postDb);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task RejectReport(int postId)
+        {
+            var postDb = await _context.Posts.FirstOrDefaultAsync(n => n.Id == postId);
+
+            if(postDb != null)
+            {
+                postDb.NrOfReports = 0;
+                _context.Posts.Update(postDb);
+                await _context.SaveChangesAsync();  
+            }
         }
     }
 }
