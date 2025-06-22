@@ -1,11 +1,12 @@
-﻿using CodeGram.Data.Services;
+﻿using CodeGram.Data.Helpers.Constants;
+using CodeGram.Data.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace CodeGram.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = AppRoles.User)]
     public class FavoritesController : Controller
     {
         private readonly IPostsService _postsService;

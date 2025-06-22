@@ -19,9 +19,15 @@
 
         @if(User.Identity.IsAuthenticated)
         {
-            //<partial name="Navigation/_TopBar" />
-            <partial name="Navigation/_TopBarAdmin" />
-            <partial name="Navigation/_SideBar" />
+            @if(User.IsInRole("Admin"))
+            {
+                <partial name="Navigation/_TopBarAdmin" />
+            }
+            else
+            {
+                <partial name="Navigation/_TopBar" />
+                <partial name="Navigation/_SideBar" />
+            }  
         }
               
 

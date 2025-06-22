@@ -1,12 +1,15 @@
 ﻿using CodeGram.Controllers.Base;
+using CodeGram.Data.Helpers.Constants;
 using CodeGram.Data.Models;
 using CodeGram.Data.Services;
 using CodeGram.ViewModel.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeGram.Controllers
 {
+    [Authorize(Roles = AppRoles.User)]
     public class UsersController : BaseController
     {
         private readonly IUsersService _usersService;
