@@ -49,6 +49,16 @@ namespace CodeGram.Data.Services
                 _context.Posts.Update(postDb);
                 await _context.SaveChangesAsync();  
             }
+
+            var postReports = await _context.Reports
+                .Where(n => n.PostId == postId)
+                .ToListAsync();
+
+            if (postReports.Any())
+            {
+                _context.Remove(postReports);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
