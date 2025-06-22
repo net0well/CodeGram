@@ -1,4 +1,5 @@
 ﻿using CodeGram.Controllers.Base;
+using CodeGram.Data.Helpers.Constants;
 using CodeGram.Data.Helpers.Enums;
 using CodeGram.Data.Models;
 using CodeGram.Data.Services;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodeGram.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = AppRoles.User)]
     public class StoriesController : BaseController
     {
         private readonly IStoriesService _storiesService;

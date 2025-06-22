@@ -2,10 +2,12 @@
 using CodeGram.Data.Helpers.Constants;
 using CodeGram.Data.Services;
 using CodeGram.ViewModel.Friends;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeGram.Controllers
 {
+    [Authorize(Roles = AppRoles.User)]
     public class FriendsController : BaseController
     {
         private readonly IFriendsService _friendsService;

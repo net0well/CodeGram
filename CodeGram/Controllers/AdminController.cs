@@ -1,8 +1,11 @@
-﻿using CodeGram.Data.Services;
+﻿using CodeGram.Data.Helpers.Constants;
+using CodeGram.Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeGram.Controllers
 {
+    [Authorize(Roles = AppRoles.Admin)]
     public class AdminController : Controller
     {
         private readonly IAdminService _adminService;

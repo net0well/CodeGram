@@ -1,10 +1,13 @@
 ﻿using CodeGram.Controllers.Base;
+using CodeGram.Data.Helpers.Constants;
 using CodeGram.Data.Models;
 using CodeGram.Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeGram.Controllers
 {
+    [Authorize(Roles = AppRoles.User)]
     public class NotificationsController : BaseController
     {
         private readonly INotificationsService _notificationsService;

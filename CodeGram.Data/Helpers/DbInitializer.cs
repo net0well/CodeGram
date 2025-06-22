@@ -49,7 +49,7 @@ namespace CodeGram.Data.Helpers
                 var newAdmin = new User()
                 {
                     UserName = "admin.admin",
-                    Email = "admin.neto@gmail.com",
+                    Email = "wellingtonadm@gmail.com",
                     FullName = "Admin",
                     ProfilePictureUrl = "https://media.licdn.com/dms/image/v2/D4D03AQHHaU8CD8LE4A/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1711635684506?e=1744243200&v=beta&t=Qs3bY7QBtEqU-U-WMTZvcs7rcI1JA-fuK9TbbyFzd7E",
                     EmailConfirmed = true
