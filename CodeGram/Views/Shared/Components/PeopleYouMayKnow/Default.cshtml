@@ -14,7 +14,7 @@
         {
             <div class="side-list-item flex items-center hover:bg-gray-50 rounded-md p-2 transition-colors">
                 <a asp-controller="Users" asp-action="Details" asp-route-userId="1023">
-                    <img src="@(string.IsNullOrEmpty(data.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+data.ProfilePictureUrl))" class="w-10 h-10 rounded-full border border-gray-200 object-cover" alt="Avatar do usuário" />
+                    <img src="@(string.IsNullOrEmpty(data.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : data.ProfilePictureUrl)" class="w-10 h-10 rounded-full border border-gray-200 object-cover" alt="Avatar do usuário" />
                 </a>
 
                 <div class="flex-1 ml-3 min-w-0 mr-3">

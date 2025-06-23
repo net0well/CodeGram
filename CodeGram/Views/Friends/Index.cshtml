@@ -97,7 +97,7 @@
                                     <div class="flex items-center space-x-4">
                                         <div class="relative flex-shrink-0">
                                             <div class="w-14 h-14 rounded-xl overflow-hidden ring-2 ring-green-100 shadow-sm">
-                                                <img src="@(string.IsNullOrEmpty(friend.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content(friend.ProfilePictureUrl))"
+                                                <img src="@(string.IsNullOrEmpty(friend.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : friend.ProfilePictureUrl)"
                                                      alt="Foto de @friend.FullName"
                                                      class="w-full h-full object-cover" />
                                             </div>
@@ -185,7 +185,7 @@
                                     <div class="flex items-center space-x-4">
                                         <div class="relative flex-shrink-0">
                                             <div class="w-14 h-14 rounded-xl overflow-hidden ring-2 ring-green-100 shadow-sm">
-                                                <img src="@(string.IsNullOrEmpty(request.Sender.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content(request.Sender.ProfilePictureUrl))"
+                                                <img src="@(string.IsNullOrEmpty(request.Sender.ProfilePictureUrl) ? Url.Content("~/images/avatar/user.png") : request.Sender.ProfilePictureUrl)"
                                                      alt="Foto de @request.Sender.FullName"
                                                      class="w-full h-full object-cover" />
                                             </div>
