@@ -105,14 +105,14 @@
                 <!-- Profile Dropdown -->
                 <div class="rounded-lg overflow-hidden relative bg-white cursor-pointer shrink-0 hover:ring-2 hover:ring-indigo-300 transition-all duration-300 border border-gray-200"
                      uk-toggle="target: #profileDropdown">
-                    <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+profilePictureUrl))"
+                    <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : profilePictureUrl)"
                          class="sm:w-10 sm:h-10 w-9 h-9 rounded-lg shadow-sm shrink-0 object-cover" />
                 </div>
 
                 <div id="profileDropdown" class="hidden bg-white rounded-lg drop-shadow-xl w-64 border border-gray-200"
                      uk-drop="offset:6;pos: bottom-right;animate-out: true;">
                     <div class="p-4 py-3 flex items-center gap-4 bg-gray-100 border-b border-gray-200">
-                        <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : Url.Content("~/"+profilePictureUrl))"
+                        <img src="@(string.IsNullOrEmpty(profilePictureUrl) ? Url.Content("~/images/avatar/user.png") : profilePictureUrl)"
                              class="w-10 h-10 rounded-lg shadow-sm object-cover border border-gray-300" />
                         <div class="flex-1">
                             <h4 class="text-sm font-medium text-black">@fullName</h4>
