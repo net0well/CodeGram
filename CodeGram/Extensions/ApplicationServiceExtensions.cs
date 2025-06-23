@@ -16,6 +16,8 @@ namespace CodeGram.Extensions
             //DatabaseConfig
 
             string dbConnectionString = configuration.GetConnectionString("Default") ?? string.Empty;
+            var blobConnectionString = configuration["AzureStorageConnectionString"];
+
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(dbConnectionString));
 
             //Services Configuration
@@ -23,7 +25,7 @@ namespace CodeGram.Extensions
             services.AddScoped<IPostsService, PostsService>();
             services.AddScoped<IHashtagsService, HashtagsService>();
             services.AddScoped<IStoriesService, StoriesService>();
-            services.AddScoped<IFilesService, FilesService>();
+            services.AddScoped<IFilesService>(s => new FilesService(blobConnectionString));
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IFriendsService, FriendsService>();
             services.AddScoped<IAdminService, AdminService>();
